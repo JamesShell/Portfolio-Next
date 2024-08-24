@@ -29,7 +29,7 @@ const MoonCanvas: React.FC<React.CanvasHTMLAttributes<HTMLCanvasElement>> = (pro
         far: 200,
         position: [-4, 3, 6],
       }}
-      {...props}
+      style={props.style || {}}
     >
       <Suspense>
         <OrbitControls
