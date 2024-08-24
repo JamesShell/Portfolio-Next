@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, Suspense } from "react";
+import { useState, useRef, useEffect, Suspense, RefObject } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, Preload } from "@react-three/drei";
 import * as random from "maath/random/dist/maath-random.esm";
@@ -36,7 +36,8 @@ const Stars: React.FC<StarsProps> = (props) => {
 
   return (
     <group rotation={[0, 0, Math.PI / 4]}>
-      <Points ref={ref} positions={sphere} stride={3} frustumCulled {...props}>
+      {/* @ts-ignore */}
+      <Points positions={sphere} stride={3} frustumCulled {...props} ref={ref as any}>
         <PointMaterial
           transparent
           color={color}
