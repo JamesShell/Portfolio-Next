@@ -179,7 +179,7 @@ const MonkeyCanvas: React.FC<MonkeyCanvasProps> = ({ className, hovered }) => {
     // Adjust OrbitControls after the component has mounted
     const controls = document.querySelector("OrbitControls");
     if (controls) {
-      controls.start();
+      (controls as any).start();
     }
   }, []);
 
