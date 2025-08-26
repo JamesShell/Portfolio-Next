@@ -1,61 +1,265 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { MonkeyCanvas } from "@/components/canvas";
+import { MonkeyCanvas, StarsCanvas } from "@/components/canvas";
 import DoubleOutlinedCard from "@/components/ui/double-outlined-card";
 import { TextEffect } from "@/components/ui/text-effect";
+import { nyght } from "@/assets/font";
+import { Badge } from "../ui/badge";
+import { SocialLinks } from "../ui/social-links";
+import { SegmentedControl } from "../ui/segmented-control";
+import { Sun, Moon, Monitor } from "lucide-react";
 
 // Define a type for valid hover states
 type HoverState = "" | "about" | "work" | "contact";
 
 const Hero = () => {
   const [hoveredOne, setHoveredOne] = useState<HoverState>("");
+  const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
+  const [scrollY, setScrollY] = useState(0);
   const navItems: HoverState[] = ["about", "work", "contact"];
 
+  const themeOptions = [
+    { value: "light", label: "", icon: <Sun className="w-4 h-4" /> },
+    { value: "dark", label: "", icon: <Moon className="w-4 h-4" /> },
+    { value: "system", label: "", icon: <Monitor className="w-4 h-4" /> },
+  ];
+
+  // Load theme from localStorage on mount
+  React.useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') as "light" | "dark" | "system" | null;
+    if (savedTheme) {
+      setTheme(savedTheme);
+      applyTheme(savedTheme);
+    } else {
+      applyTheme("system");
+    }
+  }, []);
+
+  // Scroll handler
+  React.useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Theme handler with localStorage persistence
+  const applyTheme = (newTheme: "light" | "dark" | "system") => {
+    const root = document.documentElement;
+    
+    if (newTheme === "dark") {
+      root.classList.add("dark");
+    } else if (newTheme === "light") {
+      root.classList.remove("dark");
+    } else {
+      // System preference
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (prefersDark) {
+        root.classList.add("dark");
+      } else {
+        root.classList.remove("dark");
+      }
+    }
+  };
+
+  const handleThemeChange = (newTheme: string) => {
+    const themeValue = newTheme as "light" | "dark" | "system";
+    setTheme(themeValue);
+    localStorage.setItem('theme', themeValue);
+    applyTheme(themeValue);
+  };
+
   const containerVariants = {
-    hidden: { opacity: 0, y: 500 },
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { 
+        duration: 0.8, 
+        ease: "easeOut",
+        staggerChildren: 0.2,
+        delayChildren: 0.1
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 2, ease: "easeOut" },
+      scale: 1,
+      transition: { 
+        duration: 0.6, 
+        ease: [0.23, 1, 0.320, 1] // Custom cubic-bezier for smoother animation
+      },
+    },
+  };
+
+  const badgeVariants = {
+    hidden: { opacity: 0, x: -20, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      transition: { 
+        duration: 0.7, 
+        ease: "easeOut",
+        type: "spring",
+        stiffness: 100,
+        damping: 15
+      },
+    },
+  };
+
+  const navigationVariants = {
+    hidden: { opacity: 0, x: 20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { 
+        duration: 0.6, 
+        ease: "easeOut",
+        staggerChildren: 0.1
+      },
+    },
+  };
+
+  const navItemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
     },
   };
 
   return (
     <div
-      className="relative w-screen container"
+      className="relative w-screen h-screen max-w-6xl mx-auto"
       style={{ touchAction: "pan-y" }}>
+
       <motion.div
         initial="hidden"
         animate="visible"
-        className="relative faded mt-36"
+        className="flex flex-col items-center justify-center h-full w-full mt-18 lg:mt-0"
         variants={containerVariants}>
-        <DoubleOutlinedCard>
-          <h1 className="text-5xl font-bold text-foreground">
-            Hi, I&apos;m <span className="text-secondary glow-text">Ettouzany</span>
-          </h1>
-          <TextEffect as="p" per="word" preset="fade" className="mt-2 text-xl text-foreground/60">
-            Full-stack developer with 3 years experience building user-friendly
-            web apps.
-          </TextEffect>
+        
+        <div className="w-full h-full max-w-6xl relative overflow-visible">
 
-          <div className="relative flex flex-row items-center -mt-12 md:mt-0 justify-start md:items-center w-full h-full">
-            <ul className="absolute md:relative side-nav w-full md:w-2/12 text-3xl font-semibold text-foreground gap-3 flex flex-col ml-5">
-              {navItems.map((item) => (
-                <li
-                  key={item}
-                  onMouseEnter={() => setHoveredOne(item)}
-                  onMouseLeave={() => setHoveredOne("")}
-                  className="cursor-pointer">
-                  <TextEffect as="a" preset="fade" per="char" href={`#${item}`}>{item.charAt(0).toUpperCase() + item.slice(1)}</TextEffect>
-                </li>
-              ))}
-            </ul>
-            <MonkeyCanvas
-              className="absolute md:relative inset-0 md:z-[1] z-[-1] w-full md:w-10/12 md:h-full md:top-0 md:left-0"
-              hovered={hoveredOne}
-            />
+          <div className="flex justify-between items-center h-full w-full">
+            {/* Left side - Description */}
+            <motion.div 
+              className="text-left flex flex-col justify-center"
+              variants={itemVariants}
+            >
+              <motion.div variants={badgeVariants}>
+                <Badge variant={'default'} size={'xl'} className="mb-4 w-fit font-medium">
+                  <div className="h-2 w-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
+                  Available for work
+                </Badge>
+              </motion.div>
+              <motion.div 
+                className="text-lg text-foreground/50 leading-relaxed"
+                variants={itemVariants}
+              >
+                <h1 className="sr-only">Ettouzany - Full Stack Developer</h1>
+                <TextEffect as="p" per="word" preset="fade">
+                  Full-stack developer with
+                </TextEffect>
+                <TextEffect as="p" per="word" preset="fade" className="mb-2">
+                  3 years experience
+                </TextEffect>
+                <TextEffect as="p" per="word" preset="fade">
+                  building user-friendly web apps
+                </TextEffect>
+              </motion.div>
+              <motion.div 
+                className="mt-4 w-fit"
+                variants={itemVariants}
+              >
+                <SegmentedControl
+                  options={themeOptions}
+                  value={theme}
+                  onChange={handleThemeChange}
+                  size="sm"
+                />
+              </motion.div>
+            </motion.div>
+
+            {/* Right side - Navigation and Social Links */}
+            <motion.div 
+              className="flex flex-col items-center justify-center gap-6 z-10"
+              variants={navigationVariants}
+            >
+              {/* Social Links - without theme control */}
+              <motion.div variants={navItemVariants}>
+                <SocialLinks />
+              </motion.div>
+
+              {/* Navigation Items */}
+              <motion.nav 
+                className="flex gap-6"
+                variants={navigationVariants}
+                role="navigation"
+                aria-label="Main navigation"
+              >
+                {navItems.map((item, index) => (
+                  <motion.div
+                    key={item}
+                    variants={navItemVariants}
+                    onMouseEnter={() => setHoveredOne(item)}
+                    onMouseLeave={() => setHoveredOne("")}
+                    className="nav-item cursor-pointer transition-colors duration-200 hover:scale-105"
+                    whileHover={{ 
+                      scale: 1.05, 
+                      transition: { duration: 0.2 } 
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <TextEffect as="a" preset="fade" per="char" href={`#${item}`} className="text-xl font-medium" aria-label={`Navigate to ${item} section`}>
+                      {item.charAt(0).toUpperCase() + item.slice(1)}
+                    </TextEffect>
+                  </motion.div>
+                ))}
+              </motion.nav>
+            </motion.div>
           </div>
-        </DoubleOutlinedCard>
+
+          {/* Central canvas - full screen and centered */}
+          <div className="fixed inset-0 w-full h-full flex items-center justify-center">
+            <div 
+              className={`relative w-full h-full bg-transparent -z-10 transition-all duration-300 ease-out ${scrollY > 200 ? "blur-sm" : ""}` }
+              style={{
+                maskImage: 'linear-gradient(to top, transparent 10%, black 25%, black 100%)',
+                WebkitMaskImage: 'linear-gradient(to top, transparent 10%, black 25%, black 100%)',
+                opacity: Math.max(0.3, 1 - scrollY / 800)
+              }}
+            >
+              <MonkeyCanvas
+                className="w-full h-full invert dark:invert-0"
+                hovered={hoveredOne}
+              />
+            </div>
+          </div>
+            
+            {/* Large name positioned absolute bottom center */}
+            
+
+          {/* Navigation items */}
+          {/* <div className="flex justify-center gap-8">
+            {navItems.map((item) => (
+              <div
+                key={item}
+                onMouseEnter={() => setHoveredOne(item)}
+                onMouseLeave={() => setHoveredOne("")}
+                className="cursor-pointer transition-colors duration-200 hover:text-secondary">
+                <TextEffect as="a" preset="fade" per="char" href={`#${item}`} className="text-xl font-medium">
+                  {item.charAt(0).toUpperCase() + item.slice(1)}
+                </TextEffect>
+              </div>
+            ))}
+          </div> */}
+        </div>
+        
       </motion.div>
     </div>
   );

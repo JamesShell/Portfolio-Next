@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { SectionWrapper } from "@/hoc";
 import { motion } from "framer-motion";
 import { styles } from "@/styles/style";
@@ -6,34 +6,112 @@ import { Tilt } from "react-next-tilt";
 import { fadeIn, textVariant } from "@/utils/motion";
 import { technologies } from "@/constants";
 import { IconType } from "react-icons";
+import { nyght } from "@/assets/font";
+import { Badge } from "../ui/badge";
+import { Laptop, Stars } from "lucide-react";
+import { MoonCanvas } from "@/components/canvas";
 
 const Tech = () => {
-  return (
-    <div>
-      <motion.div variants={textVariant({ delay: 0 })}>
-        <h3 className={styles.sectionSubText}>Tools & Frameworks</h3>
-        <h2 className={styles.sectionHeadText}>Tech</h2>
-      </motion.div>
-      <motion.p
-        variants={fadeIn({ direction: 'up', type: 'spring', delay: 0.1, duration: 1 })}
-        className={styles.sectionPargText}
-      >
-        I have expertise in JavaScript, React, Node.js, Python, Flask, and
-        Django, using these technologies to build scalable web applications,
-        APIs, and solutions to complex problems. I am passionate about exploring
-        new technologies and applying my skills to create efficient and
-        user-friendly projects.
-      </motion.p>
+  const [scrollY, setScrollY] = useState(0);
 
-      <div className="mt-8 xs:mt-10 flex flex-wrap gap-3">
-        {technologies.map((item, index) => (
-          <TechItem
-            key={index}
-            index={index}
-            title={item.name}
-            Icon={item.icon}
-          />
-        ))}
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div className="relative">
+      <div className="container relative z-10">
+        {/* Tech Hero Section */}
+        <motion.div 
+          variants={textVariant({ delay: 0 })}
+          className="mb-16"
+        >
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+            {/* Left side - Content */}
+            <motion.div 
+              className="flex-1 items-center text-center"
+              variants={fadeIn({ direction: "left", delay: 0.2, duration: 0.8 })}
+            >
+              <motion.div 
+                className="inline-block mb-6"
+                whileHover={{ scale: 1.05 }}
+              >
+                <Badge className="flex items-center gap-2" size={'xl'}>
+                  <Stars className="w-4 h-4 text-foreground/80" />
+                  <span className="text-muted-foreground text-base">MY SKILLS</span>
+                </Badge>
+              </motion.div>
+              
+              <h1 className={`text-4xl lg:text-5xl xl:text-6xl font-semibold mb-6 ${nyght.className}`}>
+                Technologies &<br />
+                <span className={`bg-gradient-to-b from-foreground to-slate-400 dark:to-zinc-900 bg-clip-text text-transparent ${nyght.className} font-medium italic`}>Tools I Use</span>
+              </h1>
+              
+              <div className="space-y-4 text-lg text-foreground/70 leading-relaxed mb-8 text-center">
+                <p>
+                  I have expertise in JavaScript, React, Node.js, Python, Flask, and
+                  Django, using these technologies to build scalable web applications,
+                  APIs, and solutions to complex problems.
+                </p>
+                {/* <p>
+                  I am passionate about exploring new technologies and applying my skills 
+                  to create efficient and user-friendly projects that make a real impact.
+                </p>
+                <p className="font-semibold text-foreground">
+                  Always learning, always growing!
+                </p> */}
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* Enhanced Tech Grid */}
+        <motion.div 
+          className="technologies mt-8 xs:mt-10"
+          variants={{
+            hidden: { opacity: 0 },
+            show: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.1
+              }
+            }
+          }}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+        >
+          <div className="flex flex-wrap justify-center gap-3">
+            {technologies.map((item, index) => (
+              <motion.div
+                key={index}
+                variants={{
+                  hidden: { opacity: 0, y: 50 },
+                  show: { 
+                    opacity: 1, 
+                    y: 0,
+                    transition: {
+                      type: "spring",
+                      stiffness: 100,
+                      damping: 12
+                    }
+                  }
+                }}
+              >
+                <TechItem
+                  index={index}
+                  title={item.name}
+                  Icon={item.icon}
+                />
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </div>
   );
@@ -45,19 +123,14 @@ interface TechItemProps {
   index: number;
 }
 
+
 const TechItem: React.FC<TechItemProps> = ({ Icon, title, index }) => {
   return (
     <Tilt className="cursor-pointer relative" borderRadius="12px" perspective="600px" tiltClass="rounded-lg">
       <motion.div
-        variants={fadeIn({
-          direction: 'up',
-          type: 'spring',
-          delay: index * 0.2,
-          duration: 0.5
-        })}
-        className="w-full bg-shiny-header pt-[1px] rounded-lg shadow-sm"
+        className="w-full pt-[1px] rounded-lg shadow-sm"
       >
-        <div className="bg-muted/90 rounded-lg p-3 flex items-center">
+        <div className="bg-muted/40 backdrop-blur-md rounded-lg p-3 flex items-center">
           <div className="flex-shrink-0 mr-4">
             <div className="text-foreground/20 text-[20px]">
               <Icon />

@@ -1,23 +1,19 @@
 import React, { Suspense, lazy, useEffect, useState } from 'react';
-import { IBM_Plex_Mono } from 'next/font/google';
-import { ThemeProvider } from '@/components/theme/theme-provider';
+import { sfPro } from '@/assets/font'
 import Loading from '@/pages/_loading';
+import Navbar from '@/components/fragments/Navbar';
+import SEOHead from '@/components/SEO/Head';
+import { personStructuredData, websiteStructuredData } from '@/utils/structuredData';
 
 // Import components lazily
-const Navbar = lazy(() => import('@/components/fragments/Navbar'));
 const Hero = lazy(() => import('@/components/fragments/Hero'));
 const About = lazy(() => import('@/components/fragments/About'));
 const Tech = lazy(() => import('@/components/fragments/Tech'));
 const Works = lazy(() => import('@/components/fragments/Works'));
 const Feedbacks = lazy(() => import('@/components/fragments/Feedback'));
-const Contact = lazy(() => import('@/components/fragments/Contact'));
-const StarsCanvas = lazy(() => import('@/components/canvas/Stars'));
-
-// Load the IBM Plex Mono font
-const IBMPlexMono = IBM_Plex_Mono({
-  subsets: ['latin'],
-  weight: '500',
-});
+const CTAFooter = lazy(() => import('@/components/fragments/cta-footer'));
+// const StarsCanvas = lazy(() => import('@/components/canvas/Stars'));
+import { StarsCanvas, AsteroidsCanvas } from '@/components/canvas';
 
 export default function Home() {
   const [isClient, setIsClient] = useState(false);
@@ -27,33 +23,43 @@ export default function Home() {
   }, []);
 
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-      disableTransitionOnChange
-    >
-      <div className="fixed w-screen h-screen bg-radial-gradient bg-cover bg-no-repeat bg-center animate-zoom" />
-      <div className={`relative z-0 ${IBMPlexMono.className}`}>
+    <>
+      <SEOHead 
+        title="Ettouzany Portfolio - Full Stack Developer & UI/UX Designer"
+        description="Portfolio of Ettouzany - Full Stack Developer specializing in React, Next.js, TypeScript, and modern web technologies. Explore my projects, skills, and experience in creating innovative web solutions."
+        keywords="full stack developer, react developer, next.js, typescript, web development, portfolio, UI/UX design, frontend, backend, javascript, node.js"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@graph": [personStructuredData, websiteStructuredData]
+        }}
+      />
+      <div className={`relative z-0 ${sfPro.className}`}>
         <Suspense fallback={<Loading />}>
-          {isClient && (
-            <>
-              <div className="hero-container">
-                <Navbar />
-                <Hero />
-              </div>
+        {isClient && (
+          <>
+          <Navbar />
+            <div className="hero-container">
+              
+              <Hero />
+            </div>
+            
+            {/* Enhanced section spacing */}
+            <div className="space-y-32 py-20">
               <About />
               <Tech />
               <Works />
               <Feedbacks />
-              <div className="relative z-0 h-full">
-                <Contact />
-                <StarsCanvas />
-              </div>
-            </>
-          )}
+            </div>
+            
+            {/* CTA and Footer */}
+            <div className="relative z-0" id='contact'>
+              <CTAFooter />
+              <StarsCanvas />
+            </div>
+          </>
+        )}
         </Suspense>
       </div>
-    </ThemeProvider>
+    </>
   );
 }

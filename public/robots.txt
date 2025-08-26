@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Disallow admin and API routes
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /404
+
+# Allow important pages for SEO
+Allow: /
+Allow: /projects
+Allow: /experience
+Allow: /contact
+
+# Sitemap location
+Sitemap: https://ettouzany.vercel.app/sitemap.xml

@@ -4,21 +4,32 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "relative inline-flex items-center rounded-full font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 backdrop-blur-sm overflow-hidden",
   {
     variants: {
       variant: {
         default:
-          "border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80",
-        secondary:
-          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
+          "bg-muted/50 text-foreground border border-border/20 shadow-sm hover:bg-muted hover:border-border/40 hover:shadow-lg before:absolute before:inset-x-0 before:h-[1.5px] before:w-1/2 before:mx-auto before:-top-px before:shadow-xl before:bg-gradient-to-r before:from-transparent before:via-foreground/50 before:to-transparent",
+        success:
+          "bg-emerald-500/20 text-emerald-500-foreground border border-emerald-500/20 shadow-sm hover:bg-emerald-500/50 before:absolute before:inset-x-0 before:h-[1.5px] before:w-1/2 before:mx-auto before:-top-px before:shadow-xl before:bg-gradient-to-r before:from-transparent before:via-emerald-500 before:to-transparent",
+          secondary:
+          "bg-secondary/40 text-secondary-foreground border border-secondary/20 shadow-sm hover:bg-secondary/50 before:absolute before:inset-x-0 before:h-[1.5px] before:w-1/2 before:mx-auto before:-top-px before:shadow-xl before:bg-gradient-to-r before:from-transparent before:via-secondary before:to-transparent",
         destructive:
-          "border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80",
-        outline: "text-foreground",
+          "bg-destructive/40 text-destructive-foreground border border-destructive/20 shadow-sm hover:bg-destructive/50 before:absolute before:inset-x-0 before:h-[1.5px] before:w-1/2 before:mx-auto before:-top-px before:shadow-xl before:bg-gradient-to-r before:from-transparent before:via-destructive before:to-transparent",
+        warning:
+          "bg-yellow-400/20 text-yellow-400-foreground border border-yellow-400/20 shadow-sm hover:bg-yellow-400/50 before:absolute before:inset-x-0 before:h-[1.5px] before:w-1/2 before:mx-auto before:-top-px before:shadow-xl before:bg-gradient-to-r before:from-transparent before:via-yellow-400 before:to-transparent",
+        outline: "bg-background/40 text-foreground border border-input/20 shadow-sm hover:bg-accent/40 before:absolute before:inset-x-0 before:h-[1.5px] before:w-1/2 before:mx-auto before:-top-px before:shadow-xl before:bg-gradient-to-r before:from-transparent before:via-accent before:to-transparent",
+      },
+      size: {
+        sm: "px-3 py-1 text-xs",
+        default: "px-4 py-1.5 text-sm",
+        lg: "px-5 py-2 text-base",
+        xl: "px-6 py-3 text-lg",
       },
     },
     defaultVariants: {
       variant: "default",
+      size: "default",
     },
   }
 )

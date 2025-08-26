@@ -64,4 +64,5 @@ const StarsCanvas: React.FC = () => {
   );
 };
 
-export default StarsCanvas;
+// Export the StarsCanvas component and Stars component
+export { StarsCanvas, Stars };

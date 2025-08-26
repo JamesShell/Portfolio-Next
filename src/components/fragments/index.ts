@@ -6,6 +6,7 @@ import Tech from './Tech';
 import Works from './Works';
 import Feedbacks from './Feedback';
 import Contact from './Contact';
+import Timeline from './Timeline';
 
 export {
   Hero,
@@ -15,6 +16,7 @@ export {
   Works,
   Feedbacks,
   Contact,
+  Timeline,
   MoonCanvas,
   MonkeyCanvas, 
   StarsCanvas

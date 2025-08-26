@@ -1,6 +1,6 @@
 import * as di from 'react-icons/di';
 import * as fa from 'react-icons/fa';
-import { jelth } from "../assets";
+import { jelth, portfolio } from "../assets";
 import { IconType } from 'react-icons/lib';
 import { StaticImageData } from 'next/image';
 
@@ -131,6 +131,21 @@ const testimonials: Testimonial[] = [
 
 const projects: any[] = [
   {
+    type: "web",
+    name: "Portfolio Website",
+    description: "A modern, responsive portfolio website showcasing my work and skills. Built with Next.js 14, TypeScript, and Tailwind CSS, featuring smooth animations with Framer Motion, 3D elements with Three.js, and a clean, accessible design system.",
+    tags: [
+      { name: "next.js", color: "#000000" },
+      { name: "typescript", color: "#3178c6" },
+      { name: "tailwind", color: "#3d8dd8" },
+      { name: "three.js", color: "#000000" },
+    ],
+    image: portfolio,
+    source_code_link: "https://github.com/aayushbharti/portfolio-next",
+    Icon: di.DiGithub
+  },
+  {
+    type: "web",
     name: "Jelth",
     description: "A fully responsive web app where users complete tasks to earn gift cards. Built with React (Vite) for the frontend, Node.js for the backend, Firebase for authentication and database, and Redis for caching. Showcases a modern tech stack and effective web design.",
     tags: [
@@ -144,4 +159,13 @@ const projects: any[] = [
   },
 ];
 
-export { services, technologies, testimonials, projects };
+const socialLinks = {
+  github: { handle: "JamesShell", link: "https://github.com/JamesShell"},
+  linkedin: { handle: "/in/Ettouzany", link: "https://www.linkedin.com/in/james-ettozany/"},
+  dribble: { handle: "@ettouzany", link: "https://dribbble.com/juds69"},
+  twitter: { handle: "@ettouzzany", link: "https://x.com/ettouzzany"},
+  discord: { handle: "ettouzany#1234", link: "https://discord.com"},
+  mail: { handle: "ettozany@gmail.com", link: "mailto:ettozany@gmail.com"},
+}
+
+export { services, technologies, testimonials, projects, socialLinks };

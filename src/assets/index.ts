@@ -6,6 +6,7 @@ import yumi from "./yumi.png";
 import trade from "./trade.png";
 import poxels from "./poxels.png";
 import jelth from "./projects/jelth/jelth.png";
+import portfolio from "./projects/portfolio/portfolio.png";
 import cozygear from './cozygear.png';
 import tripguide from "./tripguide.png";
 import laptop from "./projects/jelth/laptop.png"
@@ -20,5 +21,6 @@ export {
   poxels,
   cozygear,
   laptop,
-  jelth
+  jelth,
+  portfolio
 };

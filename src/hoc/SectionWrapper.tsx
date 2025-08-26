@@ -8,7 +8,7 @@ type SectionWrapperProps = {
   idName: string;
 };
 
-export const SectionWrapper = <P extends object>(Component: React.ComponentType<P>, idName: string) => {
+export const SectionWrapper = <P extends object>(Component: React.ComponentType<P>, idName: string, fullScreen: boolean = false) => {
   // Function component with a generic type P
   return function HOC(props: P) {
     return (
@@ -17,7 +17,7 @@ export const SectionWrapper = <P extends object>(Component: React.ComponentType<
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.25 }}
-        className={`section container ${styles.paddingY} px-0 mx-auto relative`}
+        className={`section ${!fullScreen && "container mx-auto"} ${styles.paddingY} px-0 relative`}
       >
         <span className='hash-span' id={idName}>
           &nbsp;

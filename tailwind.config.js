@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'radial-gradient': 'radial-gradient(circle at center top, hsla(var(--foreground) / .175) 0%, hsla(var(--foreground) / 0) 70%)',
+        'radial-gradient': 'radial-gradient(circle at center top, hsla(var(--foreground) / .1) 0%, hsla(var(--foreground) / 0) 70%)',
         'shiny-header': 'linear-gradient(to right, hsla(0 0 95% / .1) 10%, hsla(0 0 95% / .5) 50%, hsla(0 0 95% / .1) 90%)',
       },
       blur: {
@@ -110,13 +110,59 @@ module.exports = {
   plugins: [require("tailwindcss-animate"), function ({ addUtilities }) {
     addUtilities({
       '.text-glow-1': {
-        'text-shadow': '0 2px 25px hsla(var(--chart-2)/ 0.7)',
+        'text-shadow': '0 2px 25px hsla(var(--chart-1)/ 0.7)',
       },
       '.text-glow-2': {
-        'text-shadow': '0 2px 25px hsla(var(--chart-3)/ 0.7)',
+        'text-shadow': '0 2px 25px hsla(var(--chart-2)/ 0.7)',
       },
       '.text-glow-3': {
+        'text-shadow': '0 2px 25px hsla(var(--chart-3)/ 0.7)',
+      },
+      '.text-glow-4': {
         'text-shadow': '0 2px 25px hsla(var(--chart-4)/ 0.7)',
+      },
+      // Gradient border utilities
+      '.border-gradient': {
+        border: '1px solid transparent',
+        backgroundClip: 'padding-box, border-box',
+        backgroundOrigin: 'border-box',
+        backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(135deg, rgba(255, 255, 255, 0.4), transparent, rgba(255, 255, 255, 0.4))',
+      },
+      '.border-gradient-primary': {
+        border: '1px solid transparent',
+        backgroundClip: 'padding-box, border-box',
+        backgroundOrigin: 'border-box',
+        backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(135deg, hsla(var(--primary) / 0.4), transparent, hsla(var(--primary) / 0.4))',
+      },
+      '.border-gradient-secondary': {
+        border: '1px solid transparent',
+        backgroundClip: 'padding-box, border-box',
+        backgroundOrigin: 'border-box',
+        backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(135deg, hsla(var(--secondary) / 0.4), transparent, hsla(var(--secondary) / 0.4))',
+      },
+      '.border-gradient-destructive': {
+        border: '1px solid transparent',
+        backgroundClip: 'padding-box, border-box',
+        backgroundOrigin: 'border-box',
+        backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(135deg, hsla(var(--destructive) / 0.4), transparent, hsla(var(--destructive) / 0.4))',
+      },
+      '.border-gradient-accent': {
+        border: '1px solid transparent',
+        backgroundClip: 'padding-box, border-box',
+        backgroundOrigin: 'border-box',
+        backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(135deg, hsla(var(--accent) / 0.4), transparent, hsla(var(--accent) / 0.4))',
+      },
+      '.border-gradient-success': {
+        border: '1px solid transparent',
+        backgroundClip: 'padding-box, border-box',
+        backgroundOrigin: 'border-box',
+        backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(135deg, rgba(34, 197, 94, 0.4), transparent, rgba(34, 197, 94, 0.4))',
+      },
+      '.border-gradient-warning': {
+        border: '1px solid transparent',
+        backgroundClip: 'padding-box, border-box',
+        backgroundOrigin: 'border-box',
+        backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(135deg, rgba(234, 179, 8, 0.4), transparent, rgba(234, 179, 8, 0.4))',
       },
     }, ['responsive', 'hover']);
   }, function ({ addComponents }) {
