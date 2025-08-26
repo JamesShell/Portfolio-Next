@@ -20,7 +20,7 @@ export default function Projects() {
     <>
       <SEOHead 
         title="Projects - Ettouzany Portfolio"
-        description="Explore Ettouzany' portfolio of innovative web development projects featuring React, Next.js, TypeScript, and modern technologies. See real-world applications and creative solutions."
+        description="Explore Ettouzany's portfolio of innovative web development projects featuring React, Next.js, TypeScript, and modern technologies. See real-world applications and creative solutions."
         keywords="projects, portfolio, web development, react, next.js, typescript, full stack, javascript, node.js, frontend, backend"
         structuredData={portfolioStructuredData}
       />

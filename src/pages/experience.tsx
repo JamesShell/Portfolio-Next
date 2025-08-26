@@ -21,7 +21,7 @@ export default function Experience() {
     <>
       <SEOHead 
         title="Experience - Ettouzany Portfolio"
-        description="Discover Ettouzany' professional journey as a Full Stack Developer. Explore work experience, technical skills, education, and career achievements in web development and modern technologies."
+        description="Discover Ettouzany's professional journey as a Full Stack Developer. Explore work experience, technical skills, education, and career achievements in web development and modern technologies."
         keywords="experience, work history, education, achievements, timeline, career, full stack developer, professional journey, skills, web development"
         structuredData={personStructuredData}
       />
