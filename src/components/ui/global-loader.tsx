@@ -12,52 +12,54 @@ interface GlobalLoaderProps {
 
 // Blinking smiley face component
 const BlinkingSmiley: React.FC = () => {
-  const [isBlinking, setIsBlinking] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const [blinkKey, setBlinkKey] = useState(0); // force rerun animation
 
   useEffect(() => {
-    setIsMounted(true);
-    
-    const blinkInterval = setInterval(() => {
-      setIsBlinking(true);
-      setTimeout(() => setIsBlinking(false), 150);
-    }, 500 + Math.random() * 500);
+    let timeout: NodeJS.Timeout;
 
-    return () => clearInterval(blinkInterval);
+    const scheduleBlink = () => {
+      // Random interval between 2s and 6s
+      const nextBlink = 2000 + Math.random() * 4000;
+
+      timeout = setTimeout(() => {
+        setBlinkKey(prev => prev + 1); // trigger new blink cycle
+        scheduleBlink();
+
+        // Sometimes do a quick double blink
+        if (Math.random() > 0.7) {
+          setTimeout(() => setBlinkKey(prev => prev + 1), 200);
+        }
+      }, nextBlink);
+    };
+
+    scheduleBlink();
+    return () => clearTimeout(timeout);
   }, []);
-
-  // Fallback for SSR
-  if (!isMounted) {
-    return (
-      <div className="relative w-20 h-20">
-        <div className="w-20 h-20 border-2 border-foreground rounded-full bg-background"></div>
-        <div className="absolute top-6 left-6 w-3 h-5 bg-foreground rounded-full"></div>
-        <div className="absolute top-6 right-6 w-3 h-5 bg-foreground rounded-full"></div>
-      </div>
-    );
-  }
 
   return (
     <div className="relative w-20 h-20">
       {/* Face Circle */}
       <div className="w-20 h-20 border-2 border-foreground rounded-full bg-background"></div>
-      
-      {/* Left Eye */}
-      <div 
-        className={`absolute top-6 left-6 bg-foreground transition-all duration-150 ${
-          isBlinking ? 'w-3 h-0.5 rounded-full' : 'w-3 h-5 rounded-full'
-        }`}
-      ></div>
-      
-      {/* Right Eye */}
-      <div 
-        className={`absolute top-6 right-6 bg-foreground transition-all duration-150 ${
-          isBlinking ? 'w-3 h-0.5 rounded-full' : 'w-3 h-5 rounded-full'
-        }`}
-      ></div>
+
+      {/* Eyes (animate scaleY instead of resizing) */}
+      <motion.div
+        key={`left-${blinkKey}`}
+        initial={{ scaleY: 1 }}
+        animate={{ scaleY: [1, 0.1, 1] }}
+        transition={{ duration: 0.2, ease: "easeInOut" }}
+        className="absolute top-6 left-6 w-3 h-5 bg-foreground rounded-full origin-center"
+      />
+      <motion.div
+        key={`right-${blinkKey}`}
+        initial={{ scaleY: 1 }}
+        animate={{ scaleY: [1, 0.1, 1] }}
+        transition={{ duration: 0.2, ease: "easeInOut" }}
+        className="absolute top-6 right-6 w-3 h-5 bg-foreground rounded-full origin-center"
+      />
     </div>
   );
 };
+
 
 // Global loader component
 const GlobalLoader: React.FC<GlobalLoaderProps> = ({ 
