@@ -19,6 +19,7 @@ import { useInView } from "framer-motion";
 import { Heart, Laptop, Sparkle, Sparkles } from "lucide-react";
 import { nyght } from "@/assets/font";
 import { Badge } from "../ui/badge";
+import { InlineLoader } from "../ui/global-loader";
 
 interface ProjectCardProps {
   index: number;
@@ -146,6 +147,7 @@ interface ProjectCardProps {
 const Works: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [activeCard, setActiveCard] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const imagesRef = useRef<HTMLDivElement>(null);
@@ -190,6 +192,15 @@ const Works: React.FC = () => {
       parent = parent.parentElement;
     }
   }, [detailsRef]);
+
+  useEffect(() => {
+    // Simulate loading time for canvas/images
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Calculate position constraints for fixed container
   const { scrollYProgress: detailsScrollProgress } = useScroll({
@@ -313,13 +324,20 @@ const Works: React.FC = () => {
                           hover: { y: -10, scale: 1.02, rotate: 1 },
                         }}
                         transition={{ duration: 0.3, ease: "anticipate" }}>
-                        <Image
-                          src={project.image}
-                          alt={project.name}
-                          width={1200}
-                          height={800}
-                          className="w-full h-full object-cover"
-                        />
+                        {isLoading ? (
+                          <div className="w-full h-full bg-muted/20 flex items-center justify-center">
+                            <InlineLoader />
+                          </div>
+                        ) : (
+                          <Image
+                            src={project.image}
+                            alt={project.name}
+                            width={1200}
+                            height={800}
+                            className="w-full h-full object-cover"
+                            onLoad={() => setIsLoading(false)}
+                          />
+                        )}
                       </motion.div>
                     </div>
                   </div>
@@ -343,13 +361,13 @@ const Works: React.FC = () => {
                 // Ensure the sticky element stays within its container
                 alignSelf: "flex-start",
               }}>
-              <motion.div 
-                key={`details-${activeCard}`}
-                className="space-y-8 p-8 rounded-2xl"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.4, ease: "easeInOut" }}>
+              <div className="space-y-8 p-8 rounded-2xl relative min-h-[600px]">
+                <motion.div 
+                  key={`details-${activeCard}`}
+                  className="absolute inset-0 p-8"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}>
                 {/* Project Title */}
                 <motion.div
                   className="space-y-4"
@@ -475,7 +493,8 @@ const Works: React.FC = () => {
                     <span>Live Demo</span>
                   </motion.button>
                 </motion.div>
-              </motion.div>
+                </motion.div>
+              </div>
             </motion.div>
           </div>
         </div>

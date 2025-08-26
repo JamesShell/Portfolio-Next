@@ -121,6 +121,7 @@ const Monkey: React.FC<MonkeyProps> = ({ isMobile, lightPosition, hovered }) => 
   const animationTimeoutRef = useRef<NodeJS.Timeout>();
   const [isInitialized, setIsInitialized] = useState(false);
   const [isRecoveringFromHover, setIsRecoveringFromHover] = useState(false);
+  const [modelsLoaded, setModelsLoaded] = useState(false);
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -287,6 +288,7 @@ const Monkey: React.FC<MonkeyProps> = ({ isMobile, lightPosition, hovered }) => 
       }
       
       setIsInitialized(true);
+      setModelsLoaded(true);
       console.log("FBX Character setup complete");
     }
     
@@ -606,8 +608,41 @@ const Monkey: React.FC<MonkeyProps> = ({ isMobile, lightPosition, hovered }) => 
 //   );
 // };
 
+// Loading component fallback
+const CanvasLoader = () => {
+  const [isBlinking, setIsBlinking] = React.useState(false);
+
+  React.useEffect(() => {
+    const blinkInterval = setInterval(() => {
+      setIsBlinking(true);
+      setTimeout(() => setIsBlinking(false), 50);
+    }, 200 + Math.random() * 10);
+
+    return () => clearInterval(blinkInterval);
+  }, []);
+
+  return (
+    <div className="absolute inset-0 flex items-center justify-center bg-transparent">
+      <div className="relative w-20 h-20">
+        <div className="w-20 h-20 border-2 border-foreground rounded-full bg-background"></div>
+        <div 
+          className={`absolute top-6 left-6 bg-foreground transition-all duration-150 ${
+            isBlinking ? 'w-3 h-0.5 rounded-full' : 'w-3 h-5 rounded-full'
+          }`}
+        ></div>
+        <div 
+          className={`absolute top-6 right-6 bg-foreground transition-all duration-150 ${
+            isBlinking ? 'w-3 h-0.5 rounded-full' : 'w-3 h-5 rounded-full'
+          }`}
+        ></div>
+      </div>
+    </div>
+  );
+};
+
 const MonkeyCanvas: React.FC<MonkeyCanvasProps> = ({ className, hovered }) => {
   const [isMobile, setIsMobile] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 600px)");
@@ -633,19 +668,32 @@ const MonkeyCanvas: React.FC<MonkeyCanvasProps> = ({ className, hovered }) => {
     }
   }, []);
 
+  useEffect(() => {
+    // Simulate loading time for 3D models
+    const loadingTimer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(loadingTimer);
+  }, []);
+
   return (
-    <Canvas
-      className={className}
-      shadows
-      camera={camera}
-      gl={{ preserveDrawingBuffer: true }}>
-      <Suspense>
-        <AspectRatioController />
-        <Monkey isMobile={isMobile} lightPosition={[0, 0, 10]} hovered={hovered} />
-        {/* <AsciiRenderer fgColor="white" bgColor="transparent" characters=" ■■■*+=-:." resolution={0.25} invert={false} /> */}
-      </Suspense>
-      <Preload all />
-    </Canvas>
+    <div className="relative w-full h-full">
+      {isLoading && <CanvasLoader />}
+      <Canvas
+        className={className}
+        shadows
+        camera={camera}
+        gl={{ preserveDrawingBuffer: true }}
+        style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s ease-in-out' }}>
+        <Suspense fallback={null}>
+          <AspectRatioController />
+          <Monkey isMobile={isMobile} lightPosition={[0, 0, 10]} hovered={hovered} />
+          {/* <AsciiRenderer fgColor="white" bgColor="transparent" characters=" ■■■*+=-:." resolution={0.25} invert={false} /> */}
+        </Suspense>
+        <Preload all />
+      </Canvas>
+    </div>
   );
 };
 

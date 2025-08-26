@@ -133,12 +133,15 @@ const ServiceCard: React.FC<{
             } as React.CSSProperties
           }>
           <motion.div
-            variants={fadeIn({
-              direction: "right",
+            initial={{ opacity: 0, scale: 0.8, y: 50 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ 
+              delay: index * 0.15,
+              duration: 0.6,
               type: "spring",
-              delay: index * 0.5,
-              duration: 0.75,
-            })}
+              stiffness: 120,
+              damping: 15
+            }}
             className="relative w-full bg-shiny-header pt-[2px] rounded-[20px] shadow-sm service-card-inside">
             <div className="relative w-full bg-muted/95 rounded-[18px] py-5 px-12 min-h-[240px] flex justify-evenly items-center flex-col">
               <DialogSubtitle>
@@ -262,11 +265,9 @@ const About = () => {
             {/* Left side - Content */}
             <motion.div
               className="flex-1 text-left"
-              variants={fadeIn({
-                direction: "left",
-                delay: 0.2,
-                duration: 0.8,
-              })}>
+              initial={{ opacity: 0, scale: 0.8, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8, type: "spring", stiffness: 100 }}>
               <motion.div
                 className="inline-block mb-6"
                 whileHover={{ scale: 1.05 }}>
@@ -320,11 +321,9 @@ const About = () => {
             {/* Right side - 3D Character */}
             <motion.div
               className="flex-shrink-0 flex flex-col items-center lg:items-end justify-center group"
-              variants={fadeIn({
-                direction: "right",
-                delay: 0.4,
-                duration: 0.8,
-              })}>
+              initial={{ opacity: 0, scale: 0.8, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.8, type: "spring", stiffness: 100 }}>
               <motion.div
                 className="relative w-80 h-60 lg:w-96 lg:h-80"
                 initial="rest"

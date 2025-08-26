@@ -1,44 +1,27 @@
 // components/Loading.tsx
 import React, { useEffect, useState } from 'react';
+import { PageLoader } from '@/components/ui/global-loader';
 
 const Loading: React.FC = () => {
-  const [progress, setProgress] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prevProgress) => {
-        if (prevProgress >= 100) {
-          clearInterval(interval);
-          return 100;
-        }
-        return prevProgress + 10;
-      });
-    }, 500); // Update progress every 500ms
-
-    return () => clearInterval(interval); // Cleanup interval on unmount
+    setMounted(true);
   }, []);
 
-  const renderProgressBar = () => {
-    const totalBars = 40;
-    const filledBars = Math.floor((progress / 100) * totalBars);
-    const emptyBars = totalBars - filledBars;
-
+  if (!mounted) {
     return (
-      <>
-        {'='.repeat(filledBars)}
-        {'-'.repeat(emptyBars)}
-      </>
+      <div className="loading-container w-full h-screen flex items-center justify-center flex-col">
+        <div className="relative w-20 h-20">
+          <div className="w-20 h-20 border-2 border-foreground rounded-full bg-background"></div>
+          <div className="absolute top-6 left-6 w-3 h-5 bg-foreground rounded-full"></div>
+          <div className="absolute top-6 right-6 w-3 h-5 bg-foreground rounded-full"></div>
+        </div>
+      </div>
     );
-  };
+  }
 
-  return (
-    <div className="loading-container w-full h-screen flex items-center justify-center flex-col">
-      <p className="text-lg mb-4">Loading...</p>
-      <pre className="text-base font-bold glow-text">
-        [{renderProgressBar()}] {progress}%
-      </pre>
-    </div>
-  );
+  return <PageLoader />;
 };
 
 export default Loading;

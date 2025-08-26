@@ -9,6 +9,7 @@ import CTAFooter from '@/components/fragments/cta-footer';
 import { StarsCanvas } from '@/components/canvas';
 import SEOHead from '@/components/SEO/Head';
 import { personStructuredData } from '@/utils/structuredData';
+import { Spotlight } from '@/components/ui/spotlight';
 
 export default function Experience() {
   const [isClient, setIsClient] = useState(false);
@@ -32,6 +33,7 @@ export default function Experience() {
             <>
               <Navbar variant="contact" />
               
+              
               {/* Hero Section with smooth entrance */}
               <motion.div 
                 className="pt-32"
@@ -41,6 +43,10 @@ export default function Experience() {
               >
                 {/* About Section */}
                 <div className="relative">
+                  <Spotlight
+        className="-top-[400px] -left-10 md:-top-96 md:left-30 lg:-top-80 lg:left-36"
+        fill="white"
+      />
                   <About />
                 </div>
                 

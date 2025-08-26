@@ -145,10 +145,10 @@ const Hero = () => {
         
         <div className="w-full h-full max-w-6xl relative overflow-visible">
 
-          <div className="flex justify-between items-center h-full w-full">
+          <div className="flex flex-col md:flex-row justify-end gap-8 md:justify-between px-12 lg:px-4 pb-12 lg:pb-0 items-start md:items-center h-full w-full">
             {/* Left side - Description */}
             <motion.div 
-              className="text-left flex flex-col justify-center"
+              className="text-left flex flex-col justify-center z-10"
               variants={itemVariants}
             >
               <motion.div variants={badgeVariants}>
@@ -187,12 +187,12 @@ const Hero = () => {
 
             {/* Right side - Navigation and Social Links */}
             <motion.div 
-              className="flex flex-col items-center justify-center gap-6 z-10"
+              className="flex flex-row-reverse md:flex-col items-center gap-6 justify-between md:justify-center z-10 w-full md:w-auto"
               variants={navigationVariants}
             >
               {/* Social Links - without theme control */}
               <motion.div variants={navItemVariants}>
-                <SocialLinks />
+                <SocialLinks className="flex-col absolute sm:relative bottom-10 right-10 sm:bottom-0 sm:right-0 sm:flex-row" />
               </motion.div>
 
               {/* Navigation Items */}

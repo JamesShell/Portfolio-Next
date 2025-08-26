@@ -61,15 +61,16 @@ const MagneticButton: React.FC<{
     >
       <Link href={href} className="inline-block">
         <motion.div
-          className={`group relative bg-foreground text-background px-8 py-4 rounded-full font-medium transition-all duration-300 overflow-hidden cursor-pointer ${className}`}
+          className={`group relative bg-foreground text-background pl-6 pr-2 py-2 rounded-full font-medium transition-all duration-300 overflow-hidden cursor-pointer ${className}`}
           whileHover={{ scale: 1.02 }}
         >
-          <span className="flex items-center gap-3 relative z-10">
+          <span className="flex items-center gap-4 relative z-10">
             {children}
             <motion.div
-              className="w-6 h-6 bg-background text-foreground rounded-full flex items-center justify-center group-hover:bg-foreground group-hover:text-background transition-colors duration-300"
+              className="h-10 aspect-square bg-background text-foreground rounded-full flex items-center justify-center group-hover:bg-foreground group-hover:text-background transition-colors duration-300"
               style={{
                 rotate: springAngle,
+                scale: 1.1,
               }}
             >
               <ArrowUpRight className="w-4 h-4" />

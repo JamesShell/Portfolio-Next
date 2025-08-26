@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { slideIn, textVariant, fadeIn } from "@/utils/motion";
-import { MoonCanvas } from "@/components/canvas";
+import { MoonCanvas, StarsCanvas } from "@/components/canvas";
 import {
   Form,
   FormField,
@@ -32,6 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Spotlight } from "@/components/ui/spotlight-new";
 
 // Define Zod schemas for validation
 const contactSchema = object({
@@ -216,7 +217,8 @@ const Contact = () => {
       <div className="relative z-0 min-h-screen">
         <Navbar variant="contact" />
         {/* Hero Section */}
-        <div className="container mx-auto px-6 pt-32 pb-16">
+        <Spotlight className="sticky" />
+        <div className="mx-4 sm:container sm:mx-auto px-4 sm:px-6 pt-20 sm:pt-32 pb-16">
           <motion.div 
             initial="hidden"
             animate="show"
@@ -267,7 +269,7 @@ const Contact = () => {
           </motion.div>
 
           {/* Main Content */}
-          <div className="flex xl:flex-row flex-col-reverse gap-12 max-w-7xl mx-auto">
+          <div className="flex xl:flex-row flex-col-reverse gap-6 sm:gap-12 max-w-7xl mx-auto">
             {/* Forms Container */}
             <motion.div
               initial="hidden"
@@ -275,7 +277,7 @@ const Contact = () => {
               variants={slideIn({direction: "left", type: "tween", delay: 0.2, duration: 1})}
               className="flex-[0.6]"
             >
-              <div className="relative bg-background/50 backdrop-blur-md border border-border/30 rounded-3xl shadow-lg p-8">
+              <div className="relative bg-background/50 backdrop-blur-md border border-border/30 rounded-3xl shadow-lg p-4 sm:p-8">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-secondary/3 rounded-3xl"></div>
                 
                 <div className="relative">
@@ -593,7 +595,7 @@ const Contact = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3 }}
-                className="bg-background/50 backdrop-blur-md border border-border/30 rounded-3xl shadow-lg p-6"
+                className="bg-background/50 backdrop-blur-md border border-border/30 rounded-3xl shadow-lg p-4 sm:p-6"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-secondary/3 rounded-3xl"></div>
                 <div className="relative">
@@ -656,8 +658,11 @@ const Contact = () => {
           </div>
         </div>
 
-        {/* CTA Footer */}
-        <CTAFooter />
+        {/* CTA and Footer */}
+              <div className="relative z-0">
+                <CTAFooter />
+                <StarsCanvas />
+              </div>
       </div>
     </>
   );

@@ -1,16 +1,18 @@
 // Structured data schemas for SEO
 
+import { socialLinks } from "@/constants";
+
 export const personStructuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": "James",
+  "name": "Ettouzany",
   "jobTitle": "Full Stack Developer",
   "description": "Experienced Full Stack Developer specializing in React, Next.js, TypeScript, and modern web technologies",
   "url": "https://ettouzany.vercel.app", // Update with your actual domain
   "sameAs": [
-    "https://github.com/yourusername", // Update with your GitHub
-    "https://linkedin.com/in/yourusername", // Update with your LinkedIn
-    "https://twitter.com/yourusername" // Update with your Twitter
+    socialLinks.github.link, // Update with your GitHub
+    socialLinks.linkedin.link, // Update with your LinkedIn
+    socialLinks.twitter.link // Update with your Twitter
   ],
   "knowsAbout": [
     "JavaScript",
@@ -31,12 +33,12 @@ export const personStructuredData = {
 export const websiteStructuredData = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "James Portfolio",
+  "name": "Ettouzany Portfolio",
   "description": "Portfolio website showcasing full stack development projects and skills",
   "url": "https://ettouzany.vercel.app", // Update with your actual domain
   "author": {
     "@type": "Person",
-    "name": "James"
+    "name": "Ettouzany"
   },
   "inLanguage": "en-US",
   "copyrightYear": new Date().getFullYear(),
@@ -46,14 +48,14 @@ export const websiteStructuredData = {
 export const portfolioStructuredData = {
   "@context": "https://schema.org",
   "@type": "CreativeWork",
-  "name": "James Portfolio",
+  "name": "Ettouzany Portfolio",
   "description": "A collection of web development projects showcasing modern technologies and design principles",
   "author": {
     "@type": "Person",
-    "name": "James",
+    "name": "Ettouzany",
     "jobTitle": "Full Stack Developer"
   },
-  "dateCreated": "2024-01-01", // Update with your actual creation date
+  "dateCreated": "2025-08-02", // Update with your actual creation date
   "dateModified": new Date().toISOString().split('T')[0],
   "inLanguage": "en-US",
   "keywords": "portfolio, web development, react, next.js, typescript, full stack"
@@ -62,12 +64,12 @@ export const portfolioStructuredData = {
 export const organizationStructuredData = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  "name": "James - Full Stack Developer",
+  "name": "Ettouzany - Full Stack Developer",
   "description": "Professional web development services specializing in modern JavaScript frameworks and full stack solutions",
   "url": "https://ettouzany.vercel.app", // Update with your actual domain
   "founder": {
     "@type": "Person",
-    "name": "James"
+    "name": "Ettouzany"
   },
   "serviceType": "Web Development",
   "areaServed": "Worldwide",
@@ -120,7 +122,7 @@ export const generateProjectStructuredData = (project: {
   "image": project.image,
   "author": {
     "@type": "Person",
-    "name": "James"
+    "name": "Ettouzany"
   },
   "programmingLanguage": project.technologies,
   "dateCreated": project.dateCreated,
