@@ -19,6 +19,8 @@ import { jelth, portfolio } from "@/assets";
 import { StaticImageData } from "next/image";
 import * as di from 'react-icons/di';
 import { IconType } from 'react-icons/lib';
+import { BlinkingSmiley } from "@/components/ui/global-loader";
+import { Spotlight } from "@/components/ui/spotlight-new";
 
 // Merged project data with working images from constants and detailed case study info
 const allProjects = [
@@ -603,6 +605,7 @@ export default function ProjectPage({ project }: Props) {
     <div className={`relative z-0 ${sfPro.className}`}>
         <Navbar />
         <div className="min-h-screen flex items-center justify-center">
+          <Spotlight />
           <div className="container mx-auto px-6 text-center">
             <motion.div
               initial="hidden"
@@ -622,11 +625,9 @@ export default function ProjectPage({ project }: Props) {
               {/* Icon */}
               <motion.div
                 variants={fadeIn({ direction: "up", delay: 0, duration: 0.6 })}
-                className="mb-8"
+                className="mb-8 flex flex-col items-center justify-center gap-y-3"
               >
-                <div className="w-24 h-24 mx-auto bg-primary/10 border border-primary/20 rounded-full flex items-center justify-center mb-6">
-                  <Clock className="w-12 h-12 text-primary" />
-                </div>
+                <BlinkingSmiley />
                 
                 <motion.div 
                   className="inline-block"

@@ -27,7 +27,7 @@ interface ProjectCardProps {
   description: string;
   tags: { name: string; color: string }[]; // Tags are objects with name and color
   image: string;
-  source_code_link: string;
+  link: string;
   Icon: IconType; // Use IconType for react-icons
 }
 
@@ -364,7 +364,7 @@ const Works: React.FC = () => {
               <div className="space-y-8 p-8 rounded-2xl relative min-h-[600px]">
                 <motion.div 
                   key={`details-${activeCard}`}
-                  className="absolute inset-0 p-8"
+                  className="absolute inset-0 p-8 space-y-8"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}>
@@ -482,7 +482,7 @@ const Works: React.FC = () => {
                   <motion.button
                     onClick={() =>
                       window.open(
-                        projects[activeCard]?.source_code_link,
+                        projects[activeCard]?.link,
                         "_blank"
                       )
                     }
@@ -614,7 +614,7 @@ const Works: React.FC = () => {
                 </motion.button>
 
                 <motion.button
-                  onClick={() => window.open(project.source_code_link, "_blank")}
+                  onClick={() => window.open(project.link, "_blank")}
                   className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-primary/10 border border-primary/20 rounded-xl text-primary font-medium hover:bg-primary/20 transition-all duration-300"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}>

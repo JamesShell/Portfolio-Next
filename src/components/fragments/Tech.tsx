@@ -128,9 +128,8 @@ const TechItem: React.FC<TechItemProps> = ({ Icon, title, index }) => {
   return (
     <Tilt className="cursor-pointer relative" borderRadius="12px" perspective="600px" tiltClass="rounded-lg">
       <motion.div
-        className="w-full pt-[1px] rounded-lg shadow-sm"
+        className="w-full shadow-sm bg-muted/40 backdrop-blur-md rounded-lg p-3 flex items-center"
       >
-        <div className="bg-muted/40 backdrop-blur-md rounded-lg p-3 flex items-center">
           <div className="flex-shrink-0 mr-4">
             <div className="text-foreground/20 text-[20px]">
               <Icon />
@@ -139,7 +138,6 @@ const TechItem: React.FC<TechItemProps> = ({ Icon, title, index }) => {
           <div>
             <div className="text-primary text-[15px] font-bold">{title}</div>
           </div>
-        </div>
       </motion.div>
     </Tilt>
   );

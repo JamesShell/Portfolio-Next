@@ -18,8 +18,8 @@ const BlinkingSmiley: React.FC = () => {
     let timeout: NodeJS.Timeout;
 
     const scheduleBlink = () => {
-      // Random interval between 2s and 6s
-      const nextBlink = 2000 + Math.random() * 4000;
+      // Random interval between 1s and 2s
+      const nextBlink = 1000 + Math.random() * 1000;
 
       timeout = setTimeout(() => {
         setBlinkKey(prev => prev + 1); // trigger new blink cycle
@@ -112,8 +112,7 @@ const GlobalLoader: React.FC<GlobalLoaderProps> = ({
 const PageLoader: React.FC<{ message?: string }> = ({ message = "Loading..." }) => {
   return (
     <GlobalLoader 
-      isLoading={true} 
-      message={message} 
+      isLoading={true}
       overlay={true}
       className="bg-background"
     />

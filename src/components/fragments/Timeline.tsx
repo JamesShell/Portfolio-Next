@@ -22,6 +22,7 @@ import {
   Code2,
   GraduationCap
 } from "lucide-react";
+import { Spotlight } from "../ui/spotlight-new";
 
 interface TimelineEntry {
   title: string;
@@ -47,58 +48,59 @@ const timelineData: TimelineData[] = [
     company: "Freelance",
     location: "Remote",
     type: "work",
-    description: "Creating modern web applications with cutting-edge technologies, focusing on user experience and performance optimization.",
+    description:
+      "Creating modern web applications with cutting-edge technologies, focusing on user experience and performance optimization.",
     highlights: [
-      "Built 15+ responsive web applications",
       "Improved client conversion rates by 40%",
-      "Specialized in React, Next.js, and Node.js"
+      "Specialized in React, Next.js, and Node.js",
     ],
-    skills: ["React", "Next.js", "TypeScript", "Node.js", "PostgreSQL", "AWS"]
+    skills: ["React", "Next.js", "TypeScript", "Node.js", "PostgreSQL", "AWS"],
   },
   {
     period: "2022 - 2023",
     role: "Frontend Developer",
     company: "Tech Startup",
-    location: "San Francisco, CA",
+    location: "Rabat, Morocco",
     type: "work",
-    description: "Developed user interfaces for SaaS products, collaborated with design teams to create intuitive user experiences.",
+    description:
+      "Developed user interfaces for SaaS products, collaborated with design teams to create intuitive user experiences.",
     highlights: [
       "Led frontend architecture decisions",
-      "Reduced page load times by 60%",
-      "Mentored 3 junior developers"
+      "Improved conversions by 60% through UI/UX enhancements",
     ],
     skills: ["React", "Vue.js", "JavaScript", "CSS", "Figma"],
-    link: "https://example.com"
   },
   {
-    period: "2018 - 2022",
-    role: "Bachelor of Computer Science",
-    company: "University of Technology",
-    location: "California, USA",
-    type: "education",
-    description: "Focused on software engineering, algorithms, and web development. Graduated with honors.",
-    highlights: [
-      "GPA: 3.8/4.0",
-      "President of Computer Science Club",
-      "Winner of 3 hackathons"
-    ],
-    skills: ["Java", "Python", "C++", "Data Structures", "Algorithms"]
-  },
+  period: "2018 - 2022",
+  role: "Bachelor of Computer Science",
+  company: "Faculty of Sciences and Techniques, University of Hassan II",
+  location: "Casablanca, Morocco",
+  type: "education",
+  description:
+    "Focused on software engineering, algorithms, and web development. Graduated with honors.",
+  highlights: [
+    "GPA: 3.8/4.0",
+    "Active member of Computer Science Club",
+    "Winner of 3 hackathons",
+  ],
+  skills: ["Java", "Python", "C++", "Data Structures", "Algorithms"],
+},
   {
-    period: "2023",
-    role: "AWS Solutions Architect",
-    company: "Amazon Web Services",
+    period: "2022",
+    role: "Problem Solving Certificate (TypeScript)",
+    company: "CodinGame",
     location: "Online Certification",
     type: "achievement",
-    description: "Certified in designing distributed systems and cloud architecture on AWS platform.",
+    description:
+      "Earned certification in TypeScript problem-solving, demonstrating strong algorithmic thinking and coding proficiency.",
     highlights: [
-      "Passed with 85% score",
-      "Specialized in serverless architecture",
-      "Expertise in cloud security"
+      "Ranking better than 95% of professionals",
+      "Certified by CodinGame for TypeScript problem-solving",
+    "Focused on algorithms, data structures, and optimization"
     ],
-    skills: ["AWS", "Cloud Architecture", "DevOps", "Security"],
-    link: "https://aws.amazon.com"
-  }
+    skills: ["TypeScript", "Problem Solving", "Algorithms", "Data Structures"],
+    link: "https://www.codingame.com/certification/hzCWQIV5mTmVvILR76JNxw",
+  },
 ];
 
 const getTypeIcon = (type: string) => {
@@ -276,6 +278,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
       className="w-full bg-transparent dark:bg-transparent font-sans md:px-10"
       ref={containerRef}
     >
+      {/* <Spotlight className="sticky" /> */}
       <div className="max-w-7xl mx-auto py-20 px-4 md:px-8 lg:px-10">
         {/* Section Header */}
         <motion.div 

@@ -16,6 +16,7 @@ import AsciiRenderer from "./AsciiRenderer";
 import { Stars } from "./Stars";
 import { lerp } from "three/src/math/MathUtils.js";
 import { ppid } from "process";
+import GlobalLoader, { BlinkingSmiley } from "../ui/global-loader";
 
 // Extend three to include ExtrudeGeometry
 extend({ ExtrudeGeometry });
@@ -38,12 +39,12 @@ interface MonkeyCanvasProps {
 
 // Initialize camera with a fixed aspect ratio
 const camera = new PerspectiveCamera(
-  30,
+  28,
   1, // Will be updated dynamically
   0.1,
   1000
 );
-camera.position.set(20, 0, 5);
+camera.position.set(8, 0, -2);
 
 // Define possible icon colors
 const ICONS_COLORS = {
@@ -190,20 +191,21 @@ const Monkey: React.FC<MonkeyProps> = ({ isMobile, lightPosition, hovered }) => 
       // Apply the animation from the animation-only FBX to our skinned character
       const newAction = mixerRef.current.clipAction(selectedAnimationFBX.animations[0], characterRef.current);
       
-      // Handle transitions based on whether we're forcing or not
+      // Handle transitions with improved smoothness
       if (prevAction && prevAction !== newAction) {
         if (force) {
-          // For forced changes (hover interrupts), stop immediately for responsiveness
-          prevAction.stop();
-          newAction.reset().play();
+          // For forced changes (hover interrupts), use quick but smooth transition
+          const fadeTime = animationType === 'hover' ? 0.15 : 0.2;
+          prevAction.fadeOut(fadeTime);
+          newAction.reset().fadeIn(fadeTime).play();
         } else {
-          // For gentle changes (idle variations), use smooth transition
-          prevAction.fadeOut(0.2);
-          newAction.reset().fadeIn(0.2).play();
+          // For gentle changes (idle variations), use longer smooth transition
+          prevAction.fadeOut(0.3);
+          newAction.reset().fadeIn(0.3).play();
         }
       } else {
-        // No previous action or same action, just start normally
-        newAction.reset().play();
+        // No previous action or same action, just start normally with fade in
+        newAction.reset().fadeIn(0.1).play();
       }
       
       // For idle animations, handle default vs variations differently
@@ -608,37 +610,6 @@ const Monkey: React.FC<MonkeyProps> = ({ isMobile, lightPosition, hovered }) => 
 //   );
 // };
 
-// Loading component fallback
-const CanvasLoader = () => {
-  const [isBlinking, setIsBlinking] = React.useState(false);
-
-  React.useEffect(() => {
-    const blinkInterval = setInterval(() => {
-      setIsBlinking(true);
-      setTimeout(() => setIsBlinking(false), 50);
-    }, 200 + Math.random() * 10);
-
-    return () => clearInterval(blinkInterval);
-  }, []);
-
-  return (
-    <div className="absolute inset-0 flex items-center justify-center bg-transparent">
-      <div className="relative w-20 h-20">
-        <div className="w-20 h-20 border-2 border-foreground rounded-full bg-background"></div>
-        <div 
-          className={`absolute top-6 left-6 bg-foreground transition-all duration-150 ${
-            isBlinking ? 'w-3 h-0.5 rounded-full' : 'w-3 h-5 rounded-full'
-          }`}
-        ></div>
-        <div 
-          className={`absolute top-6 right-6 bg-foreground transition-all duration-150 ${
-            isBlinking ? 'w-3 h-0.5 rounded-full' : 'w-3 h-5 rounded-full'
-          }`}
-        ></div>
-      </div>
-    </div>
-  );
-};
 
 const MonkeyCanvas: React.FC<MonkeyCanvasProps> = ({ className, hovered }) => {
   const [isMobile, setIsMobile] = useState(false);
@@ -679,7 +650,7 @@ const MonkeyCanvas: React.FC<MonkeyCanvasProps> = ({ className, hovered }) => {
 
   return (
     <div className="relative w-full h-full">
-      {isLoading && <CanvasLoader />}
+      {isLoading && <GlobalLoader overlay={false} />}
       <Canvas
         className={className}
         shadows

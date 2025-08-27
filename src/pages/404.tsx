@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import SEOHead from '@/components/SEO/Head';
 import { fadeIn, textVariant } from "@/utils/motion";
+import { BlinkingSmiley } from "@/components/ui/global-loader";
 
 interface NotFoundPageProps {
   type?: "404" | "coming-soon";
@@ -88,11 +89,9 @@ const NotFoundPage: React.FC<NotFoundPageProps> = ({
                 {/* Icon */}
                 <motion.div
                   variants={fadeIn({ direction: "up", delay: 0, duration: 0.6 })}
-                  className="mb-8"
+                  className="mb-8 flex flex-col items-center justify-center space-y-4"
                 >
-                  <div className="w-24 h-24 mx-auto bg-primary/10 border border-primary/20 rounded-full flex items-center justify-center mb-6">
-                    <IconComponent className="w-12 h-12 text-primary" />
-                  </div>
+                  <BlinkingSmiley />
                   
                   <motion.div 
                     className="inline-block"

@@ -48,7 +48,7 @@ export interface Project {
   description: string;
   tags: ProjectTag[];
   image: StaticImageData; // Assuming 'image' is a URL or path string
-  source_code_link: string;
+  link: string;
   Icon: IconType;
 }
 
@@ -141,7 +141,7 @@ const projects: any[] = [
       { name: "three.js", color: "#000000" },
     ],
     image: portfolio,
-    source_code_link: "https://github.com/aayushbharti/portfolio-next",
+    link: "https://ettouzany.vercel.app/",
     Icon: di.DiGithub
   },
   {
@@ -154,7 +154,7 @@ const projects: any[] = [
       { name: "tailwind", color: "#3d8dd8" },
     ],
     image: jelth,
-    source_code_link: "https://github.com/JamesShell",
+    link: "https://taskpay.netlify.app/",
     Icon: di.DiGithub
   },
 ];
