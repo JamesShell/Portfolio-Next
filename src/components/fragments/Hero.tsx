@@ -208,14 +208,14 @@ const Hero = () => {
                     variants={navItemVariants}
                     onMouseEnter={() => setHoveredOne(item)}
                     onMouseLeave={() => setHoveredOne("")}
-                    className="nav-item cursor-pointer transition-colors duration-200 hover:scale-105"
+                    className={` cursor-pointer transition-colors duration-200 text-foreground/60 hover:text-foreground hover:scale-105`}
                     whileHover={{ 
                       scale: 1.05, 
                       transition: { duration: 0.2 } 
                     }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <TextEffect as="a" preset="fade" per="char" href={`#${item}`} className="text-xl font-medium" aria-label={`Navigate to ${item} section`}>
+                    <TextEffect as="a" preset="fade" per="char" href={`#${item}`} className={`text-xl font-medium`} aria-label={`Navigate to ${item} section`}>
                       {item.charAt(0).toUpperCase() + item.slice(1)}
                     </TextEffect>
                   </motion.div>

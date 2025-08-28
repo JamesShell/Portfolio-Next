@@ -23,6 +23,7 @@ import {
   GraduationCap
 } from "lucide-react";
 import { Spotlight } from "../ui/spotlight-new";
+import { BlinkingSmiley } from "../ui/global-loader";
 
 interface TimelineEntry {
   title: string;
@@ -257,6 +258,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   useEffect(() => {
     if (ref.current) {
@@ -264,6 +266,30 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
       setHeight(rect.height);
     }
   }, [ref]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = parseInt(entry.target.getAttribute('data-timeline-index') || '0');
+            setActiveIndex(index);
+          }
+        });
+      },
+      {
+        threshold: 0.5,
+        rootMargin: '-20% 0px -20% 0px'
+      }
+    );
+
+    const timelineItems = document.querySelectorAll('[data-timeline-index]');
+    timelineItems.forEach((item) => observer.observe(item));
+
+    return () => {
+      timelineItems.forEach((item) => observer.unobserve(item));
+    };
+  }, [data]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -313,11 +339,14 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
         {data.map((item, index) => (
           <div
             key={index}
+            data-timeline-index={index}
             className="flex justify-start pt-10 md:pt-40 md:gap-10"
           >
             <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
               <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-background border border-border flex items-center justify-center shadow-lg">
-                <div className="h-4 w-4 rounded-full bg-primary border border-primary/20 p-2" />
+                <div className="scale-[0.4]" >
+                  <BlinkingSmiley animate={activeIndex === index} />
+                </div>
               </div>
               <h3 className="hidden md:block text-xl md:pl-20 md:text-5xl font-bold text-foreground/60 dark:text-foreground/60">
                 {item.title}

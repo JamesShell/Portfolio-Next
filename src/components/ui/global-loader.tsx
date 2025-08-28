@@ -11,10 +11,16 @@ interface GlobalLoaderProps {
 }
 
 // Blinking smiley face component
-const BlinkingSmiley: React.FC = () => {
+interface BlinkingSmileyProps {
+  animate?: boolean;
+}
+
+const BlinkingSmiley: React.FC<BlinkingSmileyProps> = ({ animate = true }) => {
   const [blinkKey, setBlinkKey] = useState(0); // force rerun animation
 
   useEffect(() => {
+    if (!animate) return;
+
     let timeout: NodeJS.Timeout;
 
     const scheduleBlink = () => {
@@ -34,7 +40,7 @@ const BlinkingSmiley: React.FC = () => {
 
     scheduleBlink();
     return () => clearTimeout(timeout);
-  }, []);
+  }, [animate]);
 
   return (
     <div className="relative w-20 h-20">
@@ -42,20 +48,29 @@ const BlinkingSmiley: React.FC = () => {
       <div className="w-20 h-20 border-2 border-foreground rounded-full bg-background"></div>
 
       {/* Eyes (animate scaleY instead of resizing) */}
-      <motion.div
-        key={`left-${blinkKey}`}
-        initial={{ scaleY: 1 }}
-        animate={{ scaleY: [1, 0.1, 1] }}
-        transition={{ duration: 0.2, ease: "easeInOut" }}
-        className="absolute top-6 left-6 w-3 h-5 bg-foreground rounded-full origin-center"
-      />
-      <motion.div
-        key={`right-${blinkKey}`}
-        initial={{ scaleY: 1 }}
-        animate={{ scaleY: [1, 0.1, 1] }}
-        transition={{ duration: 0.2, ease: "easeInOut" }}
-        className="absolute top-6 right-6 w-3 h-5 bg-foreground rounded-full origin-center"
-      />
+      {animate ? (
+        <>
+          <motion.div
+            key={`left-${blinkKey}`}
+            initial={{ scaleY: 1 }}
+            animate={{ scaleY: [1, 0.1, 1] }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className="absolute top-6 left-6 w-3 h-5 bg-foreground rounded-full origin-center"
+          />
+          <motion.div
+            key={`right-${blinkKey}`}
+            initial={{ scaleY: 1 }}
+            animate={{ scaleY: [1, 0.1, 1] }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className="absolute top-6 right-6 w-3 h-5 bg-foreground rounded-full origin-center"
+          />
+        </>
+      ) : (
+        <>
+          <div className="absolute top-6 left-6 w-3 h-1 bg-foreground rounded-full" />
+          <div className="absolute top-6 right-6 w-3 h-1 bg-foreground rounded-full" />
+        </>
+      )}
     </div>
   );
 };
