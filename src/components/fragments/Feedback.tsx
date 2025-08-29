@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { SectionWrapper } from '@/hoc';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { fadeIn, textVariant } from '@/utils/motion';
 import { testimonials } from '@/constants';
 import { Badge } from '@/components/ui/badge';
 import { DraggableCardBody, DraggableCardContainer } from '@/components/ui/draggable-card';
-import { MessageSquare, User } from 'lucide-react';
+import { MessageSquare, User, MousePointerClickIcon } from 'lucide-react';
 import { nyght } from '@/assets/font';
+import { Cursor } from '@/components/ui/cursor';
 
 const Feedback: React.FC = () => {
   return (
@@ -85,7 +86,7 @@ const Feedback: React.FC = () => {
                 transform: `translateX(-50%)`, // Center each card on its position
               }}
             >
-              <DraggableCardBody className="bg-background/90 backdrop-blur-md border border-border/30 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:z-[999] w-full max-w-[280px] sm:max-w-[300px]">
+              <DraggableCardBody className="bg-background/90 backdrop-blur-md border border-border/30 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:z-[999] w-fit max-w-[280px] sm:max-w-[300px]">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-secondary/3 rounded-2xl"></div>
                 
                 {/* Quote Icon */}
