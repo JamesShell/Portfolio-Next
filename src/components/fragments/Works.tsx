@@ -215,7 +215,7 @@ const Works: React.FC = () => {
   );
 
   return (
-    <div className="w-screen" ref={containerRef} id="work">
+    <div className="w-full max-w-[100vw]" ref={containerRef} id="work">
       {/* Enhanced Section Header */}
       <motion.div
         initial="hidden"
@@ -256,7 +256,7 @@ const Works: React.FC = () => {
 
       {/* Desktop Layout */}
       <div
-        className="hidden lg:flex self-start space-x-8 relative px-24 w-full overflow-visible"
+        className="hidden lg:flex self-start space-x-8 relative px-8 xl:px-24 w-full max-w-[100vw]"
         ref={ref}>
         {/* Left Side - Project Images Stack */}
         <div className="flex-1" ref={imagesRef}>
@@ -271,7 +271,7 @@ const Works: React.FC = () => {
                 animate="rest">
                 <DoubleOutlinedCard
                   showHeader={false}
-                  className={`h-[70vh] w-[40vw] cursor-pointer relative overflow-visible shadow-lg transition-all duration-300 ${
+                  className={`h-[70vh] w-full max-w-[600px] cursor-pointer relative shadow-lg transition-all duration-300 ${
                     index === activeCard 
                       ? "scale-105" 
                       : ""
@@ -348,7 +348,7 @@ const Works: React.FC = () => {
         </div>
 
         {/* Right Side - Sticky Project Details */}
-        <div className="flex-1 inline-block max-w-xl overflow-visible">
+        <div className="flex-1 inline-block max-w-xl">
           <div className="sticky top-20">
             <motion.div
               ref={detailsRef}
@@ -501,7 +501,7 @@ const Works: React.FC = () => {
       </div>
 
       {/* Mobile Layout */}
-      <div className="lg:hidden px-6 w-full">
+      <div className="lg:hidden px-4 sm:px-6 w-full max-w-[100vw]">
         {projects.map((project, index) => (
           <div
             key={`mobile-${project.name}-${index}`}

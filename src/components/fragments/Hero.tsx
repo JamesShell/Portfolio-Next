@@ -134,7 +134,7 @@ const Hero = () => {
 
   return (
     <div
-      className="relative w-screen h-screen max-w-6xl mx-auto"
+      className="relative w-full h-screen mx-auto overflow-hidden"
       style={{ touchAction: "pan-y" }}>
 
       <motion.div
@@ -145,7 +145,7 @@ const Hero = () => {
         
         <div className="w-full h-full max-w-6xl relative overflow-visible">
 
-          <div className="flex flex-col md:flex-row justify-end gap-8 md:justify-between px-12 lg:px-4 pb-12 lg:pb-0 items-start md:items-center h-full w-full">
+          <div className="flex flex-col md:flex-row justify-end gap-8 md:justify-between px-4 sm:px-6 lg:px-4 pb-12 lg:pb-0 items-start md:items-center h-full w-full">
             {/* Left side - Description */}
             <motion.div 
               className="text-left flex flex-col justify-center z-10"
@@ -192,7 +192,7 @@ const Hero = () => {
             >
               {/* Social Links - without theme control */}
               <motion.div variants={navItemVariants}>
-                <SocialLinks className="flex-col absolute sm:relative bottom-10 right-10 sm:bottom-0 sm:right-0 sm:flex-row" />
+                <SocialLinks className="flex-col absolute sm:relative bottom-4 right-4 sm:bottom-0 sm:right-0 sm:flex-row" />
               </motion.div>
 
               {/* Navigation Items */}
@@ -235,7 +235,7 @@ const Hero = () => {
               }}
             >
               <MonkeyCanvas
-                className="w-full h-full invert dark:invert-0"
+                className="w-full h-screen invert dark:invert-0"
                 hovered={hoveredOne}
               />
             </div>

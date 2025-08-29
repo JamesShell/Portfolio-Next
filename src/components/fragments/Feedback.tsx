@@ -10,7 +10,7 @@ import { nyght } from '@/assets/font';
 
 const Feedback: React.FC = () => {
   return (
-    <div className="container">
+    <div className="w-full max-w-[100vw] px-4 sm:px-6 lg:px-8">
       {/* Enhanced Section Header */}
       <motion.div 
         variants={textVariant({ delay: 0 })}
@@ -40,12 +40,19 @@ const Feedback: React.FC = () => {
       </motion.div>
       
       {/* Draggable Testimonials */}
-      <DraggableCardContainer className="relative flex flex-wrap justify-center gap-4 min-h-96">
+      <DraggableCardContainer className="relative flex flex-wrap justify-center gap-4 min-h-96 w-full max-w-[100vw]">
         {testimonials.map((item: any, index: number) => {
           // Generate consistent random values for each card based on index
           const randomRotation = (index * 17) % 21 - 10; // Random rotation between -10 and 10 degrees
-          const randomX = (index * 23) % 81 - 40; // Random X offset between -40 and 40px
+          const randomX = Math.max(-20, Math.min(20, (index * 23) % 41 - 20)); // Constrained X offset between -20 and 20px
           const zIndex = testimonials.length - index; // Stack order (first card on top)
+          
+          // Calculate safe horizontal positioning that won't overflow
+          const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+          const cardWidth = 280; // Approximate card width
+          const maxCards = Math.floor(typeof window !== 'undefined' ? window.innerWidth / (cardWidth + 40) : 3);
+          const safeSpacing = isMobile ? 60 : Math.min(120, Math.max(40, (typeof window !== 'undefined' ? window.innerWidth : 1200) / testimonials.length * 0.8));
+          const centerOffset = (testimonials.length - 1) * safeSpacing * 0.5;
           
           return (
             <motion.div
@@ -74,10 +81,11 @@ const Feedback: React.FC = () => {
               className="absolute"
               style={{
                 zIndex: zIndex,
-                left: `calc(50% + ${index * 120 - (testimonials.length * 60)}px)`, // Distribute horizontally
+                left: `calc(50% + ${Math.max(-centerOffset, Math.min(centerOffset, index * safeSpacing - centerOffset))}px)`, // Safe horizontal distribution
+                transform: `translateX(-50%)`, // Center each card on its position
               }}
             >
-              <DraggableCardBody className="bg-background/90 backdrop-blur-md border border-border/30 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:z-[999]">
+              <DraggableCardBody className="bg-background/90 backdrop-blur-md border border-border/30 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:z-[999] w-full max-w-[280px] sm:max-w-[300px]">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-secondary/3 rounded-2xl"></div>
                 
                 {/* Quote Icon */}

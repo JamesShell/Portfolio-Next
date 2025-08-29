@@ -110,9 +110,9 @@ const CTAFooter: React.FC = () => {
   ];
 
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef} className="relative max-w-screen overflow-hidden">
       {/* CTA Section */}
-      <div className="relative overflow-hidden">
+      <div className="relative">
         
         <div className="container mx-auto px-6 py-24">
           <motion.div 
@@ -237,7 +237,7 @@ const CTAFooter: React.FC = () => {
               <span>© {currentYear} Ettouzany. All rights reserved.</span>
             </div>
             
-            <div className="flex items-center gap-6">
+            <div className="flex flex-col sm:flex-row items-center gap-6">
               <FooterThemeToggle />
               <SocialLinks className="gap-3" />
             </div>
