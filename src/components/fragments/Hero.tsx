@@ -134,7 +134,7 @@ const Hero = () => {
 
   return (
     <div
-      className="relative w-full h-screen mx-auto overflow-hidden"
+      className="relative w-screen h-screen max-w-6xl mx-auto"
       style={{ touchAction: "pan-y" }}>
 
       <motion.div

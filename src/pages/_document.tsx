@@ -16,7 +16,7 @@ export default function Document() {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </Head>
       <body>
-        <div className="fixed w-full h-full bg-radial-gradient bg-cover bg-no-repeat bg-center animate-zoom" style={{ maxWidth: '100vw' }} aria-hidden="true" />
+        <div className="fixed w-screen h-screen bg-radial-gradient bg-cover bg-no-repeat bg-center animate-zoom" aria-hidden="true" />
         <Main />
         <NextScript />
       </body>
