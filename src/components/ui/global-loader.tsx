@@ -45,7 +45,7 @@ const BlinkingSmiley: React.FC<BlinkingSmileyProps> = ({ animate = true }) => {
   return (
     <div className="relative w-20 h-20">
       {/* Face Circle */}
-      <div className="w-20 h-20 border border-foreground rounded-full bg-background"></div>
+      <div className="w-20 h-20 border-2 border-foreground rounded-full bg-background"></div>
 
       {/* Eyes (animate scaleY instead of resizing) */}
       {animate ? (

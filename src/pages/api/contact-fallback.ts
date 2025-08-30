@@ -1,15 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { adminDb, isFirebaseConfigured } from '@/lib/firebase-admin';
 import { Message, Booking } from '@/types/admin';
 
-// In-memory fallback storage
-let fallbackSubmissions: (Message | Booking)[] = [];
+// In-memory storage (for development/fallback)
+let submissions: (Message | Booking)[] = [];
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log('Contact API called with method:', req.method);
+  console.log('Fallback Contact API called with method:', req.method);
   
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
@@ -56,17 +55,11 @@ export default async function handler(
       });
     }
 
-    // Store in Firestore or fallback storage
-    if (isFirebaseConfigured && adminDb) {
-      console.log('Attempting to store in Firestore:', submissionData);
-      await adminDb.collection('submissions').doc(id).set(submissionData);
-      console.log('Successfully stored submission with ID:', id);
-    } else {
-      console.log('Firebase not configured, using fallback storage:', submissionData);
-      fallbackSubmissions.push(submissionData);
-      console.log('Successfully stored submission with ID:', id);
-      console.log('Total submissions in fallback storage:', fallbackSubmissions.length);
-    }
+    // Store in memory (fallback)
+    console.log('Storing in memory:', submissionData);
+    submissions.push(submissionData);
+    console.log('Successfully stored submission with ID:', id);
+    console.log('Total submissions in memory:', submissions.length);
 
     // Send different responses based on type
     if (type === 'message') {
@@ -106,5 +99,5 @@ export default async function handler(
   }
 }
 
-// Export fallback submissions for admin API
-export { fallbackSubmissions };
+// Export submissions for the admin API
+export { submissions };
