@@ -10,6 +10,7 @@ interface DoubleOutlinedCardProps {
   children: ReactNode;
   className?: string;
   contentClassName?: string;
+  onClick?: () => {};
 }
 
 // Use React.FC for functional components
@@ -18,9 +19,10 @@ const DoubleOutlinedCard: React.FC<DoubleOutlinedCardProps> = ({
   children,
   className,
   contentClassName,
+  onClick
 }) => {
   return (
-    <Card className={cn("relative main-card bg-background/30 backdrop-blur-xl border border-border/30 h-[600px] mx-auto rounded-3xl shadow-2xl shadow-background/20 p-2", className)}>
+    <Card onClick={onClick} className={cn("relative main-card bg-background/30 backdrop-blur-xl border border-border/30 h-[600px] mx-auto rounded-3xl shadow-2xl shadow-background/20 p-2", className)}>
       <ShineEffect />
       {showHeader && (
         <div className="relative main-header w-full flex flex-col items-center justify-center rounded-t-2xl bg-background/40 backdrop-blur-md border border-x-border/30 border-t-border/50 h-12 shadow-lg bg-muted/30">

@@ -41,31 +41,18 @@ const Tech = () => {
                 className="inline-block mb-6"
                 whileHover={{ scale: 1.05 }}
               >
-                <Badge className="flex items-center gap-2" size={'xl'}>
-                  <Stars className="w-4 h-4 text-foreground/80" />
-                  <span className="text-muted-foreground text-base">MY SKILLS</span>
-                </Badge>
+                <Badge className="flex items-center gap-2 text-muted-foreground uppercase" size={'xl'} variant={'default'}>
+                                                <Stars className="w-3 h-3 text-foreground/60" />
+                                                My Skills
+                                              </Badge>
               </motion.div>
               
-              <h1 className={`text-4xl lg:text-5xl xl:text-6xl font-semibold mb-6 ${nyght.className}`}>
+              <h1 className={`text-4xl lg:text-5xl xl:text-6xl font-semibold ${nyght.className}`}>
                 Technologies &<br />
                 <span className={`bg-gradient-to-b from-foreground to-slate-400 dark:to-zinc-900 bg-clip-text text-transparent ${nyght.className} font-medium italic`}>Tools I Use</span>
               </h1>
               
-              <div className="space-y-4 text-lg text-foreground/70 leading-relaxed mb-8 text-center">
-                <p>
-                  I have expertise in JavaScript, React, Node.js, Python, Flask, and
-                  Django, using these technologies to build scalable web applications,
-                  APIs, and solutions to complex problems.
-                </p>
-                {/* <p>
-                  I am passionate about exploring new technologies and applying my skills 
-                  to create efficient and user-friendly projects that make a real impact.
-                </p>
-                <p className="font-semibold text-foreground">
-                  Always learning, always growing!
-                </p> */}
-              </div>
+                  
             </motion.div>
           </div>
         </motion.div>

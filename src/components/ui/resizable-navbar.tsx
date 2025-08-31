@@ -74,6 +74,11 @@ export const Navbar = ({ children, className }: NavbarProps) => {
       // IMPORTANT: Change this to class of `fixed` if you want the navbar to be fixed
       className={cn("fixed inset-x-0 top-0 z-40 w-full", className)}
     >
+      {/* Gradient blur behind navbar */}
+      <div className="absolute inset-x-0 -top-4 h-32 backdrop-blur-sm -z-10" style={{
+        mask: "linear-gradient(to bottom, white 30%, white 10%, transparent)"
+      }}/>
+      
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
           ? React.cloneElement(
@@ -149,7 +154,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
               "relative px-4 py-2 transition-colors duration-200",
               active 
                 ? "text-primary font-medium" 
-                : "text-neutral-600 dark:text-neutral-300 hover:text-primary"
+                : "text-neutral-600 dark:text-neutral-300 hover:text-primary font-normal"
             )}
             onMouseEnter={() => setHovered(idx)}
             onClick={onItemClick}
@@ -161,7 +166,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
                   "absolute inset-0 h-full w-full rounded-full backdrop-blur-md",
                   active 
                     ? "bg-primary/10" 
-                    : "bg-gray-100/20 dark:bg-neutral-800/20"
+                    : "bg-primary/5"
                 )}
               />
             )}

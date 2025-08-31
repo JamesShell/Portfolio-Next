@@ -24,6 +24,7 @@ import { object, string, z } from "zod";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "../ui/badge";
 
 // Define Zod schema for contact form data validation
 const contactSchema = object({
@@ -144,14 +145,6 @@ const Contact = () => {
                 {renderForm}
               </div>
             </div>
-          </div>
-        </motion.div>
-        
-        <motion.div
-          variants={slideIn({direction: "up", type: "tween", delay: 0.4, duration: 1})}
-          className="xl:flex-1 xl:h-auto md:h-[550px] h-[350px] relative">
-          <div className="relative overflow-hidden h-full">
-            <MoonCanvas style={{ touchAction: "auto" }} />
           </div>
         </motion.div>
       </div>

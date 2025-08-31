@@ -27,9 +27,9 @@ const Feedback: React.FC = () => {
               className="inline-block mb-6"
               whileHover={{ scale: 1.05 }}
             >
-              <Badge className="flex items-center gap-2" size={'xl'}>
-                <MessageSquare className="w-4 h-4 text-foreground/80" />
-                <span className="text-muted-foreground text-base uppercase">What others are saying</span>
+              <Badge className="flex items-center gap-2 text-muted-foreground font-medium uppercase" size={'xl'}>
+                <MessageSquare className="w-3 h-3 text-foreground/60" />
+                What others are saying
               </Badge>
             </motion.div>
             

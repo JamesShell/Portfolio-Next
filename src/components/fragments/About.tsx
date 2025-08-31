@@ -145,9 +145,9 @@ const ServiceCard: React.FC<{
             className="relative w-full bg-shiny-header pt-[2px] rounded-[20px] shadow-sm service-card-inside">
             <div className="relative w-full bg-muted/95 rounded-[18px] py-5 px-12 min-h-[240px] flex justify-evenly items-center flex-col">
               <DialogSubtitle>
-                <Icon className="text-[40px]" />
+                <Icon className="text-[40px] text-foreground/20" />
               </DialogSubtitle>
-              <DialogTitle className="text-[20px] font-bold text-center">
+              <DialogTitle className="text-[20px] text-foreground/80 font-medium text-center">
                 {title}
               </DialogTitle>
             </div>
@@ -271,10 +271,8 @@ const About = () => {
               <motion.div
                 className="inline-block mb-6"
                 whileHover={{ scale: 1.05 }}>
-                <Badge className="flex items-center gap-2" size={"xl"}>
-                  <span className="text-muted-foreground text-base">
-                    KNOW ABOUT ME
-                  </span>
+                <Badge className="flex items-center gap-2 text-muted-foreground uppercase" size={"xl"}>
+                  Know About Me
                 </Badge>
               </motion.div>
 

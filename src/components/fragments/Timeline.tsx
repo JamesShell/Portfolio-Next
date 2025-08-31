@@ -318,10 +318,10 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
             className="inline-block mb-6"
             whileHover={{ scale: 1.05 }}
           >
-            <Badge className="flex items-center gap-2" size={'xl'}>
-              <Clock className="w-4 h-4 text-foreground/80" />
-              <span className="text-muted-foreground text-base uppercase">My Journey</span>
-            </Badge>
+            <Badge className="flex items-center gap-2 text-muted-foreground uppercase" size={'xl'} variant={'default'}>
+                                            <Clock className="w-3 h-3 text-foreground/60" />
+                                            My Journey
+                                          </Badge>
           </motion.div>
           
           <h2 className={`text-4xl lg:text-5xl xl:text-6xl font-semibold mb-6 ${nyght.className}`}>

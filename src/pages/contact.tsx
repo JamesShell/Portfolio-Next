@@ -229,9 +229,9 @@ const Contact = () => {
               className="inline-block mb-6"
               whileHover={{ scale: 1.05 }}
             >
-              <Badge className="flex items-center gap-2" size={'xl'}>
-                <Send className="w-4 h-4 text-foreground/80" />
-                <span className="text-muted-foreground text-base uppercase">Get in touch</span>
+              <Badge className="flex items-center gap-2 text-muted-foreground uppercase" size={'xl'} variant={'default'}>
+                <Send className="w-3 h-3 text-foreground/60" />
+                Get in touch
               </Badge>
             </motion.div>
             

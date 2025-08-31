@@ -234,21 +234,14 @@ const Works: React.FC = () => {
             <motion.div
               className="inline-block mb-6"
               whileHover={{ scale: 1.05 }}>
-              <Badge className="flex items-center gap-2" size={"xl"}>
-                <Heart className="w-4 h-4 text-foreground/80" />
-                <span className="text-muted-foreground text-base uppercase">
-                  Built with passion
-                </span>
-              </Badge>
+                <Badge className="flex items-center gap-2 text-muted-foreground uppercase" size={'xl'} variant={'default'}>
+                                <Heart className="w-3 h-3 text-foreground/60" />
+                                Built with passion
+                              </Badge>
             </motion.div>
 
-            <h1
-              className={`text-4xl lg:text-5xl xl:text-6xl font-semibold mb-6 ${nyght.className}`}>
-              Featured{" "}
-              <span
-                className={`bg-gradient-to-b from-foreground to-slate-400 dark:to-zinc-900 bg-clip-text text-transparent ${nyght.className} font-medium italic`}>
-                Works
-              </span>
+            <h1 className={`text-4xl lg:text-5xl xl:text-6xl font-semibold mb-6 bg-gradient-to-b from-foreground to-slate-400 dark:to-zinc-900 bg-clip-text text-transparent ${nyght.className} font-medium italic`}>
+              Featured Works
             </h1>
           </motion.div>
         </div>
@@ -281,7 +274,7 @@ const Works: React.FC = () => {
                   <div className="relative w-full h-full overflow-hidden rounded-2xl p-6 flex flex-col">
                     {/* Top content area - 25% */}
                     <div className="h-1/4 flex flex-row justify-between items-start mb-4 z-10">
-                      <p className="text-foreground/90 text-base leading-relaxed mb-4 max-w-md">
+                      <p className="text-foreground/90 text-lg leading-relaxed mb-4 max-w-md">
                         {project.name === "Portfolio Website" 
                           ? "Modern, responsive portfolio with 3D elements and smooth animations."
                           : project.name === "Jelth" 
@@ -291,7 +284,7 @@ const Works: React.FC = () => {
                       </p>
                       <div className="flex justify-end">
                         <motion.div
-                          className="flex h-12 w-12 backdrop-blur-md items-center justify-center rounded-full bg-muted/50 backdrop-blur-sm border border-border/20 transition-all duration-300 hover:bg-muted hover:border-border/40 hover:shadow-lg cursor-pointer"
+                          className="flex h-12 w-12 items-center justify-center rounded-full bg-muted/50 backdrop-blur-sm border border-border/20 transition-all duration-300 hover:bg-muted hover:border-border/40 hover:shadow-lg cursor-pointer"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => window.open(`/projects/${index + 1}`, "_self")}
@@ -389,10 +382,7 @@ const Works: React.FC = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.2 }}>
-                  <h4 className="text-foreground font-semibold text-xl flex items-center gap-2">
-                    <Laptop className={`w-4 h-4 fill-current text-glow-${activeCard % 4 + 1} text-chart${activeCard % 4 + 1}`} />
-                    Technologies Used
-                  </h4>
+                  
                   <div className="flex flex-wrap gap-3">
                     {projects[activeCard]?.tags?.map(
                       (tag: any, tagIndex: number) => {

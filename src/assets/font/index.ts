@@ -3,17 +3,22 @@ import localFont from 'next/font/local'
 export const sfPro = localFont({
   src: [
     {
+      path: './sf-pro-text-light.otf',
+      weight: '300',
+      style: 'normal',
+    },
+    {
       path: './sf-pro-text-regular.ttf',
       weight: '400',
       style: 'normal',
     },
     {
-      path: './SF-Pro-Display-Medium.ttf',
+      path: './sf-pro-text-medium.otf',
       weight: '500',
       style: 'normal',
     },
     {
-      path: './SF-Pro-Display-Bold.ttf',
+      path: './sf-pro-text-bold.otf',
       weight: '700',
       style: 'normal',
     },
