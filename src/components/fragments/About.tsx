@@ -374,7 +374,7 @@ const About = () => {
         </motion.div>
 
         {/* Enhanced Services Grid */}
-        <motion.div
+        {/* <motion.div
           className="services mt-8 xs:mt-10"
           variants={{
             hidden: { opacity: 0 },
@@ -418,7 +418,7 @@ const About = () => {
               </motion.div>
             ))}
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </div>
   );
