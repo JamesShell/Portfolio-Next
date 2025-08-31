@@ -239,10 +239,10 @@ const Works: React.FC = () => {
                                 Built with passion
                               </Badge>
             </motion.div>
-
-            <h1 className={`text-4xl lg:text-5xl xl:text-6xl font-semibold mb-6 bg-gradient-to-b from-foreground to-slate-400 dark:to-zinc-900 bg-clip-text text-transparent ${nyght.className} font-medium italic`}>
-              Featured Works
-            </h1>
+            <h1 className={`text-4xl lg:text-5xl xl:text-6xl font-semibold ${nyght.className}`}>
+                            Featured
+                            <span className={`bg-gradient-to-b from-foreground to-slate-400 dark:to-zinc-900 bg-clip-text text-transparent ${nyght.className} font-medium italic`}> Works</span>
+                          </h1>
           </motion.div>
         </div>
       </motion.div>
