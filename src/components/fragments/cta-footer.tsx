@@ -126,9 +126,9 @@ const CTAFooter: React.FC = () => {
               className="inline-block mb-6"
               whileHover={{ scale: 1.05 }}
             >
-              <Badge className="flex items-center gap-2" size={'xl'}>
-                <Heart className="w-4 h-4 text-foreground/80" />
-                <span className="text-muted-foreground text-base uppercase">Ready to start?</span>
+              <Badge className="flex items-center gap-2 text-muted-foreground uppercase" size={'xl'} variant={'default'}>
+                                              <Heart className="w-3 h-3 text-foreground/60" />
+                                              Ready to start?
               </Badge>
             </motion.div>
             
