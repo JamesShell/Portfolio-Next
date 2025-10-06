@@ -16,10 +16,11 @@ import { RocketIcon, GlobeIcon } from "@radix-ui/react-icons";
 import { IconType } from "react-icons/lib";
 import Image from "next/image";
 import { useInView } from "framer-motion";
-import { Heart, Laptop, Sparkle, Sparkles } from "lucide-react";
+import { Download, Heart, Laptop, Sparkle, Sparkles } from "lucide-react";
 import { nyght } from "@/assets/font";
 import { Badge } from "../ui/badge";
 import { InlineLoader } from "../ui/global-loader";
+import { FaAppStore, FaAppStoreIos } from "react-icons/fa";
 
 interface ProjectCardProps {
   index: number;
@@ -161,7 +162,7 @@ const Works: React.FC = () => {
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     // Adjust the calculation to better sync with the visible image
-    const adjustedProgress = Math.max(0, latest - 0.1); // Slight delay
+    const adjustedProgress = Math.max(0, latest - 0.01); // Slight delay
     const projectIndex = Math.max(
       0,
       Math.min(
@@ -275,12 +276,7 @@ const Works: React.FC = () => {
                     {/* Top content area - 25% */}
                     <div className="h-1/4 flex flex-row justify-between items-start mb-4 z-10">
                       <p className="text-foreground/90 text-lg leading-relaxed mb-4 max-w-md">
-                        {project.name === "Portfolio Website" 
-                          ? "Modern, responsive portfolio with 3D elements and smooth animations."
-                          : project.name === "Jelth" 
-                          ? "Task-based web app with gift card rewards and real-time tracking."
-                          : project.description.slice(0, 80) + "..."
-                        }
+                        {project.short_description}
                       </p>
                       <div className="flex justify-end">
                         <motion.div
@@ -479,8 +475,8 @@ const Works: React.FC = () => {
                     className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-primary/10 border border-primary/20 rounded-xl text-primary font-medium hover:bg-primary/20 transition-all duration-300"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}>
-                    <GlobeIcon className="w-4 h-4" />
-                    <span>Live Demo</span>
+                    {projects[activeCard]?.type === "web" ? <GlobeIcon className="w-4 h-4" /> : <Download className="w-4 h-4" />}
+                    <span>{projects[activeCard]?.type === "web" ? "Live Demo" : "Donwload App"}</span>
                   </motion.button>
                 </motion.div>
                 </motion.div>

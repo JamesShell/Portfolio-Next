@@ -3,7 +3,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, useTransform, useScroll } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { SocialLinks } from '@/components/ui/social-links';
 import { Heart, Coffee, Monitor, Moon, Sun } from 'lucide-react';
 import { nyght } from '@/assets/font';

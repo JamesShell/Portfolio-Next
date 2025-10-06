@@ -1,6 +1,6 @@
 import * as di from 'react-icons/di';
 import * as fa from 'react-icons/fa';
-import { jelth, portfolio } from "../assets";
+import { jelth, portfolio, put } from "../assets";
 import { IconType } from 'react-icons/lib';
 import { StaticImageData } from 'next/image';
 
@@ -133,6 +133,7 @@ const projects: any[] = [
   {
     type: "web",
     name: "Portfolio Website",
+    short_description: "Modern, responsive portfolio with 3D elements and smooth animations.",
     description: "A modern, responsive portfolio website showcasing my work and skills. Built with Next.js 14, TypeScript, and Tailwind CSS, featuring smooth animations with Framer Motion, 3D elements with Three.js, and a clean, accessible design system.",
     tags: [
       { name: "next.js", color: "#000000" },
@@ -146,7 +147,22 @@ const projects: any[] = [
   },
   {
     type: "web",
+    name: "Put.ma",
+    short_description: "Leading real estate platform in Morocco connecting buyers, sellers, and renters.",
+    description: "Put.ma is a modern web platform that simplifies the property search and transaction process. It connects buyers, sellers, and renters with their ideal properties through an accessible, transparent, and efficient experience. Since its launch, the app has been dedicated to revolutionizing real estate in Morocco using technology, trust, and exceptional service.",
+    tags: [
+      { name: "react", color: "#1267b7" },
+      { name: "Vite", color: "#309700" },
+      { name: "tailwind", color: "#3d8dd8" },
+    ],
+    image: put,
+    link: "https://put.ma/",
+    Icon: di.DiGithub
+  },
+   {
+    type: "web",
     name: "Jelth",
+    short_description: "Task-based web app with gift card rewards and real-time tracking.",
     description: "A fully responsive web app where users complete tasks to earn gift cards. Built with React (Vite) for the frontend, Node.js for the backend, Firebase for authentication and database, and Redis for caching. Showcases a modern tech stack and effective web design.",
     tags: [
       { name: "react", color: "#1267b7" },

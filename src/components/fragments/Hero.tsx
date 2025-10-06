@@ -8,6 +8,8 @@ import { Badge } from "../ui/badge";
 import { SocialLinks } from "../ui/social-links";
 import { SegmentedControl } from "../ui/segmented-control";
 import { Sun, Moon, Monitor } from "lucide-react";
+import SplitText from "@/components/SplitText";
+import BlurText from "@/components/BlurText";
 
 // Define a type for valid hover states
 type HoverState = "" | "about" | "work" | "contact";
@@ -162,15 +164,38 @@ const Hero = () => {
                 variants={itemVariants}
               >
                 <h1 className="sr-only">Ettouzany - Full Stack Developer</h1>
-                <TextEffect as="p" per="word" preset="fade">
-                  Full-stack developer with
-                </TextEffect>
-                <TextEffect as="p" per="word" preset="fade" className="mb-2">
-                  3 years experience
-                </TextEffect>
-                <TextEffect as="p" per="word" preset="fade">
-                  building user-friendly web apps
-                </TextEffect>
+                <SplitText
+                  text={`Full-stack developer with`}
+                  delay={100}
+                  duration={0.6}
+                  ease="power3.out"
+                  splitType="chars"
+                  from={{ opacity: 0, y: 40 }}
+                  to={{ opacity: 1, y: 0 }}
+                  threshold={0.1}
+                  rootMargin="-100px"
+                  textAlign="center"
+                />
+                <br/>
+                <SplitText
+                  text={`3 years experience`}
+                  className="mb-2 -mt-1"
+                  delay={100}
+                  duration={0.6}
+                  ease="power3.out"
+                  splitType="chars"
+                  from={{ opacity: 0, y: 40 }}
+                  to={{ opacity: 1, y: 0 }}
+                  threshold={0.1}
+                  rootMargin="-100px"
+                  textAlign="center"
+                />
+                <BlurText
+                  text="building user-friendly web apps"
+                  delay={1500}
+                  animateBy="words"
+                  direction="top"
+                />
               </motion.div>
               <motion.div 
                 className="mt-4 w-fit"

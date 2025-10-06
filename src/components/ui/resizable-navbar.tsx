@@ -74,10 +74,7 @@ export const Navbar = ({ children, className }: NavbarProps) => {
       // IMPORTANT: Change this to class of `fixed` if you want the navbar to be fixed
       className={cn("fixed inset-x-0 top-0 z-40 w-full", className)}
     >
-      {/* Gradient blur behind navbar */}
-      <div className="absolute inset-x-0 -top-4 h-32 backdrop-blur-sm -z-10" style={{
-        mask: "linear-gradient(to bottom, white 30%, white 10%, transparent)"
-      }}/>
+      
       
       {React.Children.map(children, (child) =>
         React.isValidElement(child)

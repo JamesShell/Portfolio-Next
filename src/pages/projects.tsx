@@ -9,6 +9,7 @@ import { StarsCanvas } from '@/components/canvas';
 import SEOHead from '@/components/SEO/Head';
 import { portfolioStructuredData } from '@/utils/structuredData';
 import { Spotlight } from '@/components/ui/spotlight-new';
+import GradualBlur from "@/components/GradualBlur";
 
 export default function Projects() {
   const [isClient, setIsClient] = useState(false);
@@ -30,6 +31,18 @@ export default function Projects() {
         <Suspense fallback={<Loading />}>
           {isClient && (
             <>
+              {/* Gradient blur behind navbar */}
+              <GradualBlur
+                target="page"
+                position="top"
+                height="6rem"
+                strength={2}
+                divCount={5}
+                curve="bezier"
+                exponential={true}
+                opacity={1}
+                className="!z-[20]"
+              />
               <Navbar variant="contact" />
               <Spotlight className="sticky" />
               {/* Hero Section with smooth entrance */}
