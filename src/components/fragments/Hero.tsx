@@ -192,7 +192,7 @@ const Hero = () => {
                 />
                 <BlurText
                   text="building user-friendly web apps"
-                  delay={1500}
+                  delay={500}
                   animateBy="words"
                   direction="top"
                 />
