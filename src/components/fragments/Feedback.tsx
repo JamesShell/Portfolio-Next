@@ -32,7 +32,7 @@ const Feedback: React.FC = () => {
       scrollTrigger: {
         trigger: containerRef.current,
         start: 'top top',
-        end: '+=120%', // Balance between smoothness and no dead zones
+        end: '+=150%', // Balance between smoothness and no dead zones
         pin: true,
         scrub: 10, // Increased for smoother, less jittery animation
         anticipatePin: 1,

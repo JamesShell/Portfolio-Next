@@ -6,7 +6,7 @@ import close from "./close.svg";
 // import trade from "./trade.png";
 // import poxels from "./poxels.png";
 import jelth from "./projects/jelth/jelth.png";
-import portfolio from "./projects/portfolio/portfolio.png";
+import sybelle from "./projects/sybelle/sybelle.png";
 // import cozygear from './cozygear.png';
 // import tripguide from "./tripguide.png";
 import laptop from "./projects/jelth/laptop.png"
@@ -24,5 +24,5 @@ export {
   laptop,
   jelth,
   put,
-  portfolio
+  sybelle
 };

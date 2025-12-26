@@ -476,7 +476,7 @@ const Works: React.FC = () => {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}>
                     {projects[activeCard]?.type === "web" ? <GlobeIcon className="w-4 h-4" /> : <Download className="w-4 h-4" />}
-                    <span>{projects[activeCard]?.type === "web" ? "Live Demo" : "Donwload App"}</span>
+                    <span>{projects[activeCard]?.type === "web" ? "View Site" : "Donwload App"}</span>
                   </motion.button>
                 </motion.div>
                 </motion.div>
@@ -605,7 +605,7 @@ const Works: React.FC = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}>
                   <GlobeIcon className="w-4 h-4" />
-                  <span>Live Demo</span>
+                  <span>View Site</span>
                 </motion.button>
               </div>
             </div>

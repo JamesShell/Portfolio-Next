@@ -1,6 +1,6 @@
 import * as di from 'react-icons/di';
 import * as fa from 'react-icons/fa';
-import { jelth, portfolio, put } from "../assets";
+import { jelth, sybelle, put } from "../assets";
 import { IconType } from 'react-icons/lib';
 import { StaticImageData } from 'next/image';
 
@@ -142,17 +142,17 @@ const testimonials: Testimonial[] = [
 const projects: any[] = [
   {
     type: "web",
-    name: "Portfolio Website",
-    short_description: "Modern, responsive portfolio with 3D elements and smooth animations.",
-    description: "A modern, responsive portfolio website showcasing my work and skills. Built with Next.js 14, TypeScript, and Tailwind CSS, featuring smooth animations with Framer Motion, 3D elements with Three.js, and a clean, accessible design system.",
+    name: "Sybelle",
+    short_description: "Real Estate Branding & Marketing Website with parallax scrolling hero.",
+    description: "A modern branding and marketing website for a real estate agency, featuring a parallax scrolling hero section that creates an immersive first impression. Built end-to-end with responsive design, optimized animations, and a layout that balances visual storytelling with performance across all devices.",
     tags: [
       { name: "next.js", color: "#000000" },
       { name: "typescript", color: "#3178c6" },
       { name: "tailwind", color: "#3d8dd8" },
-      { name: "three.js", color: "#000000" },
+      { name: "framer-motion", color: "#FF0055" },
     ],
-    image: portfolio,
-    link: "https://ettouzany.vercel.app/",
+    image: sybelle,
+    link: "https://sybelle.com",
     Icon: di.DiGithub
   },
   {

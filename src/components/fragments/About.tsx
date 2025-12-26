@@ -29,7 +29,7 @@ import { FaCertificate } from "react-icons/fa";
 import { IconType } from "react-icons/lib";
 import { nyght } from "@/assets/font";
 import { AboutCanvas } from "@/components/canvas";
-import profileImage from "@/assets/profile.jpg";
+import profileImage from "@/assets/profile.png";
 import Image from "next/image";
 import MagneticButton from "../ui/magnatic-button";
 import { SocialLinks } from "../ui/social-links";
