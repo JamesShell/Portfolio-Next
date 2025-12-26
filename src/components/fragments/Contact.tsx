@@ -2,6 +2,7 @@ import React from "react";
 import { SectionWrapper } from "@/hoc";
 import { motion } from "framer-motion";
 import { slideIn, textVariant } from "@/utils/motion";
+import { sendGAEvent } from "@next/third-parties/google";
 import { MoonCanvas } from "@/components/canvas";
 import {
   Card,
@@ -50,6 +51,8 @@ const Contact = () => {
     const mailtoLink = `mailto:jelth.com@gmail.com?subject=${encodeURIComponent(
       subject
     )}&body=${encodeURIComponent(emailBody)}`;
+    
+    sendGAEvent('event', 'contact_message_sent', { value: fullName });
 
     // Open default email client with pre-filled data
     window.location.href = mailtoLink;

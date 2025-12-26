@@ -36,6 +36,9 @@ export interface Technology {
 export interface Testimonial {
   testimonial: string;
   name: string;
+  designation?: string;
+  company?: string;
+  image?: string;
 }
 
 export interface ProjectTag {
@@ -124,7 +127,14 @@ const technologies: Technology[] = [
 ];
 
 const testimonials: Testimonial[] = [
-  { testimonial: "This guy is a top-notch full-stack web developer. Highly recommended!", name: "Ethan Lawson" },
+  {
+    testimonial:
+      "Abdel is professional, adaptable, and always willing to learn. He works hard to solve problems and improve designs. I could not have asked for a better developer for my agency.",
+    name: "Kodi Echeozo",
+    designation: "CEO",
+    company: "Sybelle",
+    image: "https://randomuser.me/api/portraits/women/4.jpg",
+  },
   { testimonial: "Those web development skills are exceptional. Choose him for outstanding results!", name: "Lily Bennett" },
   { testimonial: "Ettouzany is a professional and dedicated full-stack web developer. Impressive work!", name: "Owen Sullivan" },
 ];
@@ -159,7 +169,7 @@ const projects: any[] = [
     link: "https://put.ma/",
     Icon: di.DiGithub
   },
-   {
+  {
     type: "web",
     name: "Jelth",
     short_description: "Task-based web app with gift card rewards and real-time tracking.",
@@ -176,12 +186,14 @@ const projects: any[] = [
 ];
 
 const socialLinks = {
-  github: { handle: "JamesShell", link: "https://github.com/JamesShell"},
-  linkedin: { handle: "/in/Ettouzany", link: "https://www.linkedin.com/in/james-ettozany/"},
-  dribble: { handle: "@ettouzany", link: "https://dribbble.com/juds69"},
-  twitter: { handle: "@ettouzzany", link: "https://x.com/ettouzzany"},
-  discord: { handle: "ettouzany#1234", link: "https://discord.com"},
-  mail: { handle: "ettozany@gmail.com", link: "mailto:ettozany@gmail.com"},
+  github: { handle: "JamesShell", link: "https://github.com/JamesShell" },
+  linkedin: { handle: "/in/Ettouzany", link: "https://www.linkedin.com/in/james-ettozany/" },
+  dribble: { handle: "@ettouzany", link: "https://dribbble.com/juds69" },
+  twitter: { handle: "@ettouzzany", link: "https://x.com/ettouzzany" },
+  discord: { handle: "ettouzany#1234", link: "https://discord.com" },
+  mail: { handle: "ettozany@gmail.com", link: "mailto:ettozany@gmail.com" },
 }
+
+export const GOOGLE_ANALYTICS_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || "";
 
 export { services, technologies, testimonials, projects, socialLinks };

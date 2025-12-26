@@ -33,6 +33,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Spotlight } from "@/components/ui/spotlight-new";
+import { sendGAEvent } from "@next/third-parties/google";
 
 // Define Zod schemas for validation
 const contactSchema = object({
@@ -101,6 +102,7 @@ const Contact = () => {
 
       if (response.ok && result.success) {
         contactForm.reset();
+        sendGAEvent('event', 'contact_message_sent', { value: data.fullName });
         setSubmitStatus({ type: 'success', message: result.message });
       } else {
         setSubmitStatus({ type: 'error', message: result.message || 'Failed to send message' });
@@ -156,6 +158,7 @@ const Contact = () => {
       if (response.ok && result.success) {
         bookingForm.reset();
         setSelectedDateTime({ date: "", time: "" });
+        sendGAEvent('event', 'calendar_booking', { value: formData.projectType });
         setSubmitStatus({ type: 'success', message: result.message });
       } else {
         setSubmitStatus({ type: 'error', message: result.message || 'Failed to book call' });

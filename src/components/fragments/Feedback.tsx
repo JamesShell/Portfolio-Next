@@ -1,21 +1,102 @@
-import React, { useRef, useState } from 'react';
+'use client';
+
+import React, { useRef, useEffect } from 'react';
 import { SectionWrapper } from '@/hoc';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { fadeIn, textVariant } from '@/utils/motion';
 import { testimonials } from '@/constants';
 import { Badge } from '@/components/ui/badge';
-import { DraggableCardBody, DraggableCardContainer } from '@/components/ui/draggable-card';
-import { MessageSquare, User, MousePointerClickIcon } from 'lucide-react';
+import { MessageSquare, User } from 'lucide-react';
 import { nyght } from '@/assets/font';
-import { Cursor } from '@/components/ui/cursor';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+import { useGSAP } from '@gsap/react';
+
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 const Feedback: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement[]>([]);
+
+  useGSAP(() => {
+    if (!containerRef.current || cardsRef.current.length === 0) return;
+
+    const cards = cardsRef.current;
+    const isMobile = window.innerWidth < 768;
+    const viewportWidth = window.innerWidth;
+    
+    // Create a timeline for the arch animation
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top top',
+        end: '+=120%', // Balance between smoothness and no dead zones
+        pin: true,
+        scrub: 10, // Increased for smoother, less jittery animation
+        anticipatePin: 1,
+      }
+    });
+
+    // Calculate arch path for each card - RIGHT TO LEFT
+    cards.forEach((card, index) => {
+      // Start position: offscreen RIGHT, at BOTTOM of viewport
+      const startX = viewportWidth + 20; // Minimal buffer so they appear sooner
+      const startY = isMobile ? 350 : 450; 
+      
+      // Arch peak position: CENTER of screen, BOTTOM half
+      const archX = 0;
+      const archHeight = isMobile ? 200 : 250; 
+      
+      // End position: offscreen LEFT, at BOTTOM of viewport
+      const endX = -(viewportWidth + 20); // Minimal buffer
+      const endY = isMobile ? 350 : 450; 
+      
+      // Slight rotation as cards move
+      const startRotation = 15;
+      const endRotation = -15;
+
+      // Set initial position
+      gsap.set(card, {
+        x: startX,
+        y: startY,
+        rotation: startRotation,
+        scale: 0.9,
+        willChange: 'transform', // Optimization for smoothness
+      });
+
+      // Animate along arch path from RIGHT → CENTER (peak) → LEFT
+      tl.to(card, {
+        scale: 1,
+        motionPath: {
+          path: [
+            { x: startX, y: startY },        // Start: Offscreen right
+            { x: archX, y: archHeight },     // Peak: Center bottom
+            { x: endX, y: endY }             // End: Offscreen left
+          ],
+          curviness: 2.5,
+        },
+        rotation: endRotation,
+        duration: 1,
+        ease: 'power4.inOut', // Slightly less extreme than expo to reduce start/end delay
+      }, index * 0.06); // Reduced staggering to 0.1 as requested
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, { scope: containerRef, dependencies: [] });
+
   return (
-    <div className="w-full max-w-[100vw] px-4 sm:px-6 lg:px-8">
-      {/* Enhanced Section Header */}
+    <div ref={containerRef} className="relative w-full min-h-screen px-4 sm:px-6 lg:px-8">
+      {/* Enhanced Section Header - Fixed at top of pinned section */}
       <motion.div 
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
         variants={textVariant({ delay: 0 })}
-        className="mb-16"
+        className="absolute top-8 left-0 right-0 px-4 sm:px-6 lg:px-8 z-10"
       >
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
           {/* Left side - Content */}
@@ -40,87 +121,48 @@ const Feedback: React.FC = () => {
         </div>
       </motion.div>
       
-      {/* Draggable Testimonials */}
-      <DraggableCardContainer className="relative flex flex-wrap justify-center gap-4 min-h-96 w-full max-w-[100vw]">
+      {/* Arching Testimonials */}
+      <div className="relative flex justify-center items-center min-h-[400px] w-full">
         {testimonials.map((item: any, index: number) => {
-          // Generate consistent random values for each card based on index
-          const randomRotation = (index * 17) % 21 - 10; // Random rotation between -10 and 10 degrees
-          const randomX = Math.max(-20, Math.min(20, (index * 23) % 41 - 20)); // Constrained X offset between -20 and 20px
-          const zIndex = testimonials.length - index; // Stack order (first card on top)
-          
-          // Calculate safe horizontal positioning that won't overflow
-          const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-          const cardWidth = 280; // Approximate card width
-          const maxCards = Math.floor(typeof window !== 'undefined' ? window.innerWidth / (cardWidth + 40) : 3);
-          const safeSpacing = isMobile ? 60 : Math.min(120, Math.max(40, (typeof window !== 'undefined' ? window.innerWidth : 1200) / testimonials.length * 0.8));
-          const centerOffset = (testimonials.length - 1) * safeSpacing * 0.5;
-          
           return (
-            <motion.div
+            <div
               key={index}
-              initial={{ 
-                opacity: 0, 
-                y: 0,
-                x: randomX,
-                rotate: randomRotation,
-                z: index * -2 // Slight depth stacking
+              ref={(el) => {
+                if (el) cardsRef.current[index] = el;
               }}
-              whileInView={{ 
-                opacity: 1, 
-                y: 0,
-                x: randomX,
-                rotate: randomRotation 
-              }}
-              transition={{ 
-                duration: 0.8, 
-                delay: index * 0.2,
-                type: "spring",
-                stiffness: 100,
-                damping: 15
-              }}
-              viewport={{ once: true }}
               className="absolute"
-              style={{
-                zIndex: zIndex,
-                left: `calc(50% + ${Math.max(-centerOffset, Math.min(centerOffset, index * safeSpacing - centerOffset))}px)`, // Safe horizontal distribution
-                transform: `translateX(-50%)`, // Center each card on its position
-              }}
+              style={{ zIndex: testimonials.length - index }}
             >
-              <DraggableCardBody className="bg-background/90 backdrop-blur-md border border-border/30 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:z-[999] w-fit max-w-[280px] sm:max-w-[300px]">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-secondary/3 rounded-2xl"></div>
+              <div className="bg-black dark:bg-white backdrop-blur-md border border-zinc-800 dark:border-zinc-200 rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-300 w-[85vw] max-w-[400px] h-[60vh] p-8 sm:p-10 flex flex-col justify-between">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-white/5 dark:from-black/5 dark:to-black/5 rounded-xl pointer-events-none"></div>
                 
-                {/* Quote Icon */}
-                <div className="relative mb-4">
-                  <MessageSquare className="w-8 h-8 text-primary/60" />
-                </div>
-                
-                {/* Testimonial Content */}
-                <div className="relative z-10">
-                  <blockquote className="text-foreground/80 mb-6 leading-relaxed text-sm italic">
+                {/* Testimonial Content - TOP LEFT */}
+                <div className="relative z-10 flex-1 flex items-start justify-start pt-4">
+                  <blockquote className="text-zinc-100 dark:text-zinc-900 leading-relaxed text-lg sm:text-xl font-semibold text-left">
                     "{item.testimonial}"
                   </blockquote>
-                  
-                  {/* Author Info */}
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-muted/50 backdrop-blur-sm border border-border/20 rounded-full flex items-center justify-center">
-                      <User className="w-4 h-4 text-muted-foreground" />
-                    </div>
-                    <div>
-                      <h4 className="text-foreground font-medium text-base">{item.name}</h4>
-                      {item.company && (
-                        <p className="text-muted-foreground text-xs">{item.company}</p>
-                      )}
-                    </div>
+                </div>
+                
+                {/* Author Info - BOTTOM */}
+                <div className="relative z-10 flex items-center space-x-4 pt-6 border-t border-zinc-800 dark:border-zinc-200">
+                  <div className="w-14 h-14 bg-white/10 dark:bg-black/5 backdrop-blur-sm border border-zinc-700/50 dark:border-zinc-300/50 rounded-full flex items-center justify-center shrink-0">
+                    <User className="w-6 h-6 text-white/90 dark:text-black/70" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-white dark:text-black font-medium text-lg">{item.name}</h4>
+                    {item.company && (
+                      <p className="text-zinc-400 dark:text-zinc-500 text-base font-light">{item.company}</p>
+                    )}
                   </div>
                 </div>
                 
                 {/* Hover glow effect */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/5 via-transparent to-secondary/5 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-              </DraggableCardBody>
-            </motion.div>
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-white/5 via-transparent to-white/5 dark:from-black/5 dark:to-black/5 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+              </div>
+            </div>
           );
         })}
-      </DraggableCardContainer>
+      </div>
     </div>
   );
 };

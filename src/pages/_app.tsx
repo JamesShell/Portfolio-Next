@@ -1,10 +1,13 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Suspense } from "react";
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { AuthProvider } from '@/hooks/useAuth';
 import Loading from "./_loading";
 import { useRouter } from 'next/router';
+import { GOOGLE_ANALYTICS_ID } from "@/constants";
+import CookieBanner from "@/components/CookieBanner";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -30,6 +33,8 @@ export default function App({ Component, pageProps }: AppProps) {
       ) : (
         AppContent
       )}
+      {GOOGLE_ANALYTICS_ID && <GoogleAnalytics gaId={GOOGLE_ANALYTICS_ID} />}
+      <CookieBanner />
     </ThemeProvider>
   );
 }
