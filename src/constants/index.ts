@@ -1,6 +1,6 @@
 import * as di from 'react-icons/di';
 import * as fa from 'react-icons/fa';
-import { jelth, sybelle, put } from "../assets";
+import { jelth, sybelle, put, hoodie, putma, putma1, putma2, sybelle1, sybelle2 } from "../assets";
 import { IconType } from 'react-icons/lib';
 import { StaticImageData } from 'next/image';
 
@@ -49,10 +49,13 @@ export interface ProjectTag {
 export interface Project {
   name: string;
   description: string;
+  short_description?: string;
   tags: ProjectTag[];
-  image: StaticImageData; // Assuming 'image' is a URL or path string
+  image?: StaticImageData | string;
+  video?: string;
   link: string;
-  Icon: IconType;
+  Icon?: IconType;
+  type?: "web" | "mobile" | "design" | "case_study";
 }
 
 // Define the data arrays with the types
@@ -139,49 +142,77 @@ const testimonials: Testimonial[] = [
   { testimonial: "Ettouzany is a professional and dedicated full-stack web developer. Impressive work!", name: "Owen Sullivan" },
 ];
 
-const projects: any[] = [
+
+const projects: Project[] = [
+
   {
-    type: "web",
     name: "Sybelle",
-    short_description: "Real Estate Branding & Marketing Website with parallax scrolling hero.",
-    description: "A modern branding and marketing website for a real estate agency, featuring a parallax scrolling hero section that creates an immersive first impression. Built end-to-end with responsive design, optimized animations, and a layout that balances visual storytelling with performance across all devices.",
+    description: "Dynamic motion graphics and video presentation for Sybelle.",
+    short_description: "Motion Graphics",
     tags: [
-      { name: "next.js", color: "#000000" },
-      { name: "typescript", color: "#3178c6" },
-      { name: "tailwind", color: "#3d8dd8" },
-      { name: "framer-motion", color: "#FF0055" },
+      { name: "Video", color: "text-blue-500" },
+      { name: "Motion", color: "text-purple-500" },
     ],
-    image: sybelle,
-    link: "https://sybelle.com",
-    Icon: di.DiGithub
+    video: sybelle2,
+    link: "#",
+    type: "design",
   },
   {
-    type: "web",
-    name: "Put.ma",
-    short_description: "Leading real estate platform in Morocco connecting buyers, sellers, and renters.",
-    description: "Put.ma is a modern web platform that simplifies the property search and transaction process. It connects buyers, sellers, and renters with their ideal properties through an accessible, transparent, and efficient experience. Since its launch, the app has been dedicated to revolutionizing real estate in Morocco using technology, trust, and exceptional service.",
+    name: "Hoodie Design",
+    description: "A creative hoodie design project showcasing modern streetwear aesthetics.",
+    short_description: "Streetwear Hoodie Design",
     tags: [
-      { name: "react", color: "#1267b7" },
-      { name: "Vite", color: "#309700" },
-      { name: "tailwind", color: "#3d8dd8" },
+      { name: "Design", color: "text-blue-500" },
+      { name: "Fashion", color: "text-purple-500" },
     ],
-    image: put,
-    link: "https://put.ma/",
-    Icon: di.DiGithub
+    image: hoodie,
+    link: "#",
+    type: "design",
   },
   {
-    type: "web",
-    name: "Jelth",
-    short_description: "Task-based web app with gift card rewards and real-time tracking.",
-    description: "A fully responsive web app where users complete tasks to earn gift cards. Built with React (Vite) for the frontend, Node.js for the backend, Firebase for authentication and database, and Redis for caching. Showcases a modern tech stack and effective web design.",
+    name: "PUTma",
+    description: "Innovative platform design for PUTma.",
+    short_description: "Platform Design",
     tags: [
-      { name: "react", color: "#1267b7" },
-      { name: "nodejs", color: "#309700" },
-      { name: "tailwind", color: "#3d8dd8" },
+      { name: "UI/UX", color: "text-blue-500" },
     ],
-    image: jelth,
-    link: "https://taskpay.netlify.app/",
-    Icon: di.DiGithub
+    image: putma,
+    link: "#",
+    type: "design",
+  },
+  {
+    name: "Putma Mobile",
+    description: "Mobile application interface for Putma.",
+    short_description: "Mobile App Interface",
+    tags: [
+      { name: "Mobile", color: "text-pink-500" },
+    ],
+    image: putma1,
+    link: "#",
+    type: "mobile",
+  },
+  {
+    name: "Putma Dashboard",
+    description: "Comprehensive dashboard view for Putma analytics.",
+    short_description: "Analytics Dashboard",
+    tags: [
+      { name: "Web", color: "text-blue-500" },
+      { name: "Dashboard", color: "text-green-500" },
+    ],
+    image: putma2,
+    link: "#",
+    type: "web",
+  },
+  {
+    name: "Sybelle Brand",
+    description: "Brand identity and visual language for Sybelle.",
+    short_description: "Brand Identity",
+    tags: [
+      { name: "Branding", color: "text-pink-500" },
+    ],
+    image: sybelle1,
+    link: "#",
+    type: "design",
   },
 ];
 

@@ -7,9 +7,10 @@ import { useRef } from 'react';
 // Magnetic Button Component
 const MagneticButton: React.FC<{
   children: React.ReactNode;
-  href: string;
+  href?: string;
   className?: string;
-}> = ({ children, href, className = "" }) => {
+  onClick?: () => void;
+}> = ({ children, href, className = "", onClick }) => {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -46,6 +47,35 @@ const MagneticButton: React.FC<{
     angle.set(0); // reset arrow angle
   };
 
+  const ButtonContent = (
+    <motion.div
+      className={`group relative bg-foreground text-background pl-6 pr-2 py-2 rounded-full font-medium transition-all duration-300 overflow-hidden cursor-pointer ${className}`}
+      whileHover={{ scale: 1.02 }}
+    >
+      <span className="flex items-center gap-4 relative z-10">
+        {children}
+        <motion.div
+          className="h-10 aspect-square bg-background text-foreground rounded-full flex items-center justify-center group-hover:bg-foreground group-hover:text-background transition-colors duration-300"
+          style={{
+            rotate: springAngle,
+            scale: 1.1,
+          }}
+        >
+          <ArrowUpRight className="w-4 h-4" />
+        </motion.div>
+      </span>
+
+      {/* Hover effect */}
+      <motion.div
+        className="absolute inset-0 bg-foreground/90"
+        initial={{ scale: 0 }}
+        whileHover={{ scale: 1 }}
+        transition={{ duration: 0.3 }}
+        style={{ borderRadius: "50px" }}
+      />
+    </motion.div>
+  );
+
   return (
     <motion.div
       ref={ref}
@@ -58,35 +88,17 @@ const MagneticButton: React.FC<{
         x: springX,
         y: springY,
       }}
+      onClick={onClick}
     >
-      <Link href={href} className="inline-block">
-        <motion.div
-          className={`group relative bg-foreground text-background pl-6 pr-2 py-2 rounded-full font-medium transition-all duration-300 overflow-hidden cursor-pointer ${className}`}
-          whileHover={{ scale: 1.02 }}
-        >
-          <span className="flex items-center gap-4 relative z-10">
-            {children}
-            <motion.div
-              className="h-10 aspect-square bg-background text-foreground rounded-full flex items-center justify-center group-hover:bg-foreground group-hover:text-background transition-colors duration-300"
-              style={{
-                rotate: springAngle,
-                scale: 1.1,
-              }}
-            >
-              <ArrowUpRight className="w-4 h-4" />
-            </motion.div>
-          </span>
-
-          {/* Hover effect */}
-          <motion.div
-            className="absolute inset-0 bg-foreground/90"
-            initial={{ scale: 0 }}
-            whileHover={{ scale: 1 }}
-            transition={{ duration: 0.3 }}
-            style={{ borderRadius: "50px" }}
-          />
-        </motion.div>
-      </Link>
+      {href ? (
+        <Link href={href} className="inline-block">
+          {ButtonContent}
+        </Link>
+      ) : (
+        <div className="inline-block">
+          {ButtonContent}
+        </div>
+      )}
     </motion.div>
   );
 };

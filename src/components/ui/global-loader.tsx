@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 
 interface GlobalLoaderProps {
   isLoading?: boolean;
@@ -17,6 +17,28 @@ interface BlinkingSmileyProps {
 
 const BlinkingSmiley: React.FC<BlinkingSmileyProps> = ({ animate = true }) => {
   const [blinkKey, setBlinkKey] = useState(0); // force rerun animation
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  // Smooth out the movement
+  const springConfig = { damping: 25, stiffness: 150 };
+  const springX = useSpring(mouseX, springConfig);
+  const springY = useSpring(mouseY, springConfig);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const { innerWidth, innerHeight } = window;
+      // Calculate position relative to center of screen, limit to +/- 12px
+      const x = (e.clientX - innerWidth / 2) / (innerWidth / 2) * 12;
+      const y = (e.clientY - innerHeight / 2) / (innerHeight / 2) * 12;
+      
+      mouseX.set(x);
+      mouseY.set(y);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   useEffect(() => {
     if (!animate) return;
@@ -55,20 +77,24 @@ const BlinkingSmiley: React.FC<BlinkingSmileyProps> = ({ animate = true }) => {
             initial={{ scaleY: 1 }}
             animate={{ scaleY: [1, 0.1, 1] }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
             className="absolute top-6 left-6 w-3 h-5 bg-foreground rounded-full origin-center"
+            style={{ x: springX, y: springY }}
           />
           <motion.div
             key={`right-${blinkKey}`}
             initial={{ scaleY: 1 }}
             animate={{ scaleY: [1, 0.1, 1] }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
             className="absolute top-6 right-6 w-3 h-5 bg-foreground rounded-full origin-center"
+            style={{ x: springX, y: springY }}
           />
         </>
       ) : (
         <>
-          <div className="absolute top-6 left-6 w-3 h-1 bg-foreground rounded-full" />
-          <div className="absolute top-6 right-6 w-3 h-1 bg-foreground rounded-full" />
+          <motion.div className="absolute top-6 left-6 w-3 h-1 bg-foreground rounded-full" style={{ x: springX, y: springY }} />
+          <motion.div className="absolute top-6 right-6 w-3 h-1 bg-foreground rounded-full" style={{ x: springX, y: springY }} />
         </>
       )}
     </div>

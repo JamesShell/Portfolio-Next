@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "motion/react";
-import { Sun, Moon, MessageCircle, Github, Linkedin, Twitter } from "lucide-react";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { Sun, Moon, ChatCircle, GithubLogo, LinkedinLogo, TwitterLogo, DribbbleLogo } from "@phosphor-icons/react";
 import { SegmentedControl } from "./segmented-control";
 import { cn } from "@/lib/utils";
 import { socialLinks as SL } from "@/constants";
-import { FaDribbble } from "react-icons/fa";
+// FaDribbble replaced with DribbbleLogo from phosphor-icons above
 
 interface SocialLink {
   id: number;
@@ -21,6 +21,7 @@ interface SocialLinksProps {
   className?: string;
   theme?: "light" | "dark" | "system";
   onThemeChange?: (theme: "light" | "dark" | "system") => void;
+  onHover?: (hovered: string) => void;
 }
 
 const socialLinks: SocialLink[] = [
@@ -28,7 +29,7 @@ const socialLinks: SocialLink[] = [
     id: 1,
     name: "GitHub",
     handle: SL.github.handle,
-    icon: <Github className="w-5 h-5" />,
+    icon: <GithubLogo className="w-5 h-5" weight="fill" />,
     href: SL.github.link,
     color: "#333",
   },
@@ -36,7 +37,7 @@ const socialLinks: SocialLink[] = [
     id: 2,
     name: "LinkedIn",
     handle: SL.linkedin.handle,
-    icon: <Linkedin className="w-5 h-5" />,
+    icon: <LinkedinLogo className="w-5 h-5" weight="fill" />,
     href: SL.linkedin.link,
     color: "#0077b5",
   },
@@ -44,7 +45,7 @@ const socialLinks: SocialLink[] = [
     id: 3,
     name: "Twitter",
     handle: SL.twitter.handle,
-    icon: <Twitter className="w-5 h-5" />,
+    icon: <TwitterLogo className="w-5 h-5" weight="fill" />,
     href: SL.twitter.link,
     color: "#1da1f2",
   },
@@ -52,19 +53,19 @@ const socialLinks: SocialLink[] = [
     id: 5,
     name: "Dribbble",
     handle: SL.dribble.handle,
-    icon: <FaDribbble className="w-5 h-5" />,
+    icon: <DribbbleLogo className="w-5 h-5" weight="fill" />,
     href: SL.dribble.link,
     color: "#ea4c89",
   },
 ];
 
 const themeOptions = [
-  { value: "light", label: "", icon: <Sun className="w-4 h-4" /> },
-  { value: "dark", label: "", icon: <Moon className="w-4 h-4" /> },
+  { value: "light", label: "", icon: <Sun className="w-4 h-4" weight="fill" /> },
+  { value: "dark", label: "", icon: <Moon className="w-4 h-4" weight="fill" /> },
   { value: "system", label: "", icon: <div className="w-4 h-4 rounded-full border-2 border-current border-l-transparent" /> },
 ];
 
-const SocialIcon: React.FC<{ item: SocialLink; index: number }> = ({ item, index }) => {
+const SocialIcon: React.FC<{ item: SocialLink; index: number; onHover?: (hovered: string) => void }> = ({ item, index, onHover }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const x = useMotionValue(0);
   const springConfig = { stiffness: 100, damping: 15 };
@@ -94,8 +95,14 @@ const SocialIcon: React.FC<{ item: SocialLink; index: number }> = ({ item, index
   return (
     <div
       className="group relative"
-      onMouseEnter={() => setHoveredIndex(item.id)}
-      onMouseLeave={() => setHoveredIndex(null)}
+      onMouseEnter={() => {
+        setHoveredIndex(item.id);
+        if (onHover) onHover(item.name.toLowerCase());
+      }}
+      onMouseLeave={() => {
+        setHoveredIndex(null);
+        if (onHover) onHover("");
+      }}
     >
       <AnimatePresence>
         {hoveredIndex === item.id && (
@@ -148,11 +155,12 @@ const SocialIcon: React.FC<{ item: SocialLink; index: number }> = ({ item, index
 
 export const SocialLinks: React.FC<SocialLinksProps> = ({
   className,
+  onHover,
 }) => {
   return (
     <div className={cn("flex items-center gap-3", className)}>
       {socialLinks.map((item, index) => (
-        <SocialIcon key={item.id} item={item} index={index} />
+        <SocialIcon key={item.id} item={item} index={index} onHover={onHover} />
       ))}
     </div>
   );

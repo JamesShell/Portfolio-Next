@@ -52,6 +52,10 @@ const ICONS_COLORS = {
   about: 2,
   work: 3,
   contact: 4,
+  github: 2,
+  linkedin: 3,
+  twitter: 4,
+  dribbble: 2,
 } as const;
 
 type IconKey = keyof typeof ICONS_COLORS;
@@ -62,6 +66,10 @@ const CAMERA_POSITIONS = {
   about: { position: [5, -6, 0], target: [0, 0, 0] }, // Zoom into body
   work: { position: [5, -5, -3], target: [2, 1.5, -3.15] }, // Zoom into planets area
   contact: { position: [2, -1, 10], target: [-1, 1, 3.5] }, // Zoom into other planets
+  github: { position: [5, -6, 0], target: [0, 0, 0] },
+  linkedin: { position: [5, -5, -3], target: [2, 1.5, -3.15] },
+  twitter: { position: [2, -1, 10], target: [-1, 1, 3.5] },
+  dribbble: { position: [5, -6, 0], target: [0, 0, 0] },
 } as const;
 
 // Aspect Ratio Controller component
@@ -436,18 +444,25 @@ const Monkey: React.FC<MonkeyProps> = ({ isMobile, lightPosition, hovered }) => 
       // const scale = 0.01 + Math.sin(state.clock.elapsedTime * 1) * 0.001;
       // characterRef.current.scale.set(scale, scale, scale);
     }
-    // Rotate planets around Y-axis at different speeds
+    // Rotate planets around Y-axis at different speeds and hide based on scroll
+    const shouldHidePlanets = scrollY > 100; // Hide planets when scrolled past 100px
     planetsRef.current.forEach((planet, index) => {
       if (planet.name === "SphereGroup") {
         // Handle the grouped Sphere and Sphere001
         planet.children.forEach((child: any, childIndex: number) => {
-          child.position.applyAxisAngle(new Vector3(0, 1, 0), 0.005);
-          child.rotation.z -= 0.025 + (childIndex * 0.01);
+          child.visible = !shouldHidePlanets;
+          if (child.visible) {
+            child.position.applyAxisAngle(new Vector3(0, 1, 0), 0.005);
+            child.rotation.z -= 0.025 + (childIndex * 0.01);
+          }
         });
       } else if (planet) {
         // Handle individual planets
-        planet.position.applyAxisAngle(new Vector3(0, 1, 0), 0.005);
-        planet.rotation.z += 0.025 + (index * 0.001);
+        planet.visible = !shouldHidePlanets;
+        if (planet.visible) {
+          planet.position.applyAxisAngle(new Vector3(0, 1, 0), 0.005);
+          planet.rotation.z += 0.025 + (index * 0.001);
+        }
       }
     });
     // Subtle wave scaling animation - only animate when scaling up
@@ -465,7 +480,7 @@ const Monkey: React.FC<MonkeyProps> = ({ isMobile, lightPosition, hovered }) => 
       let targetPos = CAMERA_POSITIONS[hovered];
       
       // Override positions for work and contact with dynamic positioning
-      if (hovered === "work") {
+      if (hovered === "work" || hovered === "linkedin") {
         const sphereGroup = planetsRef.current.find(item => item.name === "SphereGroup");
         if (sphereGroup && sphereGroup.children.length > 0) {
           const refSphere = sphereGroup.children[0];
@@ -475,7 +490,7 @@ const Monkey: React.FC<MonkeyProps> = ({ isMobile, lightPosition, hovered }) => 
             target: [pos.x, pos.y, pos.z]
           };
         }
-      } else if (hovered === "contact") {
+      } else if (hovered === "contact" || hovered === "twitter") {
         // Find Sphere003 for contact
         let sphere005: any = null;
         scene.traverse((child: any) => {

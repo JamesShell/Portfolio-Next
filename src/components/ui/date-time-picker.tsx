@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar, Clock, ChevronLeft, ChevronRight } from "lucide-react";
+import { Calendar, Clock, CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { Button } from "./button";
 
 interface DateTimePickerProps {
@@ -76,7 +76,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({
             onClick={() => navigateMonth(-1)}
             className="p-1"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <CaretLeft className="w-4 h-4" weight="bold" />
           </Button>
           <span className="font-medium">{monthYear}</span>
           <Button
@@ -85,7 +85,7 @@ export const DateTimePicker: React.FC<DateTimePickerProps> = ({
             onClick={() => navigateMonth(1)}
             className="p-1"
           >
-            <ChevronRight className="w-4 h-4" />
+            <CaretRight className="w-4 h-4" weight="bold" />
           </Button>
         </div>
 

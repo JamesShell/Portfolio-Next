@@ -7,17 +7,17 @@ import { nyght } from "@/assets/font";
 import { Badge } from "../ui/badge";
 import { SocialLinks } from "../ui/social-links";
 import { SegmentedControl } from "../ui/segmented-control";
-import { Sun, Moon, Monitor } from "lucide-react";
+import { Sun, Moon, Monitor } from "@phosphor-icons/react";
 
 
 // Define a type for valid hover states
-type HoverState = "" | "about" | "work" | "contact";
+type HoverState = "" | "about" | "work" | "contact" | "github" | "linkedin" | "twitter" | "dribbble";
 
 const Hero = () => {
   const [hoveredOne, setHoveredOne] = useState<HoverState>("");
   const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
   const [scrollY, setScrollY] = useState(0);
-  const navItems: HoverState[] = ["about", "work", "contact"];
+  // const navItems: HoverState[] = ["about", "work", "contact"];
 
   const themeOptions = [
     { value: "light", label: "", icon: <Sun className="w-4 h-4" /> },
@@ -194,35 +194,13 @@ const Hero = () => {
             >
               {/* Social Links - without theme control */}
               <motion.div variants={navItemVariants}>
-                <SocialLinks className="flex-col absolute sm:relative bottom-4 right-4 sm:bottom-0 sm:right-0 sm:flex-row" />
+                <SocialLinks 
+                  className="flex-col absolute sm:relative bottom-4 right-4 sm:bottom-0 sm:right-0 sm:flex-row" 
+                  onHover={(hovered) => setHoveredOne(hovered as HoverState)}
+                />
               </motion.div>
 
-              {/* Navigation Items */}
-              <motion.nav 
-                className="flex gap-6"
-                variants={navigationVariants}
-                role="navigation"
-                aria-label="Main navigation"
-              >
-                {navItems.map((item, index) => (
-                  <motion.div
-                    key={item}
-                    variants={navItemVariants}
-                    onMouseEnter={() => setHoveredOne(item)}
-                    onMouseLeave={() => setHoveredOne("")}
-                    className={` cursor-pointer transition-colors duration-200 text-foreground/60 hover:text-foreground hover:scale-105`}
-                    whileHover={{ 
-                      scale: 1.05, 
-                      transition: { duration: 0.2 } 
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <TextEffect as="a" preset="fade" per="char" href={`#${item}`} className={`text-xl font-medium`} aria-label={`Navigate to ${item} section`}>
-                      {item.charAt(0).toUpperCase() + item.slice(1)}
-                    </TextEffect>
-                  </motion.div>
-                ))}
-              </motion.nav>
+
             </motion.div>
           </div>
 

@@ -1,17 +1,18 @@
 "use client";
 import { nyght } from "@/assets/font";
 import { cn } from "@/lib/utils";
-import { Menu, X } from "lucide-react";
+import { List, X } from "@phosphor-icons/react";
 import {
   motion,
   AnimatePresence,
   useScroll,
   useMotionValueEvent,
-} from "motion/react";
+} from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 import React, { useRef, useState } from "react";
+import { BlinkingSmiley } from "./global-loader";
 
 
 interface NavbarProps {
@@ -29,9 +30,11 @@ interface NavItemsProps {
   items: {
     name: string;
     link: string;
+    action?: () => void;
   }[];
   className?: string;
   onItemClick?: () => void;
+  activeSection?: string;
 }
 
 interface MobileNavProps {
@@ -118,18 +121,27 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
   );
 };
 
-export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
+export const NavItems = ({ items, className, onItemClick, activeSection }: NavItemsProps) => {
   const [hovered, setHovered] = useState<number | null>(null);
   const router = useRouter();
 
-  const isActive = (href: string) => {
-    if (href === '/') {
+  const isActive = (link: string) => {
+    // If activeSection is provided (one-page mode), use it
+    if (activeSection) {
+      if (link === '/') return activeSection === 'hero';
+      // Extract section ID from link (e.g., "/#about" -> "about")
+      const linkSection = link.replace('/#', '').replace('#', '');
+      return linkSection === activeSection;
+    }
+    
+    // Fallback to router path (multi-page mode)
+    if (link === '/') {
       return router.pathname === '/';
     }
-    if (href.startsWith('/#')) {
-      return router.pathname === '/' && router.asPath.includes(href);
+    if (link.startsWith('/#')) {
+      return router.pathname === '/' && router.asPath.includes(link);
     }
-    return router.pathname === href;
+    return router.pathname === link;
   };
 
   return (
@@ -154,7 +166,14 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
                 : "text-neutral-600 dark:text-neutral-300 hover:text-primary font-normal"
             )}
             onMouseEnter={() => setHovered(idx)}
-            onClick={onItemClick}
+            onClick={(e) => {
+              if (item.action) {
+                e.preventDefault();
+                item.action();
+              }
+              onItemClick?.();
+            }}
+            scroll={item.action ? false : true}
           >
             {(hovered === idx || active) && (
               <motion.div
@@ -254,9 +273,9 @@ export const MobileNavToggle = ({
   onClick: () => void;
 }) => {
   return isOpen ? (
-    <X className="text-black dark:text-white" onClick={onClick} />
+    <X className="text-black dark:text-white" onClick={onClick} weight="bold" />
   ) : (
-    <Menu className="text-black dark:text-white" onClick={onClick} />
+    <List className="text-black dark:text-white" onClick={onClick} weight="bold" />
   );
 };
 
@@ -266,6 +285,11 @@ export const NavbarLogo = () => {
       href="#"
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
     >
+      <div className="relative h-8 w-8 flex items-center justify-center">
+        <div className="scale-[0.3]">
+          <BlinkingSmiley />
+        </div>
+      </div>
       <span className={`text-lg tracking-wide italic text-black dark:text-white ${nyght.className}`}>Ettouzany</span>
     </a>
   );

@@ -34,11 +34,12 @@ import BookingCard from '@/components/admin/BookingCard';
 import { withAdminAuth } from '@/hooks/useAuth';
 import { Spotlight } from "@/components/ui/spotlight-new";
 import { SegmentedControl } from "@/components/ui/segmented-control";
+import ProjectManager from "@/components/admin/ProjectManager";
 
 const AdminDashboard: React.FC = () => {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'all' | 'messages' | 'bookings'>('all');
+  const [activeTab, setActiveTab] = useState<'all' | 'messages' | 'bookings' | 'projects'>('all');
   const [filter, setFilter] = useState<'all' | 'unread' | 'pending'>('all');
   const router = useRouter();
 
@@ -188,6 +189,7 @@ const AdminDashboard: React.FC = () => {
     { value: "all", label: `All (${submissions.length})`, icon: <TrendingUp className="w-4 h-4" /> },
     { value: "messages", label: `Messages (${submissions.filter(s => s.type === 'message').length})`, icon: <MessageSquare className="w-4 h-4" /> },
     { value: "bookings", label: `Bookings (${submissions.filter(s => s.type === 'booking').length})`, icon: <Calendar className="w-4 h-4" /> },
+    { value: "projects", label: "Projects", icon: <Shield className="w-4 h-4" /> },
   ];
 
   return (
@@ -343,34 +345,10 @@ const AdminDashboard: React.FC = () => {
               options={tabOptions}
               value={activeTab}
               onChange={(value) => {
-                setActiveTab(value as "all" | "messages" | "bookings");
+                setActiveTab(value as "all" | "messages" | "bookings" | "projects");
               }}
               size="lg"
             />
-          </motion.div>
-
-          {/* Filter Controls */}
-          <motion.div 
-            className="mb-8 flex justify-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            <div className="relative bg-background/50 backdrop-blur-md border border-border/30 rounded-2xl shadow-lg p-4">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-secondary/3 rounded-2xl"></div>
-              <div className="relative flex items-center gap-3">
-                <Filter className="w-4 h-4 text-foreground/60" />
-                <select
-                  value={filter}
-                  onChange={(e) => setFilter(e.target.value as any)}
-                  className="bg-background/30 backdrop-blur-sm border border-border/50 rounded-xl py-2 px-4 text-foreground placeholder:text-foreground/50 focus:bg-background/50 focus:border-border transition-all duration-300"
-                >
-                  <option value="all">All Items</option>
-                  <option value="unread">Unread Only</option>
-                  <option value="pending">Pending Only</option>
-                </select>
-              </div>
-            </div>
           </motion.div>
 
           {/* Main Content */}
@@ -379,12 +357,42 @@ const AdminDashboard: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
           >
-            <SubmissionsList 
-              submissions={filteredSubmissions}
-              onMarkAsRead={markAsRead}
-              onUpdateBookingStatus={updateBookingStatus}
-              getStatusBadge={getStatusBadge}
-            />
+            {activeTab === 'projects' ? (
+              <ProjectManager />
+            ) : (
+                <>
+                {/* Filter Controls - only for submissions */}
+                 <motion.div 
+                    className="mb-8 flex justify-center"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                >
+                    <div className="relative bg-background/50 backdrop-blur-md border border-border/30 rounded-2xl shadow-lg p-4">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-secondary/3 rounded-2xl"></div>
+                    <div className="relative flex items-center gap-3">
+                        <Filter className="w-4 h-4 text-foreground/60" />
+                        <select
+                        value={filter}
+                        onChange={(e) => setFilter(e.target.value as any)}
+                        className="bg-background/30 backdrop-blur-sm border border-border/50 rounded-xl py-2 px-4 text-foreground placeholder:text-foreground/50 focus:bg-background/50 focus:border-border transition-all duration-300"
+                        >
+                        <option value="all">All Items</option>
+                        <option value="unread">Unread Only</option>
+                        <option value="pending">Pending Only</option>
+                        </select>
+                    </div>
+                    </div>
+                </motion.div>
+
+                <SubmissionsList 
+                submissions={filteredSubmissions}
+                onMarkAsRead={markAsRead}
+                onUpdateBookingStatus={updateBookingStatus}
+                getStatusBadge={getStatusBadge}
+                />
+              </>
+            )}
           </motion.div>
         </div>
       </div>

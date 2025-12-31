@@ -1,170 +1,225 @@
-'use client';
+"use client";
 
-import React, { useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { SectionWrapper } from '@/hoc';
-import { motion } from 'framer-motion';
-import { fadeIn, textVariant } from '@/utils/motion';
-import { testimonials } from '@/constants';
+import { motion, useAnimation, PanInfo } from 'framer-motion';
+import { textVariant } from '@/utils/motion';
+import { testimonials, Testimonial } from '@/constants';
 import { Badge } from '@/components/ui/badge';
-import { MessageSquare, User } from 'lucide-react';
+import { MessageSquare, User, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { nyght } from '@/assets/font';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
-import { useGSAP } from '@gsap/react';
 
-// Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+// Reusable Testimonial Card Component (Unchanged)
+const TestimonialCard: React.FC<{ testimonial: Testimonial; className?: string }> = ({ testimonial, className = "" }) => (
+  <div className={`bg-zinc-50 dark:bg-zinc-900 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-xl p-8 flex flex-col justify-between h-full min-h-[400px] text-left mx-2 select-none ${className}`}>
+    <div>
+      <div className="flex gap-1 mb-6">
+        {[...Array(5)].map((_, i) => (
+          <Star 
+            key={i} 
+            className="w-5 h-5 text-zinc-900 fill-zinc-900 dark:text-amber-500 dark:fill-amber-500" 
+          />
+        ))}
+      </div>
+
+      <blockquote className="text-zinc-900 dark:text-zinc-100 leading-relaxed text-xl sm:text-2xl font-medium">
+        "{testimonial.testimonial}"
+      </blockquote>
+    </div>
+    
+    <div className="flex items-center space-x-4 mt-8 pt-6 border-t border-zinc-200 dark:border-zinc-800">
+      <div className="w-14 h-14 bg-black/5 dark:bg-white/10 backdrop-blur-sm border border-zinc-300/50 dark:border-zinc-700/50 rounded-full flex items-center justify-center flex-shrink-0">
+        <User className="w-6 h-6 text-black/70 dark:text-white/90" />
+      </div>
+      <div className="text-left">
+        <h4 className="text-black dark:text-white font-semibold text-lg">
+          {testimonial.name}
+        </h4>
+        {testimonial.company && (
+          <p className="text-zinc-500 dark:text-zinc-400 text-base">
+            {testimonial.company}
+          </p>
+        )}
+      </div>
+    </div>
+  </div>
+);
 
 const Feedback: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement[]>([]);
+  // Triple the data for infinite loop buffer
+  // [Set 1 (buffer)] [Set 2 (main)] [Set 3 (buffer)]
+  const displayTestimonials = [...testimonials, ...testimonials, ...testimonials];
+  
+  // Start in the middle set
+  const startIndex = testimonials.length; 
+  const [currentIndex, setCurrentIndex] = useState(startIndex);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
-  useGSAP(() => {
-    if (!containerRef.current || cardsRef.current.length === 0) return;
+  const controls = useAnimation();
+  const CARD_WIDTH_PERCENT = 40; // Desktop grid width (2.5 items)
+  
+  // Dynamic card width based on screen size could be handled via CSS/responsive logic,
+  // but for simplicity in Framer Motion x-calculation, we'll assume the desktop logic mostly.
+  // For mobile, we might want 100%.
+  // We can use a simple check or just CSS classes forcing width.
+  // But motion 'x' percent depends on the item width.
+  // If item is 100% on mobile, shift is 100%. If 40% on desktop, shift is 40%.
+  // Let's use a state or ref for screen width? Or strictly use % and let CSS handle the width.
+  // If I move container -40%, and items are 40%, it moves 1 item.
+  // If items are 100% (mobile), I need to move -100%.
+  // Solution: Responsive shift amount.
+  
+  const [slidePercent, setSlidePercent] = useState(100);
+  const skipAnimation = useRef(false);
 
-    const cards = cardsRef.current;
-    const isMobile = window.innerWidth < 768;
-    const viewportWidth = window.innerWidth;
-    
-    // Create a timeline for the arch animation
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: 'top top',
-        end: '+=150%', // Balance between smoothness and no dead zones
-        pin: true,
-        scrub: 10, // Increased for smoother, less jittery animation
-        anticipatePin: 1,
-      }
-    });
-
-    // Calculate arch path for each card - RIGHT TO LEFT
-    cards.forEach((card, index) => {
-      // Start position: offscreen RIGHT, at BOTTOM of viewport
-      const startX = viewportWidth + 20; // Minimal buffer so they appear sooner
-      const startY = isMobile ? 350 : 450; 
-      
-      // Arch peak position: CENTER of screen, BOTTOM half
-      const archX = 0;
-      const archHeight = isMobile ? 200 : 250; 
-      
-      // End position: offscreen LEFT, at BOTTOM of viewport
-      const endX = -(viewportWidth + 20); // Minimal buffer
-      const endY = isMobile ? 350 : 450; 
-      
-      // Slight rotation as cards move
-      const startRotation = 15;
-      const endRotation = -15;
-
-      // Set initial position
-      gsap.set(card, {
-        x: startX,
-        y: startY,
-        rotation: startRotation,
-        scale: 0.9,
-        willChange: 'transform', // Optimization for smoothness
-      });
-
-      // Animate along arch path from RIGHT → CENTER (peak) → LEFT
-      tl.to(card, {
-        scale: 1,
-        motionPath: {
-          path: [
-            { x: startX, y: startY },        // Start: Offscreen right
-            { x: archX, y: archHeight },     // Peak: Center bottom
-            { x: endX, y: endY }             // End: Offscreen left
-          ],
-          curviness: 2.5,
-        },
-        rotation: endRotation,
-        duration: 1,
-        ease: 'power4.inOut', // Slightly less extreme than expo to reduce start/end delay
-      }, index * 0.06); // Reduced staggering to 0.1 as requested
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+  useEffect(() => {
+    const handleResize = () => {
+      setSlidePercent(window.innerWidth >= 768 ? 40 : 100);
     };
-  }, { scope: containerRef, dependencies: [] });
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    const interval = setInterval(() => {
+        handleNext();
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, currentIndex, slidePercent]);
+
+  const handleNext = () => {
+    if (isTransitioning) return;
+    skipAnimation.current = false;
+    setIsTransitioning(true);
+    setCurrentIndex(prev => prev + 1);
+  };
+
+  const handlePrev = () => { 
+    if (isTransitioning) return;
+    skipAnimation.current = false;
+    setIsTransitioning(true);
+    setCurrentIndex(prev => prev - 1);
+  };
+
+  const onAnimationComplete = () => {
+    setIsTransitioning(false);
+    const totalOriginal = testimonials.length;
+    
+    // Snap logic
+    if (currentIndex >= startIndex + totalOriginal) {
+      skipAnimation.current = true;
+      setCurrentIndex(currentIndex - totalOriginal);
+    }
+    if (currentIndex < startIndex) {
+        skipAnimation.current = true;
+        setCurrentIndex(currentIndex + totalOriginal);
+    }
+  };
+
+  const onDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    setIsAutoPlaying(false);
+    if (info.offset.x < -50) {
+        handleNext();
+    } else if (info.offset.x > 50) {
+        handlePrev();
+    }
+  };
 
   return (
-    <div ref={containerRef} className="relative w-full min-h-screen px-4 sm:px-6 lg:px-8">
-      {/* Enhanced Section Header - Fixed at top of pinned section */}
+    <div className="relative w-full py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      {/* Section Header */}
       <motion.div 
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
         variants={textVariant({ delay: 0 })}
-        className="absolute top-8 left-0 right-0 px-4 sm:px-6 lg:px-8 z-10"
+        className="text-center mb-12"
       >
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-          {/* Left side - Content */}
-          <motion.div 
-            className="flex-1 items-center text-center"
-            variants={fadeIn({ direction: "left", delay: 0.2, duration: 0.8 })}
-          >
-            <motion.div 
-              className="inline-block mb-6"
-              whileHover={{ scale: 1.05 }}
-            >
-              <Badge className="flex items-center gap-2 text-muted-foreground font-medium uppercase" size={'xl'}>
-                <MessageSquare className="w-3 h-3 text-foreground/60" />
-                What others are saying
-              </Badge>
-            </motion.div>
-            
-            <h1 className={`text-4xl lg:text-5xl xl:text-6xl font-semibold mb-6 ${nyght.className}`}>
-              Client <span className={`bg-gradient-to-b from-foreground to-slate-400 dark:to-zinc-900 bg-clip-text text-transparent ${nyght.className} font-medium italic`}>Feedback</span>
-            </h1>
-          </motion.div>
-        </div>
+        <motion.div 
+          className="inline-block mb-6"
+          whileHover={{ scale: 1.05 }}
+        >
+          <Badge className="flex items-center gap-2 text-muted-foreground font-medium uppercase" size={'xl'}>
+            <MessageSquare className="w-3 h-3 text-foreground/60" />
+            What others are saying
+          </Badge>
+        </motion.div>
+        
+        <h1 className={`text-4xl lg:text-5xl xl:text-6xl font-semibold mb-6 ${nyght.className}`}>
+          Partners <span className={`bg-gradient-to-b from-foreground to-slate-400 dark:to-zinc-900 bg-clip-text text-transparent ${nyght.className} font-medium italic`}>Feedback</span>
+        </h1>
       </motion.div>
       
-      {/* Arching Testimonials */}
-      <div className="relative flex justify-center items-center min-h-[400px] w-full">
-        {testimonials.map((item: any, index: number) => {
-          return (
-            <div
-              key={index}
-              ref={(el) => {
-                if (el) cardsRef.current[index] = el;
-              }}
-              className="absolute"
-              style={{ zIndex: testimonials.length - index }}
-            >
-              <div className="bg-black dark:bg-white backdrop-blur-md border border-zinc-800 dark:border-zinc-200 rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-300 w-[85vw] max-w-[400px] h-[60vh] p-8 sm:p-10 flex flex-col justify-between">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-white/5 dark:from-black/5 dark:to-black/5 rounded-xl pointer-events-none"></div>
-                
-                {/* Testimonial Content - TOP LEFT */}
-                <div className="relative z-10 flex-1 flex items-start justify-start pt-4">
-                  <blockquote className="text-zinc-100 dark:text-zinc-900 leading-relaxed text-lg sm:text-xl font-semibold text-left">
-                    "{item.testimonial}"
-                  </blockquote>
-                </div>
-                
-                {/* Author Info - BOTTOM */}
-                <div className="relative z-10 flex items-center space-x-4 pt-6 border-t border-zinc-800 dark:border-zinc-200">
-                  <div className="w-14 h-14 bg-white/10 dark:bg-black/5 backdrop-blur-sm border border-zinc-700/50 dark:border-zinc-300/50 rounded-full flex items-center justify-center shrink-0">
-                    <User className="w-6 h-6 text-white/90 dark:text-black/70" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="text-white dark:text-black font-medium text-lg">{item.name}</h4>
-                    {item.company && (
-                      <p className="text-zinc-400 dark:text-zinc-500 text-base font-light">{item.company}</p>
-                    )}
-                  </div>
-                </div>
-                
-                {/* Hover glow effect */}
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-white/5 via-transparent to-white/5 dark:from-black/5 dark:to-black/5 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-              </div>
-            </div>
-          );
-        })}
+      {/* Carousel Container */}
+      <div 
+        className="relative max-w-[1400px] mx-auto px-4"
+        onMouseEnter={() => setIsAutoPlaying(false)}
+        onMouseLeave={() => setIsAutoPlaying(true)}
+      > 
+        {/* Navigation Arrows (Desktop) */}
+        <div className="hidden md:flex justify-end gap-2 mb-4 pr-4">
+           <button 
+             onClick={() => { setIsAutoPlaying(false); handlePrev(); }}
+             className="z-10 w-12 h-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center hover:scale-110 transition-transform active:scale-95"
+           >
+             <ChevronLeft className="w-6 h-6" />
+           </button>
+           <button 
+             onClick={() => { setIsAutoPlaying(false); handleNext(); }}
+             className="z-10 w-12 h-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center hover:scale-110 transition-transform active:scale-95"
+           >
+             <ChevronRight className="w-6 h-6" />
+           </button>
+        </div>
+
+
+        {/* Track */}
+        <div className="overflow-hidden md:overflow-visible md:[mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+          <motion.div 
+            className="flex cursor-grab active:cursor-grabbing"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }} 
+            dragElastic={0.05}
+            onDragEnd={onDragEnd}
+            animate={{
+              x: `-${currentIndex * slidePercent}%`
+            }}
+            transition={{ 
+                duration: skipAnimation.current ? 0 : 0.5,
+                ease: "easeInOut",
+                type: skipAnimation.current ? "tween" : "spring",
+                stiffness: 300, 
+                damping: 30 
+            }}
+            onAnimationComplete={onAnimationComplete}
+          >
+            {displayTestimonials.map((testimonial, index) => (
+              <motion.div 
+                key={`${index}-${testimonial.name}`}
+                className="flex-shrink-0 w-full md:w-[40%] px-2 transition-opacity duration-300"
+              >
+                 <TestimonialCard testimonial={testimonial} />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </div>
+      
+      {/* Mobile Controls */}
+      <div className="flex md:hidden justify-center gap-4 mt-8">
+           <button onClick={() => { setIsAutoPlaying(false); handlePrev(); }} className="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
+             <ChevronLeft className="w-5 h-5" />
+           </button>
+           <button onClick={() => { setIsAutoPlaying(false); handleNext(); }} className="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
+             <ChevronRight className="w-5 h-5" />
+           </button>
+      </div>
+
     </div>
   );
 };
 
-export default SectionWrapper(Feedback, 'feedback');
+export default SectionWrapper(Feedback, 'testimonials');

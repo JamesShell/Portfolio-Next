@@ -5,10 +5,10 @@ import { styles } from "@/styles/style";
 import { Tilt } from "react-next-tilt";
 import { fadeIn, textVariant } from "@/utils/motion";
 import { technologies } from "@/constants";
-import { IconType } from "react-icons";
+import { IconProps } from "@phosphor-icons/react";
 import { nyght } from "@/assets/font";
 import { Badge } from "../ui/badge";
-import { Laptop, Stars } from "lucide-react";
+import { Laptop, Star } from "@phosphor-icons/react";
 import { MoonCanvas } from "@/components/canvas";
 
 const Tech = () => {

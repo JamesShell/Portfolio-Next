@@ -6,7 +6,7 @@ import {
   useScroll,
   useTransform,
   motion,
-} from "motion/react";
+} from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { nyght } from "@/assets/font";
@@ -15,13 +15,13 @@ import {
   Calendar, 
   MapPin, 
   Briefcase, 
-  Award, 
-  ExternalLink,
+  Trophy, 
+  ArrowSquareOut,
   Clock,
   Users,
-  Code2,
+  Code,
   GraduationCap
-} from "lucide-react";
+} from "@phosphor-icons/react";
 import { Spotlight } from "../ui/spotlight-new";
 import { BlinkingSmiley } from "../ui/global-loader";
 
@@ -107,11 +107,11 @@ const timelineData: TimelineData[] = [
 const getTypeIcon = (type: string) => {
   switch (type) {
     case "work":
-      return <Briefcase className="w-4 h-4" />;
+      return <Briefcase className="w-4 h-4" weight="fill" />;
     case "education":
-      return <GraduationCap className="w-4 h-4" />;
+      return <GraduationCap className="w-4 h-4" weight="fill" />;
     case "achievement":
-      return <Award className="w-4 h-4" />;
+      return <Trophy className="w-4 h-4" weight="fill" />;
     default:
       return <Clock className="w-4 h-4" />;
   }
@@ -163,7 +163,7 @@ const TimelineContent: React.FC<{ item: TimelineData; index: number }> = ({ item
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <ExternalLink className="w-4 h-4" />
+                  <ArrowSquareOut className="w-4 h-4" />
                 </motion.a>
               )}
             </div>
@@ -229,7 +229,7 @@ const TimelineContent: React.FC<{ item: TimelineData; index: number }> = ({ item
         {item.skills.length > 0 && (
           <div>
             <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-              <Code2 className="w-4 h-4" />
+              <Code className="w-4 h-4" weight="bold" />
               Technologies Used
             </h4>
             <div className="flex flex-wrap gap-2">
@@ -390,4 +390,4 @@ const DefaultTimeline = () => {
   return <Timeline data={timelineEntries} />;
 };
 
-export default SectionWrapper(DefaultTimeline, "timeline");
+export default SectionWrapper(DefaultTimeline, "experience");

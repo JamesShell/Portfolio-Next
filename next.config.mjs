@@ -1,29 +1,43 @@
-import withTM from 'next-transpile-modules';
-
-// Add the 'maath' package to the list of modules to be transpiled
-const nextConfig = withTM(['maath'])({
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  
+
+  // Use built-in transpilation instead of deprecated next-transpile-modules
+  transpilePackages: ['maath'],
+
   // Ignore ESLint errors during build (treat as warnings)
   eslint: {
     ignoreDuringBuilds: true,
   },
-  
-  // Ignore TypeScript errors during build (treat as warnings) 
+
+  // Ignore TypeScript errors during build (treat as warnings)
   typescript: {
     ignoreBuildErrors: true,
   },
-  
-  // SEO Optimizations
+
+  // Performance optimizations
   compress: true,
-  
+
+  // Experimental features for faster compilation
+  experimental: {
+    // Enable optimized package imports for heavy libraries
+    optimizePackageImports: [
+      '@phosphor-icons/react',
+      'lucide-react',
+      'react-icons',
+      '@radix-ui/react-icons',
+      'framer-motion',
+      'gsap',
+    ],
+  },
+
   // Image optimization
   images: {
     domains: ['yourwebsite.com'], // Add your domain
     formats: ['image/webp', 'image/avif'],
   },
-  
+
   // Headers for better SEO
   async headers() {
     return [
@@ -59,13 +73,19 @@ const nextConfig = withTM(['maath'])({
       },
     ];
   },
-  
+
   // Redirects for better SEO
   async redirects() {
     return [
       // Add any necessary redirects here
     ];
   },
-});
+};
 
-export default nextConfig;
+// Bundle analyzer configuration (run with ANALYZE=true npm run build)
+const withBundleAnalyzer =
+  process.env.ANALYZE === 'true'
+    ? require('@next/bundle-analyzer')({ enabled: true })
+    : (config) => config;
+
+export default withBundleAnalyzer(nextConfig);

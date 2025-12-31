@@ -73,9 +73,15 @@ const FooterThemeToggle: React.FC = () => {
   );
 };
 
+// ... imports
+import { useContactModal } from '@/context/ContactModalContext';
+
+// ... (FooterThemeToggle remains same)
+
 const CTAFooter: React.FC = () => {
   const currentYear = new Date().getFullYear();
   const containerRef = useRef<HTMLDivElement>(null);
+  const { openMessage, openBooking } = useContactModal();
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -92,9 +98,9 @@ const CTAFooter: React.FC = () => {
       title: "Navigation",
       links: [
         { name: "Home", href: "/" },
-        { name: "About", href: "/#about" },
-        { name: "Works", href: "/#work" },
-        { name: "Contact", href: "/contact" },
+        { name: "Experience", href: "/#experience" },
+        { name: "Projects", href: "/#projects" },
+        { name: "Contact", href: "#", action: openMessage },
       ]
     },
     {
@@ -159,7 +165,7 @@ const CTAFooter: React.FC = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <MagneticButton href="/contact" className="text-lg">
+              <MagneticButton onClick={openMessage} className="text-lg">
                 Get In Touch
               </MagneticButton>
             </div>
@@ -170,58 +176,73 @@ const CTAFooter: React.FC = () => {
       {/* Footer */}
       <footer>
         <div className="container mx-auto px-6 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
             {/* Brand Section */}
-            <div className="md:col-span-2">
+            <div className="md:col-span-5">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <div className="mb-4">
-                  <h3 className={`text-2xl font-bold ${nyght.className}`}>
+                <div className="mb-6">
+                  <h3 className={`text-2xl font-bold ${nyght.className} mb-4`}>
                     Ettouzany
                   </h3>
-                  <p className="text-foreground/60 mt-2 max-w-md">
+                  <p className="text-foreground/60 max-w-sm leading-relaxed">
                     Full-stack developer passionate about creating exceptional digital experiences 
-                    with modern technologies and clean, efficient code.
+                    with modern technologies.
                   </p>
                 </div>
                 
-                <div className="flex items-center gap-2 text-sm text-foreground/60">
-                  <span>Built with</span>
-                  <Heart className="w-4 h-4 text-red-500 fill-current animate-pulse" />
-                  <span>and lots of</span>
-                  <Coffee className="w-4 h-4 text-amber-600" />
+                {/* Newsletter */}
+                <div className="max-w-sm mt-8">
+                  <h4 className="font-semibold text-foreground mb-3">Subscribe to newsletter</h4>
+                  <div className="flex gap-2">
+                    <input 
+                      type="email" 
+                      placeholder="Enter your email" 
+                      className="flex-1 bg-muted/50 border border-border/50 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                    />
+                    <button className="bg-foreground text-background px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
+                      Join
+                    </button>
+                  </div>
+                  <p className="text-xs text-foreground/40 mt-2">
+                    No spam. Unsubscribe anytime.
+                  </p>
                 </div>
               </motion.div>
             </div>
 
             {/* Links Sections */}
-            {footerLinks.map((section, sectionIndex) => (
-              <motion.div
-                key={section.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1 * (sectionIndex + 1) }}
-              >
-                <h4 className="text-foreground font-semibold mb-4">{section.title}</h4>
-                <ul className="space-y-3">
-                  {section.links.map((link, linkIndex) => (
-                    <li key={linkIndex}>
-                      <Link 
-                        href={link.href}
-                        className="text-foreground/60 hover:text-foreground transition-colors duration-300 text-sm block hover:translate-x-1 transform transition-transform"
-                      >
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
+            <div className="md:col-span-7 grid grid-cols-2 gap-8">
+              {footerLinks.map((section, sectionIndex) => (
+                <motion.div
+                  key={section.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.1 * (sectionIndex + 1) }}
+                >
+                  <h4 className="text-foreground font-semibold mb-4">{section.title}</h4>
+                  <ul className="space-y-3">
+                    {section.links.map((link, linkIndex) => (
+                      <li key={linkIndex}>
+                        <Link 
+                          href={link.href}
+                          className="text-foreground/60 hover:text-foreground text-sm block hover:translate-x-1 transition-all duration-300"
+                        >
+                          {link.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+              
+
+            </div>
           </div>
 
           {/* Bottom Section */}
@@ -237,6 +258,12 @@ const CTAFooter: React.FC = () => {
             </div>
             
             <div className="flex flex-col sm:flex-row items-center gap-6">
+              <div className="items-center gap-2 text-sm text-foreground/60 hidden sm:flex">
+                <span>Made with</span>
+                <Heart className="w-4 h-4 text-red-500 fill-current animate-pulse" />
+                <span>and</span>
+                <Coffee className="w-4 h-4 text-amber-600" />
+              </div>
               <FooterThemeToggle />
               <SocialLinks className="gap-3" />
             </div>

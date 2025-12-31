@@ -4,13 +4,18 @@ import Loading from '@/pages/_loading';
 import Navbar from '@/components/fragments/Navbar';
 import SEOHead from '@/components/SEO/Head';
 import { personStructuredData, websiteStructuredData } from '@/utils/structuredData';
+import About from '@/components/fragments/About';
+import Timeline from '@/components/fragments/Timeline';
 
 // Import components lazily
 const Hero = lazy(() => import('@/components/fragments/Hero'));
-const About = lazy(() => import('@/components/fragments/About'));
-const Tech = lazy(() => import('@/components/fragments/Tech'));
+const WhyChooseMe = lazy(() => import('@/components/fragments/WhyChooseMe'));
 const Works = lazy(() => import('@/components/fragments/Works'));
+
+const Pricing = lazy(() => import('@/components/fragments/Pricing'));
+const Features = lazy(() => import('@/components/fragments/Features'));
 const Feedbacks = lazy(() => import('@/components/fragments/Feedback'));
+const FAQ = lazy(() => import('@/components/fragments/FAQ'));
 const CTAFooter = lazy(() => import('@/components/fragments/cta-footer'));
 // const StarsCanvas = lazy(() => import('@/components/canvas/Stars'));
 import { StarsCanvas, AsteroidsCanvas } from '@/components/canvas';
@@ -55,12 +60,40 @@ export default function Home() {
                 <Hero />
               </div>
 
-              {/* Enhanced section spacing */}
-              <div className="space-y-32 py-20">
-                <About />
-                <Tech />
+              {/* High-converting section flow */}
+              <div className="space-y-8">
+                {/* Social Proof */}
+                {/* <LogoCloud /> */}
+                
+                
+                {/* Features & Benefits */}
+                <Features />
+
+                {/* About Me */}
+                {/* <About /> */}
+                
+                {/* Features & Benefits */}
+                <WhyChooseMe />
+                
+                {/* Experience Timeline */}
+                {/* <Timeline /> */}
+                
+                {/* Tech Stack */}
+                {/* <Tech /> */}
+                
+                {/* Portfolio Work */}
                 <Works />
+                
+                {/* Process Flow */}
+                
+                {/* Pricing Plans */}
+                <Pricing />
+                
+                {/* Testimonials */}
                 <Feedbacks />
+                
+                {/* FAQ */}
+                <FAQ />
               </div>
 
               {/* CTA and Footer */}
@@ -75,3 +108,4 @@ export default function Home() {
     </>
   );
 }
+

@@ -9,11 +9,12 @@ import { fadeIn, textVariant } from "@/utils/motion";
 import { SectionWrapper } from "@/hoc";
 import { Cursor } from "@/components/ui/cursor";
 import {
-  CalendarDaysIcon,
-  CodeIcon,
-  MousePointerClickIcon,
-  Users2Icon,
-} from "lucide-react";
+  CalendarDots,
+  Code,
+  CursorClick,
+  Users,
+  Certificate,
+} from "@phosphor-icons/react";
 import {
   Dialog,
   DialogTrigger,
@@ -25,8 +26,8 @@ import {
   DialogDescription,
 } from "@/components/ui/animated-dialog";
 import { Badge } from "@/components/ui/badge";
-import { FaCertificate } from "react-icons/fa";
-import { IconType } from "react-icons/lib";
+// Icon imports from @phosphor-icons/react above
+import { IconProps } from "@phosphor-icons/react";
 import { nyght } from "@/assets/font";
 import { AboutCanvas } from "@/components/canvas";
 import profileImage from "@/assets/profile.png";
@@ -79,7 +80,7 @@ const HoverCursor: React.FC<{ targetRef: React.RefObject<HTMLDivElement> }> = ({
               exit={{ opacity: 0 }}
               className="inline-flex w-full items-center justify-center">
               <div className="inline-flex items-center text-sm text-white">
-                Click <MousePointerClickIcon className="ml-1 h-4 w-4" />
+                Click <CursorClick className="ml-1 h-4 w-4" weight="fill" />
               </div>
             </motion.div>
           )}
@@ -93,7 +94,7 @@ const HoverCursor: React.FC<{ targetRef: React.RefObject<HTMLDivElement> }> = ({
 const ServiceCard: React.FC<{
   index: number;
   title: string;
-  icon: IconType;
+  icon: React.ComponentType<{ className?: string }>;
   description: string;
   skills: string[];
   tools: string[];
@@ -213,7 +214,7 @@ const ServiceCard: React.FC<{
                     style={{ textShadow: "none" }}>
                     {details?.experience && (
                       <div className="flex items-center justify-center">
-                        <CalendarDaysIcon className="mr-2 text-neutral-700 dark:text-neutral-300 h-4 w-4" />
+                        <CalendarDots className="mr-2 text-neutral-700 dark:text-neutral-300 h-4 w-4" />
                         <span className="text-neutral-700 dark:text-neutral-300 text-sm">
                           {details.experience} Years Exp
                         </span>
@@ -221,7 +222,7 @@ const ServiceCard: React.FC<{
                     )}
                     {details?.projects && (
                       <div className="flex items-center justify-center">
-                        <CodeIcon className="mr-2 text-neutral-700 dark:text-neutral-300 h-4 w-4" />
+                        <Code className="mr-2 text-neutral-700 dark:text-neutral-300 h-4 w-4" weight="bold" />
                         <span className="text-neutral-700 dark:text-neutral-300 text-sm">
                           {details.projects} Projects
                         </span>
@@ -229,7 +230,7 @@ const ServiceCard: React.FC<{
                     )}
                     {details?.clients && (
                       <div className="flex items-center justify-center">
-                        <Users2Icon className="mr-2 text-neutral-700 dark:text-neutral-300 h-4 w-4" />
+                        <Users className="mr-2 text-neutral-700 dark:text-neutral-300 h-4 w-4" />
                         <span className="text-neutral-700 dark:text-neutral-300 text-sm">
                           {details.clients} Clients
                         </span>
@@ -237,7 +238,7 @@ const ServiceCard: React.FC<{
                     )}
                     {details?.certifications && (
                       <div className="flex items-center justify-center">
-                        <FaCertificate className="mr-2 text-neutral-700 dark:text-neutral-300 h-4 w-4" />
+                        <Certificate className="mr-2 text-neutral-700 dark:text-neutral-300 h-4 w-4" weight="fill" />
                         <span className="text-neutral-700 dark:text-neutral-300 text-sm">
                           {details.certifications} Certifications
                         </span>

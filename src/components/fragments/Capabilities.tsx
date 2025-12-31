@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion, animate } from "motion/react";
+import { motion, animate } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { nyght } from "@/assets/font";
 import { fadeIn, textVariant } from "@/utils/motion";
