@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { cn } from '@/lib/utils';
+import { trackEvent } from '@/lib/analytics';
 import { useContactModal } from '@/context/ContactModalContext';
 import { 
   Navbar as ResizableNavbar, 
@@ -154,7 +155,10 @@ const Navbar = ({ connected = true, variant = 'home' }: NavbarProps) => {
         />
         <NavbarButton 
           as="button" 
-          onClick={openMessage} 
+          onClick={() => {
+            trackEvent('open_contact', { source: 'navbar' });
+            openMessage();
+          }}
           variant="gradient"
         >
           Get in touch
