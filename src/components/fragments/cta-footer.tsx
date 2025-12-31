@@ -11,6 +11,9 @@ import { SegmentedControl } from '@/components/ui/segmented-control';
 import MagneticButton from '../ui/magnatic-button';
 import { socialLinks } from '@/constants';
 import { trackEvent } from '@/lib/analytics';
+import { db } from '@/lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { toast } from 'sonner';
 
 
 
@@ -83,6 +86,33 @@ const CTAFooter: React.FC = () => {
   const currentYear = new Date().getFullYear();
   const containerRef = useRef<HTMLDivElement>(null);
   const { openMessage, openBooking } = useContactModal();
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubscribe = async () => {
+    if (!email || !email.includes('@')) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await addDoc(collection(db, 'newsletter_subscribers'), {
+        email,
+        createdAt: serverTimestamp(),
+        source: 'footer',
+      });
+      
+      trackEvent('subscribe_newsletter', { source: 'footer' });
+      toast.success('Thanks for subscribing!');
+      setEmail('');
+    } catch (error) {
+      console.error('Error subscribing:', error);
+      toast.error('Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -205,11 +235,19 @@ const CTAFooter: React.FC = () => {
                   <div className="flex gap-2">
                     <input 
                       type="email" 
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email" 
-                      className="flex-1 bg-muted/50 border border-border/50 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                      className="flex-1 bg-muted/50 border border-border/50 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all disabled:opacity-50"
+                      disabled={loading}
+                      onKeyDown={(e) => e.key === 'Enter' && handleSubscribe()}
                     />
-                    <button className="bg-foreground text-background px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
-                      Join
+                    <button 
+                      onClick={handleSubscribe}
+                      disabled={loading}
+                      className="bg-foreground text-background px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {loading ? '...' : 'Join'}
                     </button>
                   </div>
                   <p className="text-xs text-foreground/40 mt-2">

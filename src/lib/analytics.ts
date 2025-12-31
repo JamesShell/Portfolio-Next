@@ -8,7 +8,8 @@ type EventName =
     | 'submit_contact_form'
     | 'section_view'
     | 'click_cta'
-    | 'select_plan';
+    | 'select_plan'
+    | 'subscribe_newsletter';
 
 type EventParams = Record<string, string | number | boolean>;
 
