@@ -77,7 +77,16 @@ const nextConfig = {
   // Redirects for better SEO
   async redirects() {
     return [
-      // Add any necessary redirects here
+      {
+        source: '/discord',
+        destination: 'https://etza.dev/?utm_source=profile&utm_id=discord',
+        permanent: false,
+      },
+      {
+        source: '/contra',
+        destination: 'https://etza.dev/?utm_source=profile&utm_id=contra',
+        permanent: false,
+      },
     ];
   },
 };
