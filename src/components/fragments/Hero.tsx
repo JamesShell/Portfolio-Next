@@ -168,7 +168,7 @@ const Hero = () => {
                 </div>
                 <br/>
                 <div className="mb-4 -mt-6">
-                  3 years experience
+                  4 years experience
                 </div>
                 <div>
                   building user-friendly web apps

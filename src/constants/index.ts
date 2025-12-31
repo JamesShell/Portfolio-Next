@@ -147,8 +147,8 @@ const projects: Project[] = [
 
   {
     name: "Sybelle",
-    description: "Dynamic motion graphics and video presentation for Sybelle.",
-    short_description: "Motion Graphics",
+    description: "Parallax Hero Landing Page for Sybelle.",
+    short_description: "Parallax Hero Landing Page for Sybelle.",
     tags: [
       { name: "Video", color: "text-blue-500" },
       { name: "Motion", color: "text-purple-500" },
@@ -158,9 +158,9 @@ const projects: Project[] = [
     type: "design",
   },
   {
-    name: "Hoodie Design",
-    description: "A creative hoodie design project showcasing modern streetwear aesthetics.",
-    short_description: "Streetwear Hoodie Design",
+    name: "Hoodie",
+    description: "A Money Earning Platform Landing Page.",
+    short_description: "Money Earning Platform Landing Page",
     tags: [
       { name: "Design", color: "text-blue-500" },
       { name: "Fashion", color: "text-purple-500" },
@@ -170,9 +170,9 @@ const projects: Project[] = [
     type: "design",
   },
   {
-    name: "PUTma",
-    description: "Innovative platform design for PUTma.",
-    short_description: "Platform Design",
+    name: "PUT.ma",
+    description: "Innovative Platform for Listing Properties.",
+    short_description: "Property Listing Platform",
     tags: [
       { name: "UI/UX", color: "text-blue-500" },
     ],
@@ -181,9 +181,20 @@ const projects: Project[] = [
     type: "design",
   },
   {
-    name: "Putma Mobile",
-    description: "Mobile application interface for Putma.",
-    short_description: "Mobile App Interface",
+    name: "Sybelle",
+    description: "Sybelle Events & Awards Page Design.",
+    short_description: "Sybelle Events & Awards Page Design.",
+    tags: [
+      { name: "Branding", color: "text-pink-500" },
+    ],
+    image: sybelle1,
+    link: "#",
+    type: "design",
+  },
+  {
+    name: "Put.ma",
+    description: "Put.ma Login Page Design.",
+    short_description: "Put.ma Login Page Design.",
     tags: [
       { name: "Mobile", color: "text-pink-500" },
     ],
@@ -192,9 +203,9 @@ const projects: Project[] = [
     type: "mobile",
   },
   {
-    name: "Putma Dashboard",
-    description: "Comprehensive dashboard view for Putma analytics.",
-    short_description: "Analytics Dashboard",
+    name: "Put.ma",
+    description: "Property Listing Platform",
+    short_description: "Property Listing Platform.",
     tags: [
       { name: "Web", color: "text-blue-500" },
       { name: "Dashboard", color: "text-green-500" },
@@ -202,17 +213,6 @@ const projects: Project[] = [
     image: putma2,
     link: "#",
     type: "web",
-  },
-  {
-    name: "Sybelle Brand",
-    description: "Brand identity and visual language for Sybelle.",
-    short_description: "Brand Identity",
-    tags: [
-      { name: "Branding", color: "text-pink-500" },
-    ],
-    image: sybelle1,
-    link: "#",
-    type: "design",
   },
 ];
 

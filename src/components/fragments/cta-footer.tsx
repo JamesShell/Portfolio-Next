@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { SegmentedControl } from '@/components/ui/segmented-control';
 import MagneticButton from '../ui/magnatic-button';
 import { socialLinks } from '@/constants';
+import { trackEvent } from '@/lib/analytics';
 
 
 
@@ -165,7 +166,10 @@ const CTAFooter: React.FC = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <MagneticButton onClick={openMessage} className="text-lg">
+              <MagneticButton onClick={() => {
+                trackEvent('open_contact', { source: 'footer_cta' });
+                openMessage();
+              }} className="text-lg">
                 Get In Touch
               </MagneticButton>
             </div>

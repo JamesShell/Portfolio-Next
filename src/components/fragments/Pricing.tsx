@@ -12,6 +12,7 @@ import {
   Sparkle
 } from "@phosphor-icons/react";
 import { useContactModal } from "@/context/ContactModalContext";
+import { trackEvent } from "@/lib/analytics";
 
 type PlanCategory = "all" | "design" | "development";
 
@@ -220,7 +221,10 @@ const Pricing: React.FC = () => {
                               ? "bg-white text-black hover:bg-zinc-200"
                               : "bg-zinc-950 text-white hover:bg-zinc-800 dark:bg-white dark:text-black"
                           }`}
-                          onClick={() => openBooking && openBooking(plan.id)}
+                          onClick={() => {
+                            trackEvent('select_plan', { plan_id: plan.id, plan_name: plan.name });
+                            openBooking && openBooking(plan.id);
+                          }}
                         >
                           Book a call
                           <Calendar className="w-4 h-4" />

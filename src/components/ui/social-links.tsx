@@ -7,6 +7,7 @@ import { SegmentedControl } from "./segmented-control";
 import { cn } from "@/lib/utils";
 import { socialLinks as SL } from "@/constants";
 // FaDribbble replaced with DribbbleLogo from phosphor-icons above
+import { trackEvent } from "@/lib/analytics";
 
 interface SocialLink {
   id: number;
@@ -141,6 +142,7 @@ const SocialIcon: React.FC<{ item: SocialLink; index: number; onHover?: (hovered
         target="_blank"
         rel="noopener noreferrer"
         onMouseMove={handleMouseMove}
+        onClick={() => trackEvent('click_social_link', { platform: item.name })}
         className="flex h-12 w-12 backdrop-blur-md items-center justify-center rounded-full bg-muted/50 backdrop-blur-sm border border-border/20 transition-all duration-300 hover:bg-muted hover:border-border/40 hover:shadow-lg"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}

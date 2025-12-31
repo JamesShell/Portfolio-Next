@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { SectionWrapper } from "@/hoc";
 import { projects } from "@/constants";
+import { trackEvent } from "@/lib/analytics";
 import { Heart, Video } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -68,6 +69,7 @@ const Works: React.FC = () => {
               key={`${project.name}-${index}`}
               whileHover={{ scale: 1.02, transition: { duration: 0.15 } }}
               className="flex-shrink-0 w-[450px] md:w-[600px] cursor-pointer group pr-6"
+              onClick={() => trackEvent('view_project', { name: project.name })}
             >
               {/* Title Section - Top */}
               <div className="mb-3">
@@ -86,7 +88,7 @@ const Works: React.FC = () => {
                 
                 {/* Subtitle */}
                 <p className="text-sm text-muted-foreground mt-1">
-                  {project.short_description?.split(' ').slice(0, 4).join(' ') || "Web Development"}
+                  {project.short_description || "Web Development"}
                 </p>
               </div>
 

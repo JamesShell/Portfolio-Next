@@ -74,7 +74,44 @@ const WhyChooseMe: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="max-w-5xl mx-auto"
         >
-          <div className="p-3">
+          {/* Mobile View (Cards) */}
+          <div className="md:hidden space-y-6">
+            {comparisonData.map((item, index) => (
+              <div 
+                key={index}
+                className="rounded-[1.5rem] border overflow-hidden bg-white border-zinc-200 shadow-[0_0_0_3px_#fafafa,0_0_0_4px_rgba(0,0,0,0.08)] dark:bg-zinc-900 dark:border-zinc-700 dark:shadow-[0_0_0_3px_#27272a,0_0_0_4px_rgba(255,255,255,0.08)] p-6"
+              >
+                <h3 className="text-sm uppercase tracking-wider font-semibold text-zinc-500 dark:text-zinc-400 mb-4">{item.category}</h3>
+                
+                <div className="space-y-4">
+                  {/* Me */}
+                  <div className="flex items-start gap-3">
+                    <div className="mt-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 p-1">
+                      <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" weight="bold" />
+                    </div>
+                    <div>
+                      <span className="block text-xs font-bold text-zinc-900 dark:text-white mb-0.5">Me</span>
+                      <p className="text-sm text-zinc-700 dark:text-zinc-300">{item.me}</p>
+                    </div>
+                  </div>
+
+                  {/* Others */}
+                  <div className="flex items-start gap-3">
+                    <div className="mt-0.5 rounded-full bg-red-100 dark:bg-red-900/30 p-1">
+                      <X className="w-3 h-3 text-red-600 dark:text-red-400" weight="bold" />
+                    </div>
+                    <div>
+                      <span className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 mb-0.5">Typical Freelancer</span>
+                      <p className="text-sm text-zinc-500 dark:text-zinc-400">{item.others}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop View (Table) */}
+          <div className="hidden md:block p-3">
             <div className="grid grid-cols-3 relative gap-4">
               
               {/* Backdrop Card for Me/Others columns */}

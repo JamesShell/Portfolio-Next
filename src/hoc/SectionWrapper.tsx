@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { styles } from '../styles/style';
 import { staggerContainer } from '../utils/motion';
+import { trackEvent } from '@/lib/analytics';
 
 // Type definition for the HOC
 type SectionWrapperProps = {
@@ -17,6 +18,7 @@ export const SectionWrapper = <P extends object>(Component: React.ComponentType<
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.25 }}
+        onViewportEnter={() => trackEvent('section_view', { section_id: idName })}
         className={`section ${!fullScreen && "container mx-auto"} ${styles.paddingY} px-0 relative`}
       >
         <span className='hash-span' id={idName}>
