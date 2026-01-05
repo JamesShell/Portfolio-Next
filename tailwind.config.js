@@ -103,6 +103,10 @@ module.exports = {
             transform: "translate(-50%,-40%) scale(1)",
           },
         },
+        "marquee": {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-33.333333%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -112,7 +116,7 @@ module.exports = {
         "reverse-float": 'reverseFloatAnimation 2.5s ease-in-out infinite',
         "zoom": 'zoom 5s ease-in-out infinite',
         "spotlight": "spotlight 2s ease .75s 1 forwards",
-        "marquee": "marquee 30s linear infinite",
+        "marquee": "marquee 100s linear infinite",
       },
       // Removed duplicate keyframes for marquee if they existed in the original or assuming they merge, 
       // but original had keyframes defined twice in extend? 

@@ -50,9 +50,9 @@ const Works: React.FC = () => {
       </div>
 
       {/* Infinite Looping Slider */}
-      <div className="relative w-full">
+      <div className="relative w-full overflow-hidden">
         <div
-          className="flex animate-marquee hover:[animation-play-state:paused]"
+          className="flex w-max animate-marquee hover:[animation-play-state:paused] will-change-transform"
         >
           {duplicatedProjects.map((project, index) => (
             <motion.div
