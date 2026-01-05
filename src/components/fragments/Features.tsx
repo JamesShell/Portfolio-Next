@@ -76,7 +76,8 @@ const Features: React.FC = () => {
           {/* Card 1: 4 Years Experience */}
           <motion.div
             style={!animationComplete ? { rotate: card1Rotation, x: card1X, y: card1Y, scale: card1Scale, willChange: 'transform' } : undefined}
-            className={`w-full lg:w-[280px] h-[340px] rounded-2xl bg-zinc-100 dark:bg-zinc-200 p-5 flex flex-col relative overflow-hidden group shadow-xl z-[1] origin-bottom transform-gpu ${animationComplete ? "hover:scale-[1.03] hover:z-20 transition-all duration-300" : ""}`}
+            className={`w-[85%] lg:w-[280px] h-[340px] rounded-2xl bg-zinc-100 dark:bg-zinc-200 p-5 flex flex-col relative overflow-hidden group shadow-xl z-[1] origin-bottom transform-gpu ${animationComplete ? "hover:scale-[1.03] hover:z-20 transition-all duration-300" : ""}`}
+
           >
             {/* Visual: Big 4 */}
             <div className="flex-1 relative flex items-center justify-center">
@@ -97,7 +98,8 @@ const Features: React.FC = () => {
           {/* Card 2: Fast Turnaround */}
           <motion.div
             style={!animationComplete ? { rotate: card2Rotation, x: card2X, y: card2Y, scale: card2Scale, background: 'radial-gradient(circle at bottom right, #1e1b2e 0%, #18181b 60%)', willChange: 'transform' } : { background: 'radial-gradient(circle at bottom right, #1e1b2e 0%, #18181b 60%)' }}
-            className={`w-full lg:w-[280px] h-[340px] rounded-2xl p-5 flex flex-col relative overflow-hidden group shadow-xl z-[2] origin-bottom transform-gpu ${animationComplete ? "hover:scale-[1.03] hover:z-20 transition-all duration-300" : ""}`}
+            className={`w-[85%] lg:w-[280px] h-[340px] rounded-2xl p-5 flex flex-col relative overflow-hidden group shadow-xl z-[2] origin-bottom transform-gpu ${animationComplete ? "hover:scale-[1.03] hover:z-20 transition-all duration-300" : ""}`}
+
           >
             {/* Visual: Lightning */}
             <div className="flex-1 relative flex items-center justify-center">
@@ -116,7 +118,8 @@ const Features: React.FC = () => {
           {/* Card 3: Built for Conversions */}
           <motion.div
             style={!animationComplete ? { rotate: card3Rotation, x: card3X, y: card3Y, scale: card3Scale, willChange: 'transform' } : undefined}
-            className={`w-full lg:w-[280px] h-[340px] rounded-2xl bg-zinc-100 dark:bg-zinc-200 p-5 flex flex-col relative overflow-hidden group shadow-xl z-[3] origin-bottom transform-gpu ${animationComplete ? "hover:scale-[1.03] hover:z-20 transition-all duration-300" : ""}`}
+            className={`w-[85%] lg:w-[280px] h-[340px] rounded-2xl bg-zinc-100 dark:bg-zinc-200 p-5 flex flex-col relative overflow-hidden group shadow-xl z-[3] origin-bottom transform-gpu ${animationComplete ? "hover:scale-[1.03] hover:z-20 transition-all duration-300" : ""}`}
+
           >
             {/* Visual: Simple conversion funnel */}
             <div className="flex-1 relative flex items-center justify-center">
@@ -142,7 +145,8 @@ const Features: React.FC = () => {
           {/* Card 4: Affordable Excellence */}
           <motion.div
             style={!animationComplete ? { rotate: card4Rotation, x: card4X, y: card4Y, scale: card4Scale, background: 'radial-gradient(circle at bottom right, #1e1b2e 0%, #18181b 60%)', willChange: 'transform' } : { background: 'radial-gradient(circle at bottom right, #1e1b2e 0%, #18181b 60%)' }}
-            className={`w-full lg:w-[280px] h-[340px] rounded-2xl p-5 flex flex-col relative overflow-hidden group shadow-xl z-[4] origin-bottom transform-gpu ${animationComplete ? "hover:scale-[1.03] hover:z-20 transition-all duration-300" : ""}`}
+            className={`w-[85%] lg:w-[280px] h-[340px] rounded-2xl p-5 flex flex-col relative overflow-hidden group shadow-xl z-[4] origin-bottom transform-gpu ${animationComplete ? "hover:scale-[1.03] hover:z-20 transition-all duration-300" : ""}`}
+
           >
             {/* Visual: Savings indicator */}
             <div className="flex-1 relative flex flex-col items-center justify-center">

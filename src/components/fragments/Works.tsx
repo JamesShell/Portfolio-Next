@@ -51,18 +51,8 @@ const Works: React.FC = () => {
 
       {/* Infinite Looping Slider */}
       <div className="relative w-full">
-        <motion.div
-          className="flex"
-          animate={{
-            x: ["0%", "-100%"],
-          }}
-          transition={{
-            x: {
-              duration: 30,
-              repeat: Infinity,
-              ease: "linear",
-            },
-          }}
+        <div
+          className="flex animate-marquee hover:[animation-play-state:paused]"
         >
           {duplicatedProjects.map((project, index) => (
             <motion.div
@@ -93,7 +83,7 @@ const Works: React.FC = () => {
               </div>
 
               {/* Image or Video - Bottom */}
-              <div className="relative h-64 md:h-96 rounded-xl overflow-hidden">
+              <div className="relative w-full aspect-video rounded-xl overflow-hidden">
                 {project.video ? (
                    <div className="w-full h-full bg-black relative">
                       <video 
@@ -121,7 +111,7 @@ const Works: React.FC = () => {
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </div>
   );

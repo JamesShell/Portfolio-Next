@@ -26,6 +26,7 @@ interface MonkeyProps {
   isMobile: boolean;
   lightPosition: [number, number, number];
   hovered: IconKey;
+  onLoaded?: () => void;
 }
 
 interface IconProps {
@@ -90,7 +91,7 @@ const AspectRatioController: React.FC = () => {
 };
 
 
-const Monkey: React.FC<MonkeyProps> = ({ isMobile, lightPosition, hovered }) => {
+const Monkey: React.FC<MonkeyProps> = ({ isMobile, lightPosition, hovered, onLoaded }) => {
   const { scene, animations } = useGLTF("./space_boi/space_boi.glb");
   
   // Load the skinned character (only this one has the mesh/skin)
@@ -299,6 +300,7 @@ const Monkey: React.FC<MonkeyProps> = ({ isMobile, lightPosition, hovered }) => 
       
       setIsInitialized(true);
       setModelsLoaded(true);
+      if (onLoaded) onLoaded();
       console.log("FBX Character setup complete");
     }
     
@@ -654,14 +656,9 @@ const MonkeyCanvas: React.FC<MonkeyCanvasProps> = ({ className, hovered }) => {
     }
   }, []);
 
-  useEffect(() => {
-    // Simulate loading time for 3D models
-    const loadingTimer = setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-
-    return () => clearTimeout(loadingTimer);
-  }, []);
+  const handleLoaded = () => {
+    setIsLoading(false);
+  };
 
   return (
     <div className="relative w-full h-full">
@@ -674,7 +671,7 @@ const MonkeyCanvas: React.FC<MonkeyCanvasProps> = ({ className, hovered }) => {
         style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s ease-in-out' }}>
         <Suspense fallback={null}>
           <AspectRatioController />
-          <Monkey isMobile={isMobile} lightPosition={[0, 0, 10]} hovered={hovered} />
+          <Monkey isMobile={isMobile} lightPosition={[0, 0, 10]} hovered={hovered} onLoaded={handleLoaded} />
           {/* <AsciiRenderer fgColor="white" bgColor="transparent" characters=" ■■■*+=-:." resolution={0.25} invert={false} /> */}
         </Suspense>
         <Preload all />

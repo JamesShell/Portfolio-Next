@@ -74,49 +74,15 @@ const WhyChooseMe: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="max-w-5xl mx-auto"
         >
-          {/* Mobile View (Cards) */}
-          <div className="md:hidden space-y-6">
-            {comparisonData.map((item, index) => (
-              <div 
-                key={index}
-                className="rounded-[1.5rem] border overflow-hidden bg-white border-zinc-200 shadow-[0_0_0_3px_#fafafa,0_0_0_4px_rgba(0,0,0,0.08)] dark:bg-zinc-900 dark:border-zinc-700 dark:shadow-[0_0_0_3px_#27272a,0_0_0_4px_rgba(255,255,255,0.08)] p-6"
-              >
-                <h3 className="text-sm uppercase tracking-wider font-semibold text-zinc-500 dark:text-zinc-400 mb-4">{item.category}</h3>
-                
-                <div className="space-y-4">
-                  {/* Me */}
-                  <div className="flex items-start gap-3">
-                    <div className="mt-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 p-1">
-                      <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" weight="bold" />
-                    </div>
-                    <div>
-                      <span className="block text-xs font-bold text-zinc-900 dark:text-white mb-0.5">Me</span>
-                      <p className="text-sm text-zinc-700 dark:text-zinc-300">{item.me}</p>
-                    </div>
-                  </div>
 
-                  {/* Others */}
-                  <div className="flex items-start gap-3">
-                    <div className="mt-0.5 rounded-full bg-red-100 dark:bg-red-900/30 p-1">
-                      <X className="w-3 h-3 text-red-600 dark:text-red-400" weight="bold" />
-                    </div>
-                    <div>
-                      <span className="block text-xs font-bold text-zinc-500 dark:text-zinc-400 mb-0.5">Typical Freelancer</span>
-                      <p className="text-sm text-zinc-500 dark:text-zinc-400">{item.others}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
 
-          {/* Desktop View (Table) */}
-          <div className="hidden md:block p-3">
-            <div className="grid grid-cols-3 relative gap-4">
+          {/* Responsive Table View */}
+          <div className="block p-3 overflow-x-auto">
+            <div className="grid grid-cols-2 md:grid-cols-3 relative gap-4 min-w-full md:min-w-[700px]">
               
               {/* Backdrop Card for Me/Others columns */}
               <div 
-                className="col-start-2 col-span-2 row-start-1 row-end-[-1] relative rounded-[1.5rem] border overflow-hidden bg-white border-zinc-200 shadow-[0_0_0_3px_#fafafa,0_0_0_4px_rgba(0,0,0,0.08)] dark:bg-zinc-900 dark:border-zinc-700 dark:shadow-[0_0_0_3px_#27272a,0_0_0_4px_rgba(255,255,255,0.08)]"
+                className="col-start-1 md:col-start-2 col-span-2 row-start-1 row-end-[-1] relative rounded-[1.5rem] border overflow-hidden bg-white border-zinc-200 shadow-[0_0_0_3px_#fafafa,0_0_0_4px_rgba(0,0,0,0.08)] dark:bg-zinc-900 dark:border-zinc-700 dark:shadow-[0_0_0_3px_#27272a,0_0_0_4px_rgba(255,255,255,0.08)]"
                 style={{ gridRow: `1 / span ${comparisonData.length + 1}` }}
               >
                  {/* Top gradients */}
@@ -129,13 +95,13 @@ const WhyChooseMe: React.FC = () => {
               </div>
 
               {/* Header Row */}
-              <div className="col-start-1 p-6 flex items-center" style={{ gridRow: 1 }}>
+              <div className="col-start-1 hidden md:flex p-6 items-center" style={{ gridRow: 1 }}>
                  {/* Empty Category Header */}
               </div>
-              <div className="col-start-2 p-6 text-center border-b border-zinc-100 dark:border-zinc-800 relative z-20" style={{ gridRow: 1 }}>
+              <div className="col-start-1 md:col-start-2 p-6 text-center border-b border-zinc-100 dark:border-zinc-800 relative z-20" style={{ gridRow: 1 }}>
                 <span className="text-lg font-bold text-zinc-900 dark:text-white">Me</span>
               </div>
-              <div className="col-start-3 p-6 text-center border-b border-zinc-100 dark:border-zinc-800 relative z-20" style={{ gridRow: 1 }}>
+              <div className="col-start-2 md:col-start-3 p-6 text-center border-b border-zinc-100 dark:border-zinc-800 relative z-20" style={{ gridRow: 1 }}>
                 <span className="text-base font-semibold text-zinc-500 dark:text-zinc-400">Typical Freelancer/Agency</span>
               </div>
 
@@ -143,12 +109,12 @@ const WhyChooseMe: React.FC = () => {
               {comparisonData.map((item, index) => (
                 <React.Fragment key={index}>
                   {/* Category */}
-                  <div className="col-start-1 p-6 flex items-start text-sm font-semibold text-zinc-800 dark:text-zinc-200" style={{ gridRow: index + 2 }}>
+                  <div className="col-start-1 hidden md:flex p-6 items-start text-sm font-semibold text-zinc-800 dark:text-zinc-200" style={{ gridRow: index + 2 }}>
                     {item.category}
                   </div>
 
                   {/* Me Column */}
-                  <div className={`col-start-2 p-6 flex items-start gap-2 relative z-20 ${
+                  <div className={`col-start-1 md:col-start-2 p-6 flex items-start gap-2 relative z-20 ${
                     index !== comparisonData.length - 1 ? "border-b border-zinc-100 dark:border-zinc-800" : ""
                   }`} style={{ gridRow: index + 2 }}>
                     <Check className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" weight="bold" />
@@ -156,7 +122,7 @@ const WhyChooseMe: React.FC = () => {
                   </div>
 
                   {/* Others Column */}
-                  <div className={`col-start-3 p-6 flex items-start gap-2 relative z-20 ${
+                  <div className={`col-start-2 md:col-start-3 p-6 flex items-start gap-2 relative z-20 ${
                     index !== comparisonData.length - 1 ? "border-b border-zinc-100 dark:border-zinc-800" : ""
                   }`} style={{ gridRow: index + 2 }}>
                     <X className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" weight="bold" />
