@@ -8,7 +8,7 @@ export const personStructuredData = {
   "name": "Ettouzany",
   "jobTitle": "Full Stack Developer",
   "description": "Experienced Full Stack Developer specializing in React, Next.js, TypeScript, and modern web technologies",
-  "url": "https://ettouzany.vercel.app", // Update with your actual domain
+  "url": "https://etza.dev", // Update with your actual domain
   "sameAs": [
     socialLinks.github.link, // Update with your GitHub
     socialLinks.linkedin.link, // Update with your LinkedIn
@@ -35,7 +35,7 @@ export const websiteStructuredData = {
   "@type": "WebSite",
   "name": "Ettouzany Portfolio",
   "description": "Portfolio website showcasing full stack development projects and skills",
-  "url": "https://ettouzany.vercel.app", // Update with your actual domain
+  "url": "https://etza.dev", // Update with your actual domain
   "author": {
     "@type": "Person",
     "name": "Ettouzany"
@@ -66,7 +66,7 @@ export const organizationStructuredData = {
   "@type": "ProfessionalService",
   "name": "Ettouzany - Full Stack Developer",
   "description": "Professional web development services specializing in modern JavaScript frameworks and full stack solutions",
-  "url": "https://ettouzany.vercel.app", // Update with your actual domain
+  "url": "https://etza.dev", // Update with your actual domain
   "founder": {
     "@type": "Person",
     "name": "Ettouzany"
@@ -81,24 +81,40 @@ export const organizationStructuredData = {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Frontend Development",
-          "description": "React, Next.js, TypeScript frontend development"
+          "name": "Landing Page",
+          "description": "A high-converting, launch-ready landing page designed and built fast."
+        },
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": 1999,
+          "priceCurrency": "USD"
         }
       },
       {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Backend Development",
-          "description": "Node.js, API development, database design"
+          "name": "Premium Page",
+          "description": "A premium, conversion-focused page with advanced polish and integrations."
+        },
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": 2999,
+          "priceCurrency": "USD"
         }
       },
       {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Full Stack Development",
-          "description": "Complete web application development from concept to deployment"
+          "name": "Product Partnership Retainer",
+          "description": "Ongoing design + development support to ship improvements every month."
+        },
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": 1499,
+          "priceCurrency": "USD",
+          "unitText": "MONTH"
         }
       }
     ]

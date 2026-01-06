@@ -14,4 +14,4 @@ Allow: /experience
 Allow: /contact
 
 # Sitemap location
-Sitemap: https://ettouzany.vercel.app/sitemap.xml
+Sitemap: https://etza.dev/sitemap.xml

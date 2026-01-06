@@ -16,7 +16,7 @@ const defaultMeta = {
   description: 'Portfolio of Ettouzany - Full Stack Developer specializing in React, Next.js, TypeScript, and modern web technologies. Explore my projects, skills, and experience.',
   keywords: 'full stack developer, react developer, next.js, typescript, web development, portfolio, UI/UX design, frontend, backend',
   ogImage: '/og-image.jpg',
-  siteUrl: 'https://ettouzany.vercel.app' // Update with your actual domain
+  siteUrl: 'https://etza.dev' // Update with your actual domain
 };
 
 export default function SEOHead({

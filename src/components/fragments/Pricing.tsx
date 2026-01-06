@@ -87,7 +87,7 @@ const plans: Plan[] = [
       "Bug fixes + emergency fixes",
       "Ship list summary at month end",
     ],
-    badge: "Limited availability",
+    badge: "2 Seats Available",
     category: ["all", "development"],
     variant: "dark",
     fullWidth: true,
