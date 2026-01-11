@@ -9,7 +9,9 @@ import { useRouter } from 'next/router';
 import { GOOGLE_ANALYTICS_ID } from "@/constants";
 import CookieBanner from "@/components/CookieBanner";
 import { ContactModalProvider } from "@/context/ContactModalContext";
+import { BookingModalProvider } from "@/context/BookingModalContext";
 import ContactDialog from "@/components/fragments/ContactDialog";
+import BookingDialog from "@/components/fragments/BookingDialog";
 import { Toaster } from "sonner";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -30,19 +32,22 @@ export default function App({ Component, pageProps }: AppProps) {
       disableTransitionOnChange
     >
       <ContactModalProvider>
-        {isAdminRoute ? (
-          <AuthProvider>
-            {AppContent}
-          </AuthProvider>
-        ) : (
-          <>
-            {AppContent}
-            <ContactDialog />
-          </>
-        )}
-        {GOOGLE_ANALYTICS_ID && <GoogleAnalytics gaId={GOOGLE_ANALYTICS_ID} />}
-        <CookieBanner />
-        <Toaster />
+        <BookingModalProvider>
+          {isAdminRoute ? (
+            <AuthProvider>
+              {AppContent}
+            </AuthProvider>
+          ) : (
+            <>
+              {AppContent}
+              <ContactDialog />
+              <BookingDialog />
+            </>
+          )}
+          {GOOGLE_ANALYTICS_ID && <GoogleAnalytics gaId={GOOGLE_ANALYTICS_ID} />}
+          <CookieBanner />
+          <Toaster />
+        </BookingModalProvider>
       </ContactModalProvider>
     </ThemeProvider>
   );

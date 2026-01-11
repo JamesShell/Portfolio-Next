@@ -19,30 +19,35 @@ interface ComparisonItem {
 
 const comparisonData: ComparisonItem[] = [
   {
-    category: "Design Approach",
-    me: "No templates. Built from scratch in Figma + Webflow/WordPress (your stack).",
-    others: "Template picked on day 1. \"Custom\" means new colors + new copy."
+    category: "Strategy & conversion",
+    me: "Conversion-first structure (CTA, sections, messaging). Includes basic tracking setup.",
+    others: "“Looks good” first—conversion decisions come later (or not at all)."
+  },
+  {
+    category: "Design approach",
+    me: "Tailored layout + visuals for your product—no cookie-cutter pages.",
+    others: "Template-first or reused patterns across clients."
   },
   {
     category: "Turnaround",
-    me: "First draft in 3-5 days. Launch in 2-4 weeks for most sites like yours.",
-    others: "Timeline stretches when your project joins a queue."
+    me: "First draft in 3–5 days. Typical launch 7–14 days (scope-dependent).",
+    others: "Queue-based timelines—often weeks before real progress."
   },
   {
     category: "Communication",
-    me: "Direct line to me. Average reply time: 2-4 hours.",
-    others: "Messages bounce between people. Decisions take longer."
+    me: "Direct to me. Updates every 48h. Avg reply same day.",
+    others: "Handoffs + waiting on multiple people."
   },
   {
     category: "Pricing",
-    me: "Flat/project pricing. Clear scope. No surprise \"project management\" line items.",
-    others: "Higher monthly retainers / add-ons / change fees."
+    me: "Fixed packages. Clear deliverables, no surprise add-ons.",
+    others: "Retainers/change fees + unclear scope creep."
   },
   {
-    category: "Client Satisfaction",
-    me: "15+ reviews, 5/5 rating. Links included.",
-    others: "Portfolio looks good; your experience varies."
-  }
+    category: "Delivery & handoff (agency-friendly)",
+    me: "Clean handoff: Figma files + components + docs (or Webflow/WordPress ready).",
+    others: "Hard to maintain later / limited documentation."
+  },
 ];
 
 const WhyChooseMe: React.FC = () => {
@@ -99,10 +104,10 @@ const WhyChooseMe: React.FC = () => {
                  {/* Empty Category Header */}
               </div>
               <div className="col-start-1 md:col-start-2 p-6 text-center border-b border-zinc-100 dark:border-zinc-800 relative z-20" style={{ gridRow: 1 }}>
-                <span className="text-lg font-bold text-zinc-900 dark:text-white">Me</span>
+                <span className="text-lg font-bold text-zinc-900 dark:text-white">Working with me</span>
               </div>
               <div className="col-start-2 md:col-start-3 p-6 text-center border-b border-zinc-100 dark:border-zinc-800 relative z-20" style={{ gridRow: 1 }}>
-                <span className="text-base font-semibold text-zinc-500 dark:text-zinc-400">Typical Freelancer/Agency</span>
+                <span className="text-base font-semibold text-zinc-500 dark:text-zinc-400">Typical agency process</span>
               </div>
 
               {/* Data Rows */}

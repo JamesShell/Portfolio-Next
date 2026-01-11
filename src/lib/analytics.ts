@@ -9,7 +9,10 @@ type EventName =
     | 'section_view'
     | 'click_cta'
     | 'select_plan'
-    | 'subscribe_newsletter';
+    | 'subscribe_newsletter'
+    | 'booking_dialog_open'
+    | 'booking_submitted'
+    | 'secondary_cta_click';
 
 type EventParams = Record<string, string | number | boolean>;
 

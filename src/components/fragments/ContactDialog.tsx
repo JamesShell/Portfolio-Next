@@ -507,8 +507,8 @@ const ContactDialog = () => {
                             <FormControl>
                               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                                 {[
-                                  { value: 'landing-page', label: 'Landing Page', desc: '$1,999 fixed', price: '$1,999' },
-                                  { value: 'premium-page', label: 'Premium Page', desc: '$2,999 fixed', price: '$2,999' },
+                                  { value: 'landing-page', label: 'Landing Page', desc: '$599 fixed', price: '$599' },
+                                  { value: 'premium-page', label: 'Premium Website', desc: '$2,499 fixed', price: '$2,499' },
                                   { value: 'product-partnership', label: 'Product Partnership', desc: '$1,499 / month', price: '$1,499/mo' },
                                 ].map((plan) => (
                                   <button

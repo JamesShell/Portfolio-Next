@@ -35,7 +35,7 @@ const plans: Plan[] = [
     id: "landing-page",
     name: "Landing Page",
     description: "A high-converting, launch-ready landing page designed and built fast.",
-    price: "$1,999",
+    price: "$599",
     period: "/fixed",
     features: [
       "1-page design + build (responsive)",
@@ -54,11 +54,12 @@ const plans: Plan[] = [
   },
   {
     id: "premium-page",
-    name: "Premium Page",
+    name: "Premium Website",
     description: "A premium, conversion-focused page with advanced polish and integrations.",
-    price: "$2,999",
+    price: "$2,499",
     period: "/fixed",
     features: [
+      "Multi-page structure",
       "Everything in Landing Page",
       "Deeper conversion structure",
       "Advanced interactions/animations",
