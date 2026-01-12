@@ -154,7 +154,7 @@ const Hero = () => {
       style={{ touchAction: "pan-y" }}>
 
       <motion.div
-        initial="hidden"
+        initial="visible"
         animate="visible"
         className="flex flex-col lg:flex-row items-center justify-between w-full px-4 sm:px-6 lg:px-8 py-20 lg:py-0"
         variants={containerVariants}>
@@ -290,9 +290,9 @@ const Hero = () => {
       {/* Scroll Indicator */}
       <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
-        initial={{ opacity: 0 }}
+        initial={{ opacity: 1 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.5 }}
+        transition={{ duration: 0 }}
         style={{ opacity: textOpacity }}
       >
         <motion.div

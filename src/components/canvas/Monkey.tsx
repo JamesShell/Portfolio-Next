@@ -668,7 +668,7 @@ const MonkeyCanvas: React.FC<MonkeyCanvasProps> = ({ className, hovered }) => {
         shadows
         camera={camera}
         gl={{ preserveDrawingBuffer: true }}
-        style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.5s ease-in-out' }}>
+        style={{ opacity: isLoading ? 0 : 1, transition: 'none' }}>
         <Suspense fallback={null}>
           <AspectRatioController />
           <Monkey isMobile={isMobile} lightPosition={[0, 0, 10]} hovered={hovered} onLoaded={handleLoaded} />
